@@ -90,7 +90,7 @@ export const verify = async (req, res) => {
     }
 }
 
-export const reverify=async(req,res)=>{
+export const reVerify=async(req,res)=>{
     try{
         const {email}=req.body;
         const user=await User.findOne({email});
@@ -111,6 +111,46 @@ export const reverify=async(req,res)=>{
         })
     }catch(error){
         return res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+
+export const login=async(req,res)=>{
+    try{
+        const {email,password}=req.body;
+        if(!email || !password){
+            return res.status(400).json({
+                success:false,
+                message:"All fields are required"
+            })
+        }
+        const exisitingUser=await User.findOne({email});
+        if(!exisitingUser){
+            return res.status(400).json({
+                success:false,
+                message:"User doesn't exist"
+            })
+        }
+        const isPassword = await bcrypt.compare(password,exisitingUser.password);
+        if(!isPassword){
+            return res.status(400).json({
+                success:false,
+                message:"Invalid Credentials"
+            })
+        }
+        if(exisitingUser.isVerified===false){
+            return res.status(400).json({
+                success:false,
+                message:"Verify your accound than login"
+            })
+        }
+        // generate token
+        const accessToken = jwt.sign({id:exisitingUser._id},process.env.SECRET_KEY,{expiresIn:'10m'});
+        const refreshToken = jwt.sign({id:exisitingUser._id},process.env.SECRET_KEY,{expiresIn:'30d'});
+    }catch(error){
+        res.status(500).json({
             success:false,
             message:error.message
         })
