@@ -9,11 +9,11 @@ const userSchema =new mongoose.Schema({
         type:String,
         required:true
     },
-    porfilePic:{
+    profilePic:{
         type:String,
         default:"" //Cloudinary image url
     },
-    porfilePicPublicId:{
+    profilePicPublicId:{
         type:String,
         default:"" //Cloudinary public_id for deletion
     },
@@ -40,7 +40,7 @@ const userSchema =new mongoose.Schema({
         defualt:false
     },
     token:{
-        type:Boolean,
+        type:String,
         defualt:false
     },
     isLoggedIn:{
