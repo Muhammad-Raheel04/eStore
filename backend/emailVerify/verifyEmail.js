@@ -10,7 +10,7 @@ export const verifyEmail = (token, email) => {
             }
         }
     );
-    const mailConfiguration = {
+    const mailDetails = {
         from: process.env.MAIL_USER,
         to: email,
         subject: 'Email Verification',
