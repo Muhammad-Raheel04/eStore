@@ -1,6 +1,7 @@
 import { User } from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { verifyEmail } from "../emailVerify/verifyEmail.js";
 
 export const register = async (req, res) => {
     try {
@@ -83,6 +84,33 @@ export const verify = async (req, res) => {
         })
     } catch (error) {
         res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+
+export const reverify=async(req,res)=>{
+    try{
+        const {email}=req.body;
+        const user=await User.findOne({email});
+        if(!user){
+            return res.status(400).json({
+                success:false,
+                message:"User not found"
+            })
+        }
+        const token =jwt.sign({id:newUser._id},process.env.SECRET_KEY,{expiresIn:'10m'});
+        verifyEmail(token,email);
+        user.token=token
+        await user.save();
+        return res.status(200).json({
+           success:true,
+           message:"Verification email sent again successfully",
+           token:user.token
+        })
+    }catch(error){
+        return res.status(500).json({
             success:false,
             message:error.message
         })
