@@ -11,11 +11,11 @@ const userSchema =new mongoose.Schema({
     },
     porfilePic:{
         type:String,
-        defualt:"" //Cloudinary image url
+        default:"" //Cloudinary image url
     },
     porfilePicPublicId:{
         type:String,
-        defualt:"" //Cloudinary public_id for deletion
+        default:"" //Cloudinary public_id for deletion
     },
     email:{
         type:String,
@@ -41,15 +41,15 @@ const userSchema =new mongoose.Schema({
     },
     token:{
         type:Boolean,
-        default:false
+        defualt:false
     },
     isLoggedIn:{
         type:Boolean,
-        default:false
+        defualt:false
     },
     otp:{
         type:String,
-        default:null
+        defualt:null
     },
     otpExpiry:{
         type:Date,
