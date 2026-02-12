@@ -2,7 +2,7 @@ import { User } from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { verifyEmail } from "../emailVerify/verifyEmail.js";
-
+import {Session} from "../models/sessionModel.js";
 export const register = async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
@@ -149,6 +149,24 @@ export const login=async(req,res)=>{
         // generate token
         const accessToken = jwt.sign({id:exisitingUser._id},process.env.SECRET_KEY,{expiresIn:'10m'});
         const refreshToken = jwt.sign({id:exisitingUser._id},process.env.SECRET_KEY,{expiresIn:'30d'});
+
+        exisitingUser.isLoggedIn=true;
+        await exisitingUser.save();
+
+        // Check for exisiting session and delete it
+        const exisitingSession = await Session.findOne({userId:exisitingUser._id});
+        if(exisitingSession){
+            await Session.deleteOne({userId:exisitingUser._id});
+        }
+        // Create a new session
+        await Session.create({userId:exisitingUser._id})
+        return res.status(200).json({
+            success:true,
+            message:`Welcome back ${exisitingUser.firstName}`,
+            user:exisitingUser,
+            accessToken,
+            refreshToken
+        })
     }catch(error){
         res.status(500).json({
             success:false,
