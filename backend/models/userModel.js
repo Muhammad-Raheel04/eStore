@@ -29,27 +29,23 @@ const userSchema =new mongoose.Schema({
     role:{
         type:String,
         enum:["user","admin"],
-        defualt:"user"
+        default:"user"
     },
     token:{
         type:String,
-        defualt:null
+        default:null
     },
     isVerified:{
         type:Boolean,
-        defualt:false
-    },
-    token:{
-        type:String,
-        defualt:false
+        default:false
     },
     isLoggedIn:{
         type:Boolean,
-        defualt:false
+        default:false
     },
     otp:{
         type:String,
-        defualt:null
+        default:null
     },
     otpExpiry:{
         type:Date,
