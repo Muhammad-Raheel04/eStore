@@ -1,12 +1,35 @@
 import React from 'react'
 import { Button } from "@/components/ui/button";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from "./pages/Home";
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Verify from './pages/Verify';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <><Navbar /><Home /></>
+  },
+  {
+    path: '/signup',
+    element: <><Signup /></>
+  },
+  {
+    path: '/login',
+    element: <><Login /></>
+  },
+  {
+    path: '/verify',
+    element: <><Verify /></>
+  },
+])
 const App = () => {
   return (
-    <div className='text-red-700'>
-      Hello World
-      <Button>Click Me</Button>
-      <button>Click Me</button>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   )
 }
 
