@@ -197,6 +197,43 @@ export const logout = async (req, res) => {
 export const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
+        user.otp = otp;
+        user.otpExpiry = otpExpiry;
+
+        await user.save();
+        await sendOTPEmail(otp, email);
+
+        return res.status(200).json({
+            success: true,
+            message: "Otp send to email successfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+export const verifyOTP = async (req, res) => {
+    try {
+        const { otp } = req.body;
+        const email = req.params.email;
+        if(!otp){
+            return res.status(400).json({
+                success:false,
+                message:"OTP is required"
+            })
+        }
         const user = await User.findOne({email});
         if(!user){
             return res.status(400).json({
@@ -204,17 +241,30 @@ export const forgotPassword = async (req, res) => {
                 message:"User not found"
             })
         }
-        const otp = Math.floor(100000 + Math.random()*900000).toString();
-        const otpExpiry = new Date(Date.now()+10*60*1000); // 10 mins
-        user.otp = otp;
-        user.otpExpiry=otpExpiry;
-
+        if(!user.otp || !user.otpExpiry){
+            return res.status(400).json({
+                success:false,
+                message:"OTP is not generated or already verified"
+            })
+        }
+        if(user.otpExpiry<new Date()){
+            return res.status(400).json({
+                success:false,
+                message:"Otp has expired please request a new one"
+            })
+        }
+        if(otp!==user.otp){
+            return res.status(400).json({
+                success:false,
+                message:"Otp is invalid"
+            })
+        }
+        user.otp=null;
+        user.otpExpiry=null;
         await user.save();
-        await sendOTPEmail(otp,email);
-
         return res.status(200).json({
             success:true,
-            message:"Otp send to email successfully"
+            message:"Otp verified successfully"
         })
     } catch (error) {
         return res.status(500).json({
