@@ -4,9 +4,9 @@ import connectDB from './database/db.js';
 import userRoute from './routes/userRoute.js';
 
 const app=express();
-
-app.use('/api/v1/user',userRoute);
 app.use(express.json());
+app.use('/api/v1/user',userRoute);
+
 const PORT=process.env.PORT;
 app.listen(PORT,()=>{
     connectDB();
