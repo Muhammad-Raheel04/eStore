@@ -29,7 +29,7 @@ export const register = async (req, res) => {
             password: hashedPassword
         })
         const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, { expiresIn: '10m' });
-        verifyEmail(token, email); //send email here
+        await verifyEmail(token, email); //send email here
         newUser.token = token
         await newUser.save();
         return res.status(201).json({
@@ -103,7 +103,7 @@ export const reVerify = async (req, res) => {
             })
         }
         const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '10m' });
-        verifyEmail(token, email);
+        await verifyEmail(token, email);
         user.token = token
         await user.save();
         return res.status(200).json({
@@ -128,44 +128,44 @@ export const login = async (req, res) => {
                 message: "All fields are required"
             })
         }
-        const exisitingUser = await User.findOne({ email });
-        if (!exisitingUser) {
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
             return res.status(400).json({
                 success: false,
                 message: "User doesn't exist"
             })
         }
-        const isPassword = await bcrypt.compare(password, exisitingUser.password);
+        const isPassword = await bcrypt.compare(password, existingUser.password);
         if (!isPassword) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid Credentials"
             })
         }
-        if (exisitingUser.isVerified === false) {
+        if (existingUser.isVerified === false) {
             return res.status(400).json({
                 success: false,
                 message: "Verify your account than login"
             })
         }
         // generate token
-        const accessToken = jwt.sign({ id: exisitingUser._id }, process.env.SECRET_KEY, { expiresIn: '10m' });
-        const refreshToken = jwt.sign({ id: exisitingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
+        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '10m' });
+        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
 
-        exisitingUser.isLoggedIn = true;
-        await exisitingUser.save();
+        existingUser.isLoggedIn = true;
+        await existingUser.save();
 
         // Check for exisiting session and delete it
-        const exisitingSession = await Session.findOne({ userId: exisitingUser._id });
+        const exisitingSession = await Session.findOne({ userId: existingUser._id });
         if (exisitingSession) {
-            await Session.deleteOne({ userId: exisitingUser._id });
+            await Session.deleteOne({ userId: existingUser._id });
         }
         // Create a new session
-        await Session.create({ userId: exisitingUser._id })
+        await Session.create({ userId: existingUser._id })
         return res.status(200).json({
             success: true,
-            message: `Welcome back ${exisitingUser.firstName}`,
-            user: exisitingUser,
+            message: `Welcome back ${existingUser.firstName}`,
+            user: existingUser,
             accessToken,
             refreshToken
         })
@@ -294,7 +294,7 @@ export const changePassword = async (req, res) => {
         if(!user){
             return res.status(400).json({
                 success:false,
-                message:"Password don't match"
+                message:"User not found"
             })
         }
         
