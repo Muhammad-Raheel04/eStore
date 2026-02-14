@@ -19,7 +19,7 @@ export const isAuthenticated = async (req,res,next)=>{
             if(error.name==="TokenExpiredError"){
                 return res.status(400).json({
                     success:false,
-                    message:"The registration token has expired"
+                    message:"Access token has expired"
                 })
             }
             return res.status(400).json({
@@ -32,7 +32,7 @@ export const isAuthenticated = async (req,res,next)=>{
         if(!user){
             return res.status(400).json({
                 success:false,
-                messsage:"User not found"
+                message:"User not found"
             })
         }
         req.user=user;
@@ -40,7 +40,7 @@ export const isAuthenticated = async (req,res,next)=>{
         next();
     }catch(error){
         return res.status(500).json({
-            success:true,
+            success:false,
             message:error.message
         })
     }
