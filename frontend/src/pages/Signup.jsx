@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import API from "@/utils/API";
+
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -13,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from "sonner";
 
 
@@ -38,21 +40,17 @@ const Signup = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         console.log(formData);
-        try{
+        try {
             setLoading(true);
-            const res=await axios.post('https://estore-production-b778.up.railway.app//api/v1/user/register',formData,{
-                headers:{
-                    "Content-Type":"application/json"
-                }
-            })
-            if(res.data.success){
+            const res = await API.post("/user/register", formData);
+            if (res.data.success) {
                 navigate('/verify');
                 toast.success(res.data.message);
             }
-        }catch(error){
+        } catch (error) {
             console.log(error);
             toast.error(error.response?.data?.message || error.message || "Something went wrong");
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
@@ -128,7 +126,7 @@ const Signup = () => {
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
                     <Button onClick={submitHandler} type="submit" className="w-full cursor-pointer bg-pink-600 hover:bg-pink-500">
-                        {loading?<><Loader2 className='h-4 w-4 animate-spin mr-2'/>Please wait</>:'Signup'}
+                        {loading ? <><Loader2 className='h-4 w-4 animate-spin mr-2' />Please wait</> : 'Signup'}
                     </Button>
                     <p className="text-gray-700 text-sm">Already have an account? <Link to={'/login'} className='hover:underline cursor-pointer text-pink-800'>Login</Link></p>
                 </CardFooter>
