@@ -4,7 +4,7 @@ export const verifyEmail = async (token, email) => {
     try {
         const transporter = nodemailer.createTransport(
             {
-                host:'smtp.mailgun.com',
+                host:'smtp.mailgun.org',
                 port:587,
                 secure:false,
                 auth: {
