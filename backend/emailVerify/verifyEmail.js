@@ -4,7 +4,7 @@ export const verifyEmail = async (token, email) => {
     try {
         const transporter = nodemailer.createTransport(
             {
-                host:'smtp-relay.brevo.org',
+                host:'smtp-relay.brevo.com',
                 port:587,
                 secure:false,
                 auth: {
