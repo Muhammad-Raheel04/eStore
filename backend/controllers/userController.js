@@ -5,6 +5,22 @@ import { verifyEmail } from "../emailVerify/verifyEmail.js";
 import { sendOTPEmail } from "../emailVerify/sendOTPEmail.js";
 import { Session } from "../models/sessionModel.js";
 import { startSession } from "mongoose";
+
+export const healthCheck = async (req,res)=>{
+    try{
+        return res.status(200).json({
+            success:true,
+            message:"eStore API is running",
+            uptime:process.uptime(),
+            timestamp:new Date()
+        })
+    }catch(error){
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
 export const register = async (req, res) => {
     try {
         const { firstName, lastName, email, password } = req.body;
