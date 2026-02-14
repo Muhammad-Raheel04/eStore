@@ -32,7 +32,7 @@ export const isAuthenticated = async (req,res,next)=>{
         if(!user){
             return res.status(400).json({
                 success:false,
-                meswhasage:"User not found"
+                message:"User not found"
             })
         }
         req.user=user;
