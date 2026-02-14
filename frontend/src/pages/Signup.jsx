@@ -57,7 +57,7 @@ const Signup = () => {
         }
     }
     return (
-        <div className='flex justify-center items-center min-h-screen bg-pink-100'>
+        <div className='flex justify-center items-center min-h-screen bg-pink-100 p-5'>
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle>Create your account</CardTitle>
