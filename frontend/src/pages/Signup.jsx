@@ -42,7 +42,7 @@ const Signup = () => {
         console.log(formData);
         try {
             setLoading(true);
-            const res = await API.post("/user/register", formData);
+            const res = await API.post("user/register", formData);
             if (res.data.success) {
                 navigate('/verify');
                 toast.success(res.data.message);
