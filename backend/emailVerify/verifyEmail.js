@@ -4,18 +4,17 @@ export const verifyEmail = async (token, email) => {
     try {
         const transporter = nodemailer.createTransport(
             {
-                
-                host:'smtp.gmail.com',
+                host:'smtp.mailgun.com',
                 port:587,
                 secure:false,
                 auth: {
-                    user: process.env.MAIL_USER,
-                    pass: process.env.MAIL_PASS
+                    user: process.env.MAILGUN_USER,
+                    pass: process.env.MAILGUN_PASS
                 }
             }
         );
         const mailDetails = {
-            from: process.env.MAIL_USER,
+            from: process.env.MAILGUN_USER,
             to: email,
             subject: 'Email Verification',
             html: `
