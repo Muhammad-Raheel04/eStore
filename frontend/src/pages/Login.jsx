@@ -27,7 +27,7 @@ const Login = () => {
         password: "",
     })
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch=useDispatch();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -46,6 +46,7 @@ const Login = () => {
             if (res.data.success) {
                 navigate('/');
                 dispatch(setUser(res.data.user));
+                localStorage.setItem('accessToken',res.data.accessToken)
                 toast.success(res.data.message);
             }
         } catch (error) {
