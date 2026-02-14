@@ -6,18 +6,18 @@ import { sendOTPEmail } from "../emailVerify/sendOTPEmail.js";
 import { Session } from "../models/sessionModel.js";
 import { startSession } from "mongoose";
 
-export const healthCheck = async (req,res)=>{
-    try{
+export const healthCheck = async (req, res) => {
+    try {
         return res.status(200).json({
-            success:true,
-            message:"eStore API is running",
-            uptime:process.uptime(),
-            timestamp:new Date()
+            success: true,
+            message: "eStore API is running",
+            uptime: process.uptime(),
+            timestamp: new Date()
         })
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-            success:false,
-            message:error.message
+            success: false,
+            message: error.message
         })
     }
 }
@@ -45,7 +45,14 @@ export const register = async (req, res) => {
             password: hashedPassword
         })
         const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, { expiresIn: '10m' });
-        await verifyEmail(token, email); //send email here
+        try {
+            await verifyEmail(token, email); //send email here
+        } catch (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            })
+        }
         newUser.token = token
         await newUser.save();
         return res.status(201).json({
@@ -138,6 +145,7 @@ export const reVerify = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log(email, password);
         if (!email || !password) {
             return res.status(400).json({
                 success: false,
@@ -292,12 +300,12 @@ export const verifyOTP = async (req, res) => {
 
 export const changePassword = async (req, res) => {
     try {
-        const {newPassword,confirmPassword} = req.body;
-        const {email}=req.params;
-        if(!newPassword || !confirmPassword){
+        const { newPassword, confirmPassword } = req.body;
+        const { email } = req.params;
+        if (!newPassword || !confirmPassword) {
             return res.status(400).json({
-                success:false,
-                message:"Both Password fields are required"
+                success: false,
+                message: "Both Password fields are required"
             })
         }
         if (newPassword !== confirmPassword) {
@@ -306,20 +314,20 @@ export const changePassword = async (req, res) => {
                 message: "Passwords do not match"
             });
         }
-        const user = await User.findOne({email});
-        if(!user){
+        const user = await User.findOne({ email });
+        if (!user) {
             return res.status(400).json({
-                success:false,
-                message:"User not found"
+                success: false,
+                message: "User not found"
             })
         }
-        
-        const hashedPassword = await bcrypt.hash(newPassword,10);
-        user.password=hashedPassword;
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
         await user.save();
         return res.status(200).json({
-            success:true,
-            message:"Password changed successfully"
+            success: true,
+            message: "Password changed successfully"
         })
     } catch (error) {
         return res.status(500).json({
@@ -329,39 +337,39 @@ export const changePassword = async (req, res) => {
     }
 }
 
-export const allUser = async (req,res)=>{
-    try{
+export const allUser = async (req, res) => {
+    try {
         const users = await User.find();
         return res.status(200).json({
-            success:true,
+            success: true,
             users
         })
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-            success:false,
-            message:error.message
+            success: false,
+            message: error.message
         })
     }
 }
 
-export const getUserById = async(req,res)=>{
-    try{
-        const {userId} = req.params;
+export const getUserById = async (req, res) => {
+    try {
+        const { userId } = req.params;
         const user = await User.findById(userId).select("-password -otp -otpExpiry -token");
-        if(!user){
+        if (!user) {
             return res.status(404).json({
-                succes:false,
-                message:"User not found"
+                succes: false,
+                message: "User not found"
             })
         }
         res.status(200).json({
-            succes:true,
+            succes: true,
             user,
         })
-    }catch(error){
+    } catch (error) {
         return res.status(500).json({
-            succes:false,
-            message:error.message
+            succes: false,
+            message: error.message
         })
     }
 }
