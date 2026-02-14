@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer'
 
-export const verifyEmail = (token, email) => {
+export const verifyEmail = async (token, email) => {
+    try{
     const transporter = nodemailer.createTransport(
         {
             service: 'gmail',
@@ -14,22 +15,21 @@ export const verifyEmail = (token, email) => {
         from: process.env.MAIL_USER,
         to: email,
         subject: 'Email Verification',
-        text: `Hi! There, You have recently visited
-            our website and entered your email.
-            Please follow the given link to verify your email
-            http://localhost:5173/verify/${token}
-            Thanks`
+        html: `
+                <p>Hi!</p>
+                <p>You recently registered on our website.</p>
+                <p>Click the link below to verify your email:</p>
+                <a href="https://estore-production-b778.up.railway.app/api/v1/user/verify/${token}">Verify Email</a>
+                <p>Thanks!</p>
+            `
     };
-    transporter.sendMail(mailDetails,
-        function (err, data) {
-            if (err) {
-                console.log('Error Occurs');
-            } else {
-                console.log('Email sent successfully');
-            }
-    });
-
-
+    const info=await transporter.sendMail(mailDetails);
+    console.log("Email sent successfully");
+    return true;
+}catch(error){
+    console.log("Error sending email",error);
+    throw new Error("Email could not be sent");
+}
 }
 
 
