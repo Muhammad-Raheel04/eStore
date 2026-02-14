@@ -24,6 +24,10 @@ const router = createBrowserRouter([
     path: '/verify',
     element: <><Verify /></>
   },
+  {
+    path: '/verify:token',
+    element: <><Verify /></>
+  },
 ])
 const App = () => {
   return (
