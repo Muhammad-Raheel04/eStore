@@ -17,7 +17,7 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from "sonner";
 
-const Signup = () => {
+const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -107,4 +107,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Login
