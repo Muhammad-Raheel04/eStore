@@ -8,13 +8,13 @@ export const verifyEmail = async (token, email) => {
                 port:587,
                 secure:false,
                 auth: {
-                    user: process.env.MAILGUN_USER,
-                    pass: process.env.MAILGUN_PASS
+                    user: process.env.BREVO_USER,
+                    pass: process.env.BREVO_PASS
                 }
             }
         );
         const mailDetails = {
-            from: process.env.MAILGUN_USER,
+            from: process.env.BREVO_USER,
             to: email,
             subject: 'Email Verification',
             html: `
