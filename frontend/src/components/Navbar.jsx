@@ -36,7 +36,6 @@ const Navbar = () => {
           localStorage.removeItem('refreshToken');
           dispatch(setUser(null));
           toast.success("Logged out successfully due to expired session.");
-          navigate('/login');
         } else {
           toast.error(error.response?.data?.message || "Logout failed");
         }
