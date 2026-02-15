@@ -10,6 +10,7 @@ const Navbar = () => {
   const { user } = useSelector(store => store.user)
   const accessToken = localStorage.getItem('accessToken');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logoutHandler = async () => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
@@ -18,19 +19,28 @@ const Navbar = () => {
     }
 
     try {
-      const res = await API.post('/user/logout', null, {
+      const res = await API.post('/user/logout', {}, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
 
       if (res.data.success) {
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         dispatch(setUser(null));
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log("Logout error:", error);
-      toast.error("Logout failed");
-    }
+        console.log("Logout error:", error);
+        if (error.response?.data?.message === "Access token has expired") {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          dispatch(setUser(null));
+          toast.success("Logged out successfully due to expired session.");
+          navigate('/login');
+        } else {
+          toast.error(error.response?.data?.message || "Logout failed");
+        }
+      }
   };
 
   return (
