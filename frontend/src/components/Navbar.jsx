@@ -11,22 +11,28 @@ const Navbar = () => {
   const accessToken = localStorage.getItem('accessToken');
   const dispatch = useDispatch();
   const logoutHandler = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      toast.error("You are not logged in");
+      return;
+    }
+
     try {
-      const res = await API.post('user/logout', {}, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
+      const res = await API.post('/user/logout', {}, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      });
+
       if (res.data.success) {
         localStorage.removeItem('accessToken');
         dispatch(setUser(null));
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log();
-
+      console.log("Logout error:", error);
+      toast.error("Logout failed");
     }
-  }
+  };
+
   return (
     <header className="bg-pink-50 fixed w-full z-20 border-b border-pink-200">
       <div className='max-w-7xl mx-auto flex justify-between items-center py-3'>
@@ -49,7 +55,7 @@ const Navbar = () => {
             </ShoppingCart>
           </Link>
           {
-            user ? <Button onClick={logoutHandler} className='bg-pink-600 text-white cursor-'>Logout</Button> :
+            user ? <Button onClick={logoutHandler} className='bg-pink-600 text-white cursor-pointer'>Logout</Button> :
               <Link to="/login">
                 <Button className='bg-gradient-to-tl from-blue-600 to-purple-600 text-white px-4 py-2 rounded-md hover:opacity-90'>
                   Login
