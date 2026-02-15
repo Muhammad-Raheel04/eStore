@@ -12,11 +12,11 @@ import VerifyOTP from './pages/VerifyOTP';
 import ChangePassword from './pages/ChangePassword';
 import VerifyEmail from './pages/VerifyEmail';
 import Footer from './components/Footer';
-
+import Profile from './pages/Profile';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <><Navbar /><Home/><Footer/></>
+    element: <><Navbar /><Home /><Footer /></>
   },
   {
     path: '/signup',
@@ -45,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: '/change-password/:email',
     element: <><ChangePassword /></>
+  },
+  {
+    path: '/profile',
+    element: <><Navbar/><Profile /><Footer /></>
   },
 ])
 const App = () => {
