@@ -18,7 +18,7 @@ const Navbar = () => {
     }
 
     try {
-      const res = await API.post('/user/logout', {}, {
+      const res = await API.post('/user/logout', null, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
 
