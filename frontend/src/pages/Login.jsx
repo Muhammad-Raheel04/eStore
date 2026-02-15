@@ -37,12 +37,9 @@ const Login = () => {
     }
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(formData);
         try {
             setLoading(true);
             const res = await API.post("user/login", formData);
-            console.log(res);
-            console.log(res.data);
             if (res.data.success) {
                 navigate('/');
                 dispatch(setUser(res.data.user));
