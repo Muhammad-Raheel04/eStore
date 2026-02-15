@@ -1,5 +1,5 @@
 import API from '@/utils/API';
-import React, { useEffect } from 'react'
+import React, { useEffect ,useState} from 'react'
 import { useNavigate ,useParams} from 'react-router-dom';
 
 const VerifyEmail = () => {
@@ -8,7 +8,7 @@ const VerifyEmail = () => {
     const navigate = useNavigate();
     const verifyEmail = async () => {
         try {
-            const res = await API.post('/verify', {}, {
+            const res = await API.post('user/verify', {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
