@@ -39,12 +39,10 @@ const Signup = () => {
     }
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(formData);
         try {
             setLoading(true);
             const res = await API.post("user/register", formData);
-            console.log(res);
-            console.log(res.data);
+          
             if (res.data.success) {
                 navigate('/verify');
                 toast.success(res.data.message);
