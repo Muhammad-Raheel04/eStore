@@ -47,7 +47,7 @@ const router = createBrowserRouter([
     element: <><ChangePassword /></>
   },
   {
-    path: '/profile',
+    path: '/profile/:userId',
     element: <><Navbar/><Profile /><Footer /></>
   },
 ])
