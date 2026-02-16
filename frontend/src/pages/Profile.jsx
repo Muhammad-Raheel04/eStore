@@ -70,7 +70,7 @@ const Profile = () => {
             if (file) {
                 formData.append("file", file);// image file for backend multer
             }
-            const res = await API.put(`http://localhost:8000/api/v1/user/update/${userId}`, formData, {
+            const res = await API.put(`user/update/${userId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 }
