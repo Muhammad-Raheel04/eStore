@@ -2,11 +2,13 @@ import express from 'express';
 import 'dotenv/config';
 import connectDB from './database/db.js';
 import userRoute from './routes/userRoute.js';
+import productRoute from './routes/productRoute.js'
 import cors from 'cors';
 const app=express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/v1/user',userRoute);
+app.use('/api/v1/product',productRoute);
 
 const PORT=process.env.PORT;
 app.listen(PORT,()=>{
