@@ -173,8 +173,8 @@ export const login = async (req, res) => {
             })
         }
         // generate token
-        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '10m' });
-        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
+        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1y' });
+        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1y' });
 
         existingUser.isLoggedIn = true;
         await existingUser.save();
