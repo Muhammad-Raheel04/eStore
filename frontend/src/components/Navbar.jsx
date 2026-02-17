@@ -43,11 +43,11 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-pink-50 fixed w-full z-20 border-b border-pink-200">
+    <header className="bg-pink-200 fixed w-full z-20 border-b border-pink-200 px-4">
       <div className='max-w-7xl mx-auto flex justify-between items-center py-3'>
         {/* {logo section} */}
         <div >
-          <img src='/eStore.svg' alt='' className='w-[100px]' />
+          <img src='/ehamza.jpg' alt='' className='w-[50px] h-[50px] rounded-full object-cover shadow-md' />
         </div>
         {/* {nav section} */}
         <nav className='flex gap-10 justify-between items-center'>
