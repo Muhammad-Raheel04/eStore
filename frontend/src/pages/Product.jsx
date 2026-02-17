@@ -19,7 +19,7 @@ const Products = () => {
     const getAllProducts = async () => {
         try {
             setLoading(true);
-            const res = await API.get(`http://localhost:8000/api/v1/product/getallproducts`);
+            const res = await API.get(`product/getallproducts`);
             if (res.data.success) {
                 setAllProducts(res.data.products);
             }
@@ -38,7 +38,7 @@ const Products = () => {
         <div className='pt-20 pb-10'>
             <div className='max-w-7xl mx-auto flex gap-7'>
                 {/* sidebar */}
-                <FilterSidebar />
+                <FilterSidebar allProducts={allProducts}/>
                 {/* Main product section */}
                 <div className="flex flex-col flex-1">
                     <div className='flex justify-end mb-4'>
