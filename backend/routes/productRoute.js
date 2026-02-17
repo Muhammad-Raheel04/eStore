@@ -5,8 +5,7 @@ import { multipleUpload } from '../middleware/multer.js';
 
 
 const router = express.Router();
-// add is admin in post /
-router.post('/', isAuthenticated, multipleUpload,addProduct);
+router.post('/', isAuthenticated, multipleUpload,isAdmin, addProduct);
 router.get('/getallproducts',getAllProduct);
 router.delete('/delete/:productId', isAuthenticated, isAdmin, deleteProduct);
 router.put("/update/:productId", isAuthenticated, isAdmin, multipleUpload, updateProduct);
