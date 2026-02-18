@@ -3,12 +3,14 @@ import 'dotenv/config';
 import connectDB from './database/db.js';
 import userRoute from './routes/userRoute.js';
 import productRoute from './routes/productRoute.js'
+import cartRoute from './routes/cartRoute.js';
 import cors from 'cors';
 const app=express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/v1/user',userRoute);
 app.use('/api/v1/product',productRoute);
+app.use('/api/v1/cart',cartRoute);
 
 const PORT=process.env.PORT;
 app.listen(PORT,()=>{
