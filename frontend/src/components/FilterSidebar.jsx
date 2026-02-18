@@ -31,10 +31,20 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
     setSearch("");
     setCategory("All");
     setBrand("All");
-    setPriceRange(1000000)
+    setPriceRange([0,999999])
   }
   return (
-    <div className="bg-gray-100 mt-10 p-4 rounded-md h-max hidden md:block w-64">
+    <div className="
+ bg-gray-100 
+  mt-5 
+  p-4 
+  rounded-md 
+  w-full 
+  md:w-64 
+  md:mt-10 
+  md:sticky 
+  md:top-24
+">
       {/* Search */}
       <Input
         type="text"
@@ -87,7 +97,7 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
           <input type="range" min="0" value={priceRange[1]} onChange={handleMaxChange} max="999999" step="100" className='w-full' />
         </div>
         {/* Reset button */}
-        <Button onChange={resetFilters}className="bg-pink-600 text-white mt-5 cursor-pointer w-full" >Reset Filter</Button>
+        <Button onClick={resetFilters} className="bg-pink-600 text-white mt-5 cursor-pointer w-full" >Reset Filter</Button>
       </div>
     </div>
   );
