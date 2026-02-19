@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import API from '@/utils/API';
 import { setCart } from '@/redux/productSlice';
+import { toast } from 'sonner';
 
 const Cart = () => {
   const cart = useSelector((store) => store.product.cart);
@@ -31,13 +32,11 @@ const Cart = () => {
   }
   const handleUpdateQuantity = async (productId, type) => {
     try {
-      console.log(API);
       const res = await API.put(`cart/update`, { productId, type }, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-      console.log(res.data);
       if (res.data.success) {
         dispatch(setCart(res.data.cart))
       }
