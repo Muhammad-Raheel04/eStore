@@ -1,9 +1,7 @@
 import React from 'react'
 import { Button } from "@/components/ui/button";
-import Features from './components/Features';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from "./pages/Home";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Verify from './pages/Verify';
@@ -15,10 +13,11 @@ import Footer from './components/Footer';
 import Profile from './pages/Profile';
 import Products from './pages/Product';
 import Cart from './pages/Cart';
+import LandingPage from './pages/LandingPage';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <><Navbar /><Home /><Footer /></>
+    element: <><Navbar /><LandingPage /><Footer /></>
   },
   {
     path: '/signup',
