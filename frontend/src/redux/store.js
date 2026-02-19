@@ -17,6 +17,7 @@ const persistConfig = {
     key: 'eStore',
     version: 1,
     storage,
+    whitelist:['user','product']
 }
 const rootReducer = combineReducers({
     user: userSlice,
