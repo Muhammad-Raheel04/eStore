@@ -1,37 +1,18 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 
 const Hero = () => {
     return (
-        <section className='bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16'>
-            <div className='max-w-7xl mx-auto px-4'>
-                <div className='grid md:grid-cols-2 gap-8 items-center'>
-                    <div>
-                        <h1 className='text-4xl md:text-6xl font-bold mb-4'>
-                            Latest Electronics at Best Prices
-                        </h1>
-                        <p className='text-xl mb-6 text-blue-100'>
-                            Discover cutting-edge technology with unbeatable deals on smartphones, laptops, and more.
-                        </p>
-                        <div className='flex flex-col sm:flex-row gap-4'>
-                            <Button className="bg-white text-blue-600 hover:bg-gray-100">
-                                Shop Now
-                            </Button>
-                            <Button
-                                variant="outline"
-                                className="border-white text-white hover:bg-white hover:text-blue-600 bg-transparent"
-                            >
-                                View Deals
-                            </Button>
-                        </div>
-                    </div>
-                    <div className='relative mt-8'>
-                        <img src='/hero.jpg' alt='Latest Electronics' className='w-full h-auto' />
-                    </div>
-                </div>
+        <section className="relative h-[70vh] md:h-[80vh] bg-gray-100 flex items-center justify-center">
+            <div className="absolute inset-0 bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-70"></div>
+            <div className="relative text-center px-4">
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">New Arrivals</h1>
+                <p className="text-lg md:text-2xl text-white mb-6">Shop the latest trends and exclusive offers</p>
+                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                    Shop Now
+                </button>
             </div>
         </section>
     );
-}
+};
 
 export default Hero;
