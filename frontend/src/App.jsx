@@ -14,6 +14,14 @@ import Profile from './pages/Profile';
 import Products from './pages/Product';
 import Cart from './pages/Cart';
 import LandingPage from './pages/LandingPage';
+import Dashboard from './pages/Dashboard';
+import AdminSales from './pages/admin/AdminSales';
+import AdminProduct from './pages/admin/AdminProduct';
+import AdminOrders from './pages/admin/AdminOrders';
+import UserInfo from './pages/admin/UserInfo';
+import showuserOrders from './pages/admin/showuserOrders';
+import ProtectedRoute from './components/ProtectedRoute';
+import SingleProduct from './pages/SingleProduct';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -49,15 +57,46 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile/:userId',
-    element: <><Navbar/><Profile /><Footer /></>
+    element: <ProtectedRoute><Navbar /><Profile /><Footer /></ProtectedRoute>
   },
   {
     path: '/products',
-    element: <><Navbar/><Products/><Footer /></>
+    element: <ProtectedRoute><Navbar /><Products /><Footer /></ProtectedRoute>
+  },
+  {
+    path: '/products/:id',
+    element: <><Navbar /><SingleProduct /></>
+
   },
   {
     path: '/cart',
-    element: <><Navbar/><Cart/><Footer /></>
+    element: <ProtectedRoute><Navbar /><Cart /><Footer /></ProtectedRoute>
+  },
+  {
+    path: '/dashboard',
+    element: <ProtectedRoute adminOnly={true}><Navbar></Navbar><Dashboard /></ProtectedRoute>,
+    children: [
+      {
+        path: "sales",
+        element: <AdminSales />
+      },
+      {
+        path: "add-product",
+        element: <AdminProduct />
+      },
+      {
+        path: "products",
+        element: <AdminProduct />
+      },
+      {
+        path: "orders",
+        element: <AdminOrders />
+      },
+      {
+        path: "user/order/:userId",
+        element: <showUserOrder />
+      },
+    ]
   }
 ])
 const App = () => {
