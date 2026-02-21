@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import API from "@/utils/API";
+import API from '@/utils/API';
 import { toast } from "sonner";
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,14 +33,15 @@ const Navbar = () => {
         localStorage.removeItem('refreshToken');
         dispatch(setUser(null));
         toast.success(res.data.message);
+        navigate("/login");
       }
     } catch (error) {
-      console.log("Logout error:", error);
       if (error.response?.data?.message === "Access token has expired") {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         dispatch(setUser(null));
         toast.success("Logged out successfully due to expired session.");
+        navigate("/login");
       } else {
         toast.error(error.response?.data?.message || "Logout failed");
       }
