@@ -56,7 +56,9 @@ const Navbar = () => {
         </div>
         {/* Hamburger menu for mobile */}
         <div className="md:hidden flex items-center gap-4">
-          {user && <span className='text-gray-800 text-lg font-semibold'>Hello, {user.firstName}</span>}
+          {user && (<Link to={`/profile/${user._id}`} className='text-gray-800 text-lg font-semibold'>
+            Hello, {user.firstName}
+            </Link>)}
           <Link to={'/cart'} className='relative'>
             <div className='relative'>
               <ShoppingCart className='w-6 h-6' />
