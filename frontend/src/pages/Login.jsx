@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from "sonner";
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/redux/userSlice';
@@ -27,7 +27,10 @@ const Login = () => {
         password: "",
     })
     const navigate = useNavigate();
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -41,9 +44,9 @@ const Login = () => {
             setLoading(true);
             const res = await API.post("user/login", formData);
             if (res.data.success) {
-                navigate('/');
+                navigate(from,{replace:true});
                 dispatch(setUser(res.data.user));
-                localStorage.setItem('accessToken',res.data.accessToken)
+                localStorage.setItem('accessToken', res.data.accessToken)
                 toast.success(res.data.message);
             }
         } catch (error) {
@@ -64,7 +67,7 @@ const Login = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col gap-6">
-                        
+
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input
