@@ -19,7 +19,7 @@ import AdminSales from './pages/admin/AdminSales';
 import AdminProduct from './pages/admin/AdminProduct';
 import AdminOrders from './pages/admin/AdminOrders';
 import UserInfo from './pages/admin/UserInfo';
-import showuserOrders from './pages/admin/showuserOrders';
+import showuserOrders from './pages/admin/ShowUserOrders';
 import ProtectedRoute from './components/ProtectedRoute';
 import SingleProduct from './pages/SingleProduct';
 const router = createBrowserRouter([
