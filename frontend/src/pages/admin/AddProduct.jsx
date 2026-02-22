@@ -165,7 +165,7 @@ const AddProduct = () => {
             <Button
               disabled={loading}
               onClick={submitHandler}
-              className='w-full bg-pink-600 cursor-pointer' type='submit'>
+              className='w-full bg-pink-600 cursor-pointer mt-4' type='submit'>
               {
                 loading ? <span className='flex gap-l items-center'><Loader className='animate-spin' /></span> : "Add Product"
               }
