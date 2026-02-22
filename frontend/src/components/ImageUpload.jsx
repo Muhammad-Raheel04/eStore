@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { Card, CardContent } from './ui/card'
 
 const ImageUpload = ({ productData, setProductData }) => {
+    const fileInputRef=useRef(null);
     const handleFiles = (e) => {
         const files = Array.from(e.target.files || [])
         if (files.length) {
@@ -16,15 +17,24 @@ const ImageUpload = ({ productData, setProductData }) => {
             return
         }
     }
+    const removeImage = (index) => {
+        setProductData((prev) => {
+            const updatedImages = prev.productImg.filter((_, i) => i !== index);
+            return { ...prev, productImg: updatedImages };
+        });
+
+        if(fileInputRef.current){
+            fileInputRef.current.value="";
+        }
+    }
     return (
         <div className="grid gap-2">
             <Label>Product Images</Label>
-            <Input type='file' id="file-upload" className="" accept="image/*" multiple onChange={handleFiles}/>
+            <Input type='file' id="file-upload" className="" accept="image/*" multiple onChange={handleFiles} ref={fileInputRef}/>
             <Button variant='outline'>
                 <label htmlFor='file-upload' className='cursor-pointer'>Upload Images</label>
             </Button>
 
-            {/**/}
             {/* image Preview */}
             {
                 productData.productImg.length > 0 && (
@@ -54,6 +64,14 @@ const ImageUpload = ({ productData, setProductData }) => {
                                                 height={200}
                                                 className="w-full h-32 object-cover rounded-md"
                                             />
+                                            {/* remove button */}
+                                            <button
+                                                onClick={() => removeImage(idx)}
+                                                className="absolute top-1 right-1 bg-black/5 text-black p-1 rounded-full opacity-40 group-hover:opacity-100 transition"
+                                                size={14}
+                                            >
+                                                X
+                                            </button>
                                         </CardContent>
                                     </Card>
                                 );
