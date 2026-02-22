@@ -1,4 +1,4 @@
-import { ShoppingCart, Trash } from 'lucide-react'
+import { ShoppingCart,Trash2 } from 'lucide-react'
 import React from 'react'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
@@ -9,6 +9,25 @@ import API from '@/utils/API'
 import { toast } from 'sonner'
 
 const ProductCard = ({ product, loading, isAdmin }) => {
+  if (loading) {
+    return (
+      <div className='shadow-lg rounded-lg overflow-hidden h-max'>
+        <div className='w-full h-full aspect-square overflow-hidden'>
+          <Skeleton className='w-full h-full rounded-lg' />
+        </div>
+        <div className='px-2 space-y-2 my-2'>
+          <Skeleton className='w-[200px] h-4' />
+          <Skeleton className='w-[100px] h-4' />
+          <Skeleton className='w-[150px] h-8' />
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return null;
+  }
+
   const { productImg, productPrice, productName } = product;
   const accessToken = localStorage.getItem("accessToken");
   const dispatch=useDispatch();
@@ -53,7 +72,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
           <Skeleton className='w-full h-full rounded-lg' />
         ) : (
           <img
-            src={productImg[0]?.url}
+            src={productImg?.[0]?.url}
             onClick={()=>navigate(`/products/${product._id}`)}
             alt={productName}
             className='w-full h-full transition-transform duration-300 hover:scale-105 cursor-pointer'
@@ -78,7 +97,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
             </Button>
             {isAdmin && (
               <Button onClick={() => handleDelete(product._id)} className='bg-red-500 hover:bg-red-600'>
-                <Trash className="h-4 w-4" />
+                <Trash2 className="h-4 w-4" />
               </Button>
             )}
           </div>
