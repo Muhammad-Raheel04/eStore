@@ -19,9 +19,10 @@ import AdminSales from './pages/admin/AdminSales';
 import AdminProduct from './pages/admin/AdminProduct';
 import AdminOrders from './pages/admin/AdminOrders';
 import UserInfo from './pages/admin/UserInfo';
-import showuserOrders from './pages/admin/ShowUserOrders';
+import ShowUserOrders from './pages/admin/ShowUserOrders';
 import ProtectedRoute from './components/ProtectedRoute';
 import SingleProduct from './pages/SingleProduct';
+import AddProduct from './pages/admin/AddProduct';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path: "add-product",
-        element: <AdminProduct />
+        element: <AddProduct />
       },
       {
         path: "products",
@@ -94,7 +95,7 @@ const router = createBrowserRouter([
       },
       {
         path: "user/order/:userId",
-        element: <showUserOrder />
+        element: <ShowUserOrders/>
       },
     ]
   }
