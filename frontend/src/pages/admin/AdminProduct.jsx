@@ -1,155 +1,255 @@
-import React from 'react';
-import FilterSidebar from '@/components/FilterSidebar';
-import ProductCard from '@/components/ProductCard';
-
+import React, { useState } from 'react'
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
-import API from '@/utils/API';
-import { useDispatch, useSelector } from 'react-redux';
-import { setProducts } from '@/redux/productSlice';
-import { Menu } from 'lucide-react';
+} from '@/components/ui/select'
+import { Edit, Search, Trash2 } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import ImageUpload from '@/components/ImageUpload'
+import API from '@/utils/API'
+import { toast } from 'sonner'
+import { setProducts } from '@/redux/productSlice'
 
 const AdminProduct = () => {
-    const { products } = useSelector(store => store.product);
-    const [allProducts, setAllProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [search, setSearch] = useState("");
-    const [category, setCategory] = useState("All");
-    const [brand, setBrand] = useState("All");
-    const [priceRange, setPriceRange] = useState([0, 999999]);
-    const [sortOrder, setSortOrder] = useState('');
-    const [showSidebar, setShowSidebar] = useState(false);
+    const { products } = useSelector((store) => store.product)
+    const [editProduct, setEditProduct] = useState(null);
+    const [open, setOpen] = useState(false);
+    const accessToken = localStorage.getItem('accessToken');
     const dispatch = useDispatch();
 
-    const getAllProducts = async () => {
-        setLoading(true);
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setEditProduct((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+    const handleSave = async (e) => {
+        e.preventDefault()
+
+        const formData = new FormData()
+
+        formData.append("productName", editProduct.productName)
+        formData.append("productDesc", editProduct.productDesc)
+        formData.append("productPrice", editProduct.productPrice)
+        formData.append("category", editProduct.category)
+        formData.append("brand", editProduct.brand)
+
+        const existingImages = editProduct.productImg
+            .filter((img) => !(img instanceof File) && img.public_id)
+            .map((img) => img.public_id)
+
+        formData.append("existingImages", JSON.stringify(existingImages))
+
+        editProduct.productImg
+            .filter((img) => img instanceof File)
+            .forEach((file) => {
+                formData.append("files", file)
+            })
+
         try {
-            const res = await API.get('/product/all');
+            const res = await API.put(`/product/update/${editProduct._id}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
             if (res.data.success) {
-                setAllProducts(res.data.products);
-                dispatch(setProducts(res.data.products));
+                toast.success("Product updated Successfully");
+                const updateProducts = products.map((p) => {
+                    return p._id === editProduct._id ? res.data.product : p
+                })
+                dispatch(setProducts(updateProducts));
+                setOpen(false);
             }
         } catch (error) {
-            toast.error("Failed to fetch products");
-            console.error(error);
-        } finally {
-            setLoading(false);
+            console.log(error);
+        }
+    }
+    const deleteProductHandler = async (productId) => {
+        try {
+            const remainingProducts = products.filter((product) => product._id !== productId)
+            const res = await API.delete(`/product/delete/${productId}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+            if (res.data.success) {
+                toast.success(res.data.message)
+                dispatch(setProducts(remainingProducts))
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
-    useEffect(() => {
-        if (allProducts.length === 0) return;
-
-        let filtered = [...allProducts];
-
-        if (search.trim() !== "") {
-            filtered = filtered.filter(p => p.productName?.toLowerCase().includes(search.toLowerCase()));
-        }
-
-        if (category !== "All") {
-            filtered = filtered.filter(p => p.category === category);
-        }
-
-        if (brand !== "All") {
-            filtered = filtered.filter(p => p.brand === brand);
-        }
-
-        filtered = filtered.filter(p => p.productPrice >= priceRange[0] && p.productPrice <= priceRange[1]);
-        if (sortOrder === "lowToHigh") {
-            filtered.sort((a, b) => a.productPrice - b.productPrice)
-        } else if (sortOrder === "highToLow") {
-            filtered.sort((a, b) => b.productPrice - a.productPrice)
-        }
-
-        dispatch(setProducts(filtered))
-    }, [sortOrder, allProducts, search, category, brand, priceRange, dispatch])
-
-    useEffect(() => {
-        getAllProducts();
-    }, []);
-
     return (
-        <div className='pt-20 pb-10 px-4 sm:px-6 lg:px-8 pl-[300px]'>
-            <div className='max-w-7xl mx-auto flex flex-col lg:flex-row gap-6'>
-
-                {/* Mobile Filter Button */}
-                <div className="lg:hidden flex justify-between items-center mb-4">
-                    <button
-                        onClick={() => setShowSidebar(true)}
-                        className="p-2 rounded-md bg-gray-200 text-gray-700 lg:hidden"
-                    >
-                        <Menu className="h-6 w-6" />
-                    </button>
-                    <Select onValueChange={(value) => setSortOrder(value)}>
-                        <SelectTrigger className="w-[200px]">
-                            <SelectValue placeholder="Sort by price" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectItem value="lowToHigh">Price: Low to High</SelectItem>
-                                <SelectItem value="highToLow">Price: High to Low</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                {/* Filter Sidebar */}
-                {(showSidebar || window.innerWidth >= 1024) && (
-                    <div className={`fixed inset-0 z-50 bg-white lg:relative lg:w-1/4 lg:max-w-xs lg:flex lg:flex-col ${showSidebar ? 'block' : 'hidden'}`}>
-                        <div className="p-4 lg:p-0">
-                            <FilterSidebar
-                                search={search}
-                                setSearch={setSearch}
-                                category={category}
-                                setCategory={setCategory}
-                                brand={brand}
-                                setBrand={setBrand}
-                                priceRange={priceRange}
-                                setPriceRange={setPriceRange}
-                                setShowSidebar={setShowSidebar}
-                            />
-                        </div>
-                    </div>
-                )}
-
-                {/* Products */}
-                <div className="flex-1">
-                    <div className='hidden lg:flex justify-end mb-4'>
-                        <Select onValueChange={(value) => setSortOrder(value)}>
-                            <SelectTrigger className="w-[200px]">
-                                <SelectValue placeholder="Sort by price" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectItem value="lowToHigh">Price: Low to High</SelectItem>
-                                    <SelectItem value="highToLow">Price: High to Low</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-
-                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 '>
-                        {products.map((product) => (
-                            <ProductCard
-                                key={product._id}
-                                product={product}
-                                loading={loading}
-                                isAdmin={true} // <--- This is the crucial part
-                            />
-                        ))}
-                    </div>
+        <div className="pl-[350px] py-20 pr-20 flex flex-col gap-3 min-h-screen bg-gray-100">
+            <div className='flex justify-between'>
+                <div className='relative bg-white rounded-lg'>
+                    <Input type="text" placeholder="Search Product..." className='w-[400px] items-center' />
+                    <Search className='absolute right-3 top-1.5 text-gray-500' />
                 </div>
             </div>
-        </div>
-    );
-};
+            <Select>
+                <SelectTrigger className='w-[200px] bg-white'>
+                    <SelectValue placeholder="Sort by Price" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="lowToHigh">Price: Low to High</SelectItem>
+                    <SelectItem value="highToLow">Price: High to Low</SelectItem>
+                </SelectContent>
+            </Select>
+            {
+                products.filter(Boolean).map((product) => {
+                    return (
+                        <Card key={product._id} className="px-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex gap-2 items-center">
+                                    <img src={product.productImg && product.productImg.length > 0 ? product.productImg[0].url : ''} alt="" className="w-25 h-25" />
+                                    <h1 className="font-bold w-96 text-gray-700">{product?.productName}</h1>
+                                </div>
+                                <div className="font-semibold text-gray-800">{product?.productPrice}</div>
+                                <div className="flex gap-3">
 
-export default AdminProduct;
+                                    <Dialog open={open} onOpenChange={setOpen}>
+
+                                        <DialogTrigger asChild>
+                                            <Edit onClick={() => { setOpen(true), setEditProduct(product) }} className="text-green-500 cursor-pointer" />
+                                        </DialogTrigger>
+
+                                        <DialogContent className='sm:max-w[625px] max-h-[740px] overflow-y-scroll'>
+                                            <DialogHeader>
+                                                <DialogTitle>Edit Product</DialogTitle>
+                                                <DialogDescription>
+                                                    Make changes to your product here. Click save when you're done.
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <div className="flex flex-col gap-2">
+                                                <div className="grid gap-2">
+                                                    <Label>Product name</Label>
+                                                    <Input
+                                                        value={editProduct?.productName}
+                                                        onChange={handleChange}
+                                                        type='text'
+                                                        name="productName"
+                                                        placeholder='Ex-Iphone'
+                                                        required />
+                                                </div>
+
+                                                <div className="grid gap-2">
+                                                    <Label>Price</Label>
+                                                    <Input
+                                                        value={editProduct?.productPrice}
+                                                        onChange={handleChange}
+                                                        name="productPrice"
+                                                        type='number'
+                                                        required />
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div className="grid gap-2">
+                                                        <Label>Brand</Label>
+                                                        <Input
+                                                            value={editProduct?.brand}
+                                                            onChange={handleChange}
+                                                            type="text"
+                                                            name="brand"
+                                                            placeholder="Ex-apple"
+                                                            required />
+                                                    </div>
+                                                    <div className="grid gap-2">
+                                                        <Label>Category</Label>
+                                                        <Input
+                                                            value={editProduct?.category}
+                                                            onChange={handleChange}
+                                                            type="text"
+                                                            name="category"
+                                                            placeholder="Ex-mobile"
+                                                            required />
+                                                    </div>
+                                                </div>
+                                                <div className='grid gap-2'>
+                                                    <div className='flex items-center'>
+                                                        <Label>
+                                                            Description
+                                                        </Label>
+                                                    </div>
+                                                    <Textarea
+                                                        name='productDesc'
+                                                        value={editProduct?.productDesc}
+                                                        onChange={handleChange}
+                                                        placeholder='Enter brief description of product' />
+                                                </div>
+                                                <ImageUpload
+                                                    productData={editProduct} setProductData={setEditProduct} />
+                                            </div>
+
+                                            <DialogFooter className='mt-4'>
+                                                <DialogClose asChild>
+                                                    <Button variant="outline">Cancel</Button>
+                                                </DialogClose>
+                                                <Button onClick={handleSave} type="submit">Save changes</Button>
+                                            </DialogFooter>
+
+                                        </DialogContent>
+
+                                    </Dialog>
+                                    <AlertDialog>
+                                        <AlertDialogTrigger>
+                                            <Trash2 className="text-red-500 cursor-pointer" />
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    This action cannot be undone. This will permanently delete your account and remove your data from our servers.
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction onClick={()=>deleteProductHandler(product._id)}>Continue</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+
+                                </div>
+                            </div>
+                        </Card>
+                    )
+                })
+            }
+        </div>
+
+    )
+
+}
+
+export default AdminProduct
