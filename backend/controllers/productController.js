@@ -96,7 +96,7 @@ export const deleteProduct = async (req, res) => {
         }
 
         // Delete product from MongoDB
-        await Product.findOneAndDelete(productId);
+        await Product.findByIdAndDelete({_id:productId});
         return res.status(200).json({
             success: true,
             message: "Product deleted successfully"
@@ -145,7 +145,7 @@ export const updateProduct = async (req, res) => {
             for (let file of req.files) {
                 const fileUri = getDataUri(file);
                 const result = await cloudinary.uploader.upload(fileUri, {
-                    folder: "mern_products"
+                    folder: "hamza_products"
                 });
                 updatedImages.push({
                     url: result.secure_url,
