@@ -47,7 +47,6 @@ const Navbar = () => {
       }
     }
   };
-
   return (
     <header className="bg-pink-100 fixed w-full z-20 border-b border-pink-200 px-4">
       <div className='max-w-7xl mx-auto flex justify-between items-center py-3'>
@@ -58,7 +57,7 @@ const Navbar = () => {
         <div className="md:hidden flex items-center gap-4">
           {user && (<Link to={`/profile/${user._id}`} className='text-gray-800 text-lg font-semibold'>
             Hello, {user.firstName}
-            </Link>)}
+          </Link>)}
           <Link to={'/cart'} className='relative'>
             <div className='relative'>
               <ShoppingCart className='w-6 h-6' />
