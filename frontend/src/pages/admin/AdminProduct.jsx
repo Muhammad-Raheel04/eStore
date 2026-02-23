@@ -43,9 +43,25 @@ const AdminProduct = () => {
     const { products } = useSelector((store) => store.product)
     const [editProduct, setEditProduct] = useState(null);
     const [open, setOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [sortOrder, setSortOrder] = useState("");
     const accessToken = localStorage.getItem('accessToken');
     const dispatch = useDispatch();
 
+    let filteredProducts = products.filter((product) => {
+        return (
+            product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.category.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    });
+
+    if (sortOrder === 'lowToHigh') {
+        filteredProducts = [...filteredProducts].sort((a, b) => a.productPrice - b.productPrice)
+    }
+    if (sortOrder === 'highToLow') {
+        filteredProducts = [...filteredProducts].sort((a, b) => b.productPrice - a.productPrice)
+    }
     const handleChange = (e) => {
         const { name, value } = e.target
         setEditProduct((prev) => ({
@@ -115,11 +131,16 @@ const AdminProduct = () => {
         <div className="pl-[350px] py-20 pr-20 flex flex-col gap-3 min-h-screen bg-gray-100">
             <div className='flex justify-between'>
                 <div className='relative bg-white rounded-lg'>
-                    <Input type="text" placeholder="Search Product..." className='w-[400px] items-center' />
+                    <Input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search Product..."
+                        className='w-[400px] items-center' />
                     <Search className='absolute right-3 top-1.5 text-gray-500' />
                 </div>
             </div>
-            <Select>
+            <Select onValueChange={(value)=>setSortOrder(value)}>
                 <SelectTrigger className='w-[200px] bg-white'>
                     <SelectValue placeholder="Sort by Price" />
                 </SelectTrigger>
@@ -129,7 +150,7 @@ const AdminProduct = () => {
                 </SelectContent>
             </Select>
             {
-                products.filter(Boolean).map((product) => {
+                filteredProducts.filter(Boolean).map((product) => {
                     return (
                         <Card key={product._id} className="px-4">
                             <div className="flex items-center justify-between">
@@ -235,7 +256,7 @@ const AdminProduct = () => {
                                             </AlertDialogHeader>
                                             <AlertDialogFooter>
                                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction onClick={()=>deleteProductHandler(product._id)}>Continue</AlertDialogAction>
+                                                <AlertDialogAction onClick={() => deleteProductHandler(product._id)}>Continue</AlertDialogAction>
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>
