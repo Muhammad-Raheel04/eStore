@@ -22,6 +22,7 @@ import UserInfo from './pages/admin/UserInfo';
 import ShowUserOrders from './pages/admin/ShowUserOrders';
 import ProtectedRoute from './components/ProtectedRoute';
 import SingleProduct from './pages/SingleProduct';
+import AdminUsers from './pages/admin/AdminUser';
 import AddProduct from './pages/admin/AddProduct';
 const router = createBrowserRouter([
   {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: <AdminOrders />
+      },
+      {
+        path:'users',
+        element:<AdminUsers/>
       },
       {
         path: "user/order/:userId",
