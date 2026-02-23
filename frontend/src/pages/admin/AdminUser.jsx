@@ -6,18 +6,22 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import UserLogo from '@/assets/user.jpg'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useNavigate } from 'react-router-dom'
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
+  const navigate=useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
   const getAllUsers = async () => {
-  const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     try {
       setLoading(true);
-      const res = await API.get('/user/all-user',{
-      headers:{
-        Authorization:`Bearer ${accessToken}`
-      }});
+      const res = await API.get('/user/all-user', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
       if (res.data.success) {
         setUsers(res.data.users)
       }
@@ -28,7 +32,10 @@ const AdminUsers = () => {
       setLoading(false);
     }
   }
-
+  const filteredUsers = users.filter(user =>
+    `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+  )
   useEffect(() => {
     getAllUsers()
   }, [])
@@ -38,9 +45,9 @@ const AdminUsers = () => {
       <p>View and manage registered users</p>
       <div className='flex relative w-[300px] mt-6'>
         <Search className='absolute left-2 top-1 text-gray-600 w-5' />
-        <Input className='pl-10' placeholder="Search Users..." />
+        <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='pl-10' placeholder="Search Users..." />
       </div>
-      <div className='grid grid-cols-3 gap-7 mt-7'>
+      <div className='grid grid-cols-2 gap-7 mt-7'>
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className='bg-pink-100 p-5 rounded-lg'>
@@ -58,7 +65,7 @@ const AdminUsers = () => {
             </div>
           ))
         ) : (
-          users.map((user) => {
+          filteredUsers.map((user) => {
             return (
               <div key={user._id} className='bg-pink-100 p-5 rounded-lg'>
                 <div className='flex items-center gap-2'>
@@ -69,7 +76,7 @@ const AdminUsers = () => {
                   </div>
                 </div>
                 <div className='flex gap-3 mt-3'>
-                  <Button><Edit>Edit</Edit></Button>
+                  <Button onClick={()=>navigate(`/dashboard/users/${user?._id}`)} variant='outline'><Edit>Edit</Edit></Button>
                   <Button><Eye>Show Order</Eye></Button>
                 </div>
               </div>
