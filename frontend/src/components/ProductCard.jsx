@@ -1,5 +1,5 @@
-import { ShoppingCart,Trash2 } from 'lucide-react'
-import React from 'react'
+import { ShoppingCart, Trash2 } from 'lucide-react'
+import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
 import { useDispatch } from 'react-redux'
@@ -30,21 +30,26 @@ const ProductCard = ({ product, loading, isAdmin }) => {
 
   const { productImg, productPrice, productName } = product;
   const accessToken = localStorage.getItem("accessToken");
-  const dispatch=useDispatch();
-  const navigate =useNavigate();
+  const [loadingCart, setLoadingCart] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const addToCart = async (productId) => {
     try {
-      const res = await API.post('cart/add',{productId},{
-        headers:{
-          Authorization:`Bearer ${accessToken}`
+      setLoadingCart(true);
+      const res = await API.post('cart/add', { productId }, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
         }
       });
-      if(res.data.success){
+      if (res.data.success) {
         toast.success("Product added to Cart");
         dispatch(setCart(res.data.cart));
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      toast.error("Failed to add to cart");
+    } finally {
+      setLoadingCart(false);
     }
   }
 
@@ -73,7 +78,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
         ) : (
           <img
             src={productImg?.[0]?.url}
-            onClick={()=>navigate(`/products/${product._id}`)}
+            onClick={() => navigate(`/products/${product._id}`)}
             alt={productName}
             className='w-full h-full transition-transform duration-300 hover:scale-105 cursor-pointer'
           />
@@ -91,9 +96,19 @@ const ProductCard = ({ product, loading, isAdmin }) => {
           <h1 className='font-semibold h-12 line-clamp-2'>{productName}</h1>
           <h2 className='font-bold'>Rs{productPrice}</h2>
           <div className='flex gap-2 mt-3 mb-4'>
-            <Button onClick={()=>addToCart(product._id)} className='bg-pink-600 w-full'>
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              Add to Cart
+            <Button
+              onClick={() => addToCart(product._id)}
+              className='bg-pink-600 w-full'
+              disabled={loadingCart} 
+            >
+              {loadingCart ? (
+                <span className="animate-pulse">Adding...</span> 
+              ) : (
+                <>
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  Add to Cart
+                </>
+              )}
             </Button>
             {isAdmin && (
               <Button onClick={() => handleDelete(product._id)} className='bg-red-500 hover:bg-red-600'>
