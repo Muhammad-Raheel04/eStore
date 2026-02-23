@@ -1,11 +1,87 @@
-import React from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import API from '@/utils/API'
+import { Edit, Eye, Search } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import UserLogo from '@/assets/user.jpg'
+import { Skeleton } from '@/components/ui/skeleton'
 
-const AdminUser = () => {
+const AdminUsers = () => {
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(false)
+  const getAllUsers = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+    try {
+      setLoading(true);
+      const res = await API.get('/user/all-user',{
+      headers:{
+        Authorization:`Bearer ${accessToken}`
+      }});
+      if (res.data.success) {
+        setUsers(res.data.users)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to fetch users.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
   return (
-    <div>
-      
+    <div className='pl-[350px] py-20 pr-20 mx-auto px-4'>
+      <h1 className='font-bold text-2xl'>User Management</h1>
+      <p>View and manage registered users</p>
+      <div className='flex relative w-[300px] mt-6'>
+        <Search className='absolute left-2 top-1 text-gray-600 w-5' />
+        <Input className='pl-10' placeholder="Search Users..." />
+      </div>
+      <div className='grid grid-cols-3 gap-7 mt-7'>
+        {loading ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className='bg-pink-100 p-5 rounded-lg'>
+              <div className='flex items-center gap-2'>
+                <Skeleton className='rounded-full w-16 h-16' />
+                <div>
+                  <Skeleton className='w-[150px] h-4 mb-2' />
+                  <Skeleton className='w-[200px] h-4' />
+                </div>
+              </div>
+              <div className='flex gap-3 mt-3'>
+                <Skeleton className='w-[80px] h-10' />
+                <Skeleton className='w-[100px] h-10' />
+              </div>
+            </div>
+          ))
+        ) : (
+          users.map((user) => {
+            return (
+              <div key={user._id} className='bg-pink-100 p-5 rounded-lg'>
+                <div className='flex items-center gap-2'>
+                  <img src={user.profilePic || UserLogo} alt="" className='rounded-full w-16 aspect-square object-cover border border-pink-600' />
+                  <div>
+                    <h1 className='font-semibold'>@{user.firstName} {user.lastName}</h1>
+                    <h3>{user.email}</h3>
+                  </div>
+                </div>
+                <div className='flex gap-3 mt-3'>
+                  <Button><Edit>Edit</Edit></Button>
+                  <Button><Eye>Show Order</Eye></Button>
+                </div>
+              </div>
+            )
+          })
+        )}
+        {!loading && users.length === 0 && (
+          <p className='col-span-3 text-center text-gray-500'>No users found.</p>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
-export default AdminUser
+export default AdminUsers
