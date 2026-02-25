@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { setCart } from "@/redux/productSlice";
 
 const ProductDesc = ({ product }) => {
+    const [loading,setLoading]=useState();
     const dispatch = useDispatch();
     const accessToken = localStorage.getItem("accessToken");
     const [quantity, setQuantity] = useState(1);
@@ -83,10 +84,27 @@ const ProductDesc = ({ product }) => {
             {/* Sticky Bottom Add to Cart */}
             <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-md">
                 <Button
-                    onClick={addToCart}
-                    className="w-full bg-pink-600 hover:bg-pink-700 text-lg"
+                    onClick={async () => {
+                        try {
+                            setLoading(true);
+                            await addToCart(); // your existing function
+                        } finally {
+                            setLoading(false);
+                        }
+                    }}
+                    disabled={loading}
+                    className={`
+    w-full 
+    bg-pink-600 
+    text-white 
+    py-3 
+    rounded-lg 
+    transition-all 
+    duration-300
+    ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-pink-700'}
+  `}
                 >
-                    Add to Cart • Rs. {product.productPrice * quantity}
+                    {loading ? "Processing" : `Add to Cart • Rs. ${product.productPrice * quantity}`}
                 </Button>
             </div>
         </>
