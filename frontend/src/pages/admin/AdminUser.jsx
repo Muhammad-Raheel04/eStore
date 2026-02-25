@@ -1,17 +1,15 @@
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import API from '@/utils/API'
-import { Edit, Eye, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import UserLogo from '@/assets/user.jpg'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useNavigate } from 'react-router-dom'
+
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
-  const navigate=useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const getAllUsers = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -74,10 +72,6 @@ const AdminUsers = () => {
                     <h1 className='font-semibold'>@{user.firstName} {user.lastName}</h1>
                     <h3>{user.email}</h3>
                   </div>
-                </div>
-                <div className='flex gap-3 mt-3'>
-                  <Button onClick={()=>navigate(`/dashboard/users/${user?._id}`)} variant='outline'><Edit>Edit</Edit></Button>
-                  <Button><Eye>Show Order</Eye></Button>
                 </div>
               </div>
             )
