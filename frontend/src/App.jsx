@@ -24,6 +24,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import SingleProduct from './pages/SingleProduct';
 import AdminUsers from './pages/admin/AdminUser';
 import AddProduct from './pages/admin/AddProduct';
+import AddressForm from './pages/AddressForm';
+import OrderSuccess from './pages/OrderSuccess';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -75,6 +77,14 @@ const router = createBrowserRouter([
     element: <ProtectedRoute><Navbar /><Cart /><Footer /></ProtectedRoute>
   },
   {
+    path: '/address',
+    element: <ProtectedRoute><AddressForm/></ProtectedRoute>
+  },
+  {
+    path: '/order-success',
+    element: <ProtectedRoute><OrderSuccess></OrderSuccess></ProtectedRoute>
+  },
+  {
     path: '/dashboard',
     element: <ProtectedRoute adminOnly={true}><Navbar></Navbar><Dashboard /></ProtectedRoute>,
     children: [
@@ -97,6 +107,10 @@ const router = createBrowserRouter([
       {
         path:'users',
         element:<AdminUsers/>
+      },
+       {
+        path:'users/:userId',
+        element:<UserInfo/>
       },
       {
         path: "user/order/:userId",
