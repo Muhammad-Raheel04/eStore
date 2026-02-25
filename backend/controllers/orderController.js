@@ -1,6 +1,6 @@
 import { sendOrderEmail } from "../emailVerify/sendOrderEmail.js";
 import { Cart } from "../models/CartModel.js";
-import { Order } from "../models/OrderModel.js";
+import {Order} from '../models/orderModel.js';
 import axios from "axios";
 
 export const createCODOrder = async (req, res) => {
