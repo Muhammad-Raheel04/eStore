@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [searchTerm, setSearchTerm] = useState('');
   const fetchOrders = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -48,7 +48,12 @@ const AdminOrders = () => {
       toast.error('Failed to update order status');
     }
   };
-
+  const filteredOrders = orders.filter(order => {
+    const email = order.user?.email?.toLowerCase() || '';
+    const orderId = order._id?.toLowerCase() || '';
+    const term = searchTerm.toLowerCase();
+    return email.includes(term) || orderId.includes(term);
+  });
   if (loading) {
     // Real table skeleton
     return (
@@ -95,6 +100,15 @@ const AdminOrders = () => {
   return (
     <div className="pl-[350px] py-20 pr-20 mx-auto px-4">
       <h2 className="text-2xl font-bold mb-6">User Orders</h2>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by Order ID or Email"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-600"
+        />
+      </div>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg">
@@ -109,7 +123,7 @@ const AdminOrders = () => {
           </thead>
 
           <tbody>
-            {orders.map(order => {
+            {filteredOrders.map(order => {
               const os = (order.orderStatus || '').toLowerCase();
               const ps = (order.paymentStatus || '').toLowerCase();
               const status = os === 'delivered' ? 'delivered' : (ps === 'paid' ? 'paid' : 'pending');
@@ -123,6 +137,7 @@ const AdminOrders = () => {
                   </td>
                   <td className="p-3 border-b">
                     <p>{order?.shippingAddress?.address}, {order?.shippingAddress?.city}</p>
+                    <p>{order?.shippingAddress?.phone}</p>
                     <p>Zip ({order?.shippingAddress?.zip})</p>
                     <p>{order?.shippingAddress?.country}</p>
                   </td>
