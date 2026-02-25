@@ -71,27 +71,27 @@ const Cart = () => {
     <div className="pt-20 bg-gray-50 min-h-screen">
       {cart?.items?.length > 0 ?
         <div className="max-w-7xl mx-auto">
-          <div className="max-w-7xl mx-auto flex gap-7">
+          <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-7 px-4">
             <div className="flex flex-col gap-5 flex-1">
               {cart?.items?.length > 0 ? (
                 <div className='max-w-7xl mx-auto'>
                   <h1 className="text-2xl font-bold text-gray-800 mb-7">Shopping Cart</h1>
-                  <div className="max-w-7xl mx-auto flex gap-7">
+                  <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-7">
                     <div className="flex flex-col gap-5 flex-1">
                       {cart?.items?.map((product, index) => {
                         return (
                           <Card key={index} className="p-4 shadow-sm hover:shadow-md transition rounded-xl">
-                            <div className="flex justify-between items-center gap-8">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6">
 
                               {/* Product Info */}
-                              <div className="flex items-center gap-4 w-[400px]">
+                              <div className="flex items-center gap-4 w-full sm:w-[400px]">
                                 <img
                                   src={product?.productId?.productImg?.[0]?.url || userLogo}
                                   alt={product?.productId?.productName || "Product image"}
                                   className="w-24 h-24 object-cover rounded-lg border"
                                 />
 
-                                <div className="w-[280px] space-y-1">
+                                <div className="w-full sm:w-[280px] space-y-1">
                                   <h1 className="font-semibold text-gray-800 line-clamp-2">
                                     {product?.productId?.productName}
                                   </h1>
@@ -127,38 +127,37 @@ const Cart = () => {
                         );
                       })}
                     </div>
-                    <Card className="w-[400px]">
+                    <Card className="w-full lg:w-[400px] mb-4">
                       <CardHeader>
                         <CardTitle>Order Summary</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="flex justify-between">
                           <span>Shipping</span>
-                          <span>${shipping}</span>
+                          <span>Rs{shipping}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Tax(5%)</span>
-                          <span>${tax}</span>
+                          <span>Rs{tax}</span>
                         </div>
                         <Separator />
                         <div className='flex justify-between font-bold text-lg'>
                           <span>Total</span>
-                          <span>${total}</span>
+                          <span>Rs{total}</span>
                         </div>
                         <div className='space-y-3 pt-4'>
                           <div className='flex space-x-2'>
                             <Input placeholder="Promo Code" />
                             <Button variant='outline'>Apply</Button>
                           </div>
-                          <Button className='w-full bg-pink-600'>PLACE ORDER</Button>
+                          <Button onClick={()=>navigate('/address')} className='w-full bg-pink-600'>PLACE ORDER</Button>
                           <Button variant='outline' className='w-full bg-transparent'>
                             <Link to="/products">Continue Shopping</Link>
                           </Button>
                         </div>
                         <div className='text-sm text-muted-foreground pt-4'>
                           <p>* Free shipping on orders over 299</p>
-                          <p>* 30-days return policy</p>
-                          <p>* Secure checkout with SSL encryption</p>
+                          <p>* 30-days return policy</p>         
                         </div>
                       </CardContent>
                     </Card>
