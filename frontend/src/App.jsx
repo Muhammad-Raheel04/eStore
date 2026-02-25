@@ -18,7 +18,6 @@ import Dashboard from './pages/Dashboard';
 import AdminSales from './pages/admin/AdminSales';
 import AdminProduct from './pages/admin/AdminProduct';
 import AdminOrders from './pages/admin/AdminOrders';
-import UserInfo from './pages/admin/UserInfo';
 import ShowUserOrders from './pages/admin/ShowUserOrders';
 import ProtectedRoute from './components/ProtectedRoute';
 import SingleProduct from './pages/SingleProduct';
@@ -108,10 +107,10 @@ const router = createBrowserRouter([
         path:'users',
         element:<AdminUsers/>
       },
-       {
-        path:'users/:userId',
-        element:<UserInfo/>
-      },
+      //  {
+      //   path:'users/:userId',
+      //   element:<UserInfo/>
+      // },
       {
         path: "user/order/:userId",
         element: <ShowUserOrders/>
