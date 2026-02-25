@@ -1,33 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { ShoppingCart, Menu, X } from 'lucide-react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '@/redux/userSlice';
 import API from '@/utils/API';
 import { toast } from "sonner";
-import { ShoppingCart, Menu, X } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '@/redux/userSlice';
-import { useState } from 'react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useSelector(store => store.user);
-  const { cart } = useSelector(store => store.product);
-  const accessToken = localStorage.getItem('accessToken');
-  const admin = user?.role === 'admin' ? true : false;
+  const { user } = useSelector(state => state.user);
+  const { cart } = useSelector(state => state.product);
+  const admin = user?.role === 'admin';
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const logoutHandler = async () => {
     const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      toast.error("You are not logged in");
-      return;
-    }
+    if (!accessToken) return toast.error("You are not logged in");
 
     try {
-      const res = await API.post('/user/logout', {}, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      });
-
+      const res = await API.post('/user/logout', {}, { headers: { Authorization: `Bearer ${accessToken}` } });
       if (res.data.success) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
@@ -40,87 +33,95 @@ const Navbar = () => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         dispatch(setUser(null));
-        toast.success("Logged out successfully due to expired session.");
+        toast.success("Logged out due to expired session.");
         navigate("/login");
       } else {
         toast.error(error.response?.data?.message || "Logout failed");
       }
     }
   };
+
+  const cartCount = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
+
   return (
-    <header className="bg-pink-100 fixed w-full z-20 border-b border-pink-200 px-4">
-      <div className='max-w-7xl mx-auto flex justify-between items-center py-3'>
-        <div className='flex items-center gap-4'>
-          <img src='/ehamza.jpg' alt='' className='w-[50px] h-[50px] rounded-full object-fill shadow-md' />
-        </div>
-        {/* Hamburger menu for mobile */}
-        <div className="md:hidden flex items-center gap-4">
-          {user && (<Link to={`/profile/${user._id}`} className='text-gray-800 text-lg font-semibold'>
-            Hello, {user.firstName}
-          </Link>)}
-          <Link to={'/cart'} className='relative'>
-            <div className='relative'>
-              <ShoppingCart className='w-6 h-6' />
-              {cart?.items?.length > 0 && (
-                <span className='absolute -top-2 -right-3 bg-pink-500 text-white text-xs rounded-full px-2 py-0.5'>
-                  {cart.items.length}
-                </span>
-              )}
-            </div>
+    <header className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3">
+          <span className="font-bold text-xl text-pink-600 inline-block tracking-widest hover:tracking-normal transition-all duration-500">
+            <i>Hamza Rajput</i>
+          </span>
+
+        </Link>
+
+        {/* Desktop Links */}
+        <nav className="hidden md:flex items-center gap-8">
+          <Link to="/" className="hover:text-pink-600 transition">Home</Link>
+          <Link to="/products" className="hover:text-pink-600 transition">Products</Link>
+          {user && <Link to={`/profile/${user._id}`} className="hover:text-pink-600 transition">Hello, {user.firstName}</Link>}
+          {admin && <Link to="/dashboard/sales" className="hover:text-pink-600 transition">Dashboard</Link>}
+        </nav>
+
+        {/* Right Section */}
+        <div className="flex items-center gap-4">
+          {/* Cart */}
+          <Link to="/cart" className="relative hover:text-pink-600 transition">
+            <ShoppingCart className="w-6 h-6" />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-3 bg-pink-600 text-white text-xs font-bold rounded-full px-2 py-0.5">{cartCount}</span>
+            )}
           </Link>
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-800 focus:outline-none">
+
+          {/* Login / Logout */}
+          {user ? (
+            <Button
+              onClick={logoutHandler}
+              className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition"
+            >
+              Logout
+            </Button>
+          ) : (
+            <Link to="/login">
+              <Button className="bg-gradient-to-tr from-blue-600 to-purple-600 text-white px-4 py-2 rounded-md hover:opacity-90 transition">
+                Login
+              </Button>
+            </Link>
+          )}
+
+          {/* Mobile Menu Toggle */}
+          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
-        {/* {nav section for desktop} */}
-        <nav className='hidden md:flex gap-10 justify-between items-center'>
-          <ul className='flex gap-7 items-center text-xl font-semibold'>
-            <Link to={'/'}><li>Home</li></Link>
-            <Link to={'/products'}><li>Products</li></Link>
-            {
-              user && <Link to={`/profile/${user._id}`}><li>Hello, {user.firstName}</li></Link>
-            }
-            {
-              admin && <Link to={`/dashboard/sales`}><li>Dashboard</li></Link>
-            }
-          </ul>
-          <Link to={'/cart'} className='relative'>
-            <div className='relative'>
-              <ShoppingCart className='w-6 h-6' />
-              {cart?.items?.length > 0 && (
-                <span className='absolute -top-2 -right-3 bg-pink-500 text-white text-xs rounded-full px-2 py-0.5'>
-                  {cart.items.length}
-                </span>
-              )}
-            </div>
-          </Link>
+      </div>
 
-          {
-            user ? <Button onClick={logoutHandler} className='bg-pink-600 text-white cursor-pointer'>Logout</Button> :
-              <Link to="/login">
-                <Button className='bg-gradient-to-tl from-blue-600 to-purple-600 text-white px-4 py-2 rounded-md hover:opacity-90'>
+      {/* Mobile Menu */}
+      <div className={`md:hidden bg-white shadow-lg transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+        <ul className="flex flex-col gap-4 items-center text-lg font-semibold">
+          <Link to="/" onClick={() => setIsMenuOpen(false)} className="hover:text-pink-600 transition">Home</Link>
+          <Link to="/products" onClick={() => setIsMenuOpen(false)} className="hover:text-pink-600 transition">Products</Link>
+          {user && (
+            <Link to={`/profile/${user._id}`} onClick={() => setIsMenuOpen(false)} className="hover:text-pink-600 transition">
+              Hello, {user.firstName}
+            </Link>
+          )}
+          <li>
+            {user ? (
+              <Button
+                onClick={() => { logoutHandler(); setIsMenuOpen(false); }}
+                className="bg-pink-600 text-white px-4 py-2 rounded-md transition"
+              >
+                Logout
+              </Button>
+            ) : (
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                <Button className="bg-gradient-to-tr from-blue-600 to-purple-600 text-white px-4 py-2 rounded-md hover:opacity-90 transition">
                   Login
                 </Button>
               </Link>
-          }
-        </nav>
-        {/* Mobile Menu */}
-        <div className={`md:hidden absolute top-full left-0 w-full bg-pink-100 shadow-lg transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-          <ul className='flex flex-col items-center py-4 text-xl font-semibold'>
-            <Link to={'/'} onClick={() => setIsMenuOpen(false)} className='py-2'><li>Home</li></Link>
-            <Link to={'/products'} onClick={() => setIsMenuOpen(false)} className='py-2'><li>Products</li></Link>
-            <li className='py-2'>
-              {
-                user ? <Button onClick={() => { logoutHandler(); setIsMenuOpen(false); }} className='bg-pink-600 text-white cursor-pointer'>Logout</Button> :
-                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                    <Button className='bg-gradient-to-tl from-blue-600 to-purple-600 text-white px-4 py-2 rounded-md hover:opacity-90'>
-                      Login
-                    </Button>
-                  </Link>
-              }
-            </li>
-          </ul>
-        </div>
+            )}
+          </li>
+        </ul>
       </div>
     </header>
   );
