@@ -52,35 +52,65 @@ const LandingPage = () => {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Shop by Category</h2>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {/* Category Card 1 */}
             <div className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition duration-300">
-              <img src="/elctronics.jpg" alt="Electronics" className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img
+                src="/elctronics.jpg"
+                alt="Electronics"
+                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+              />
               <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-30 transition-opacity duration-300">
                 <h3 className="text-white text-xl font-semibold">Electronics</h3>
               </div>
             </div>
+
             {/* Category Card 2 */}
             <div className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition duration-300">
-              <img src="/cloths.jpg" alt="Clothing" className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img
+                src="/cloths.jpg"
+                alt="Clothing"
+                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+              />
               <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-30 transition-opacity duration-300">
                 <h3 className="text-white text-xl font-semibold">Clothing</h3>
               </div>
             </div>
+
             {/* Category Card 3 */}
             <div className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition duration-300">
-              <img src="/accessories.jpg" alt="Accessories" className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img
+                src="/accessories.jpg"
+                alt="Accessories"
+                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+              />
               <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-30 transition-opacity duration-300">
                 <h3 className="text-white text-xl font-semibold">Accessories</h3>
               </div>
             </div>
+
             {/* Category Card 4 */}
             <div className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition duration-300">
-              <img src="/homeGoods.jpg" alt="Home Goods" className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img
+                src="/homeGoods.jpg"
+                alt="Home Goods"
+                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+              />
               <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-30 transition-opacity duration-300">
                 <h3 className="text-white text-xl font-semibold">Home Goods</h3>
               </div>
             </div>
+          </div>
+
+          {/* Button to Products Page */}
+          <div className="mt-8 flex justify-center">
+            <a
+              href="/products"
+              className="px-6 py-3 bg-pink-600 text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition duration-300"
+            >
+              View All Products
+            </a>
           </div>
         </div>
       </section>
@@ -92,28 +122,36 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Blog Post Card 1 */}
             <div className="bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition duration-300 overflow-hidden">
-              <img src="https://via.placeholder.com/600x400" alt="Blog Post 1" className="w-full h-48 object-cover" />
+              <img src="/blog_1.png" alt="Blog Post 1" className="w-full h-48 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">The Future of E-commerce</h3>
-                <p className="text-gray-600 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p className="text-gray-600 text-sm">
+                  Discover the latest trends shaping online shopping, from AI-powered recommendations to sustainable packaging and mobile-first experiences.
+                </p>
                 <a href="#" className="mt-4 inline-block text-pink-600 hover:text-pink-800 font-semibold">Read More</a>
               </div>
             </div>
+
             {/* Blog Post Card 2 */}
             <div className="bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition duration-300 overflow-hidden">
-              <img src="https://via.placeholder.com/600x400" alt="Blog Post 2" className="w-full h-48 object-cover" />
+              <img src="/blog_2.png" alt="Blog Post 2" className="w-full h-48 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Top 10 Must-Have Gadgets</h3>
-                <p className="text-gray-600 text-sm">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p className="text-gray-600 text-sm">
+                  Check out the latest gadgets that are revolutionizing the way we shop, work, and stay connected, featuring smart home devices and wearable tech.
+                </p>
                 <a href="#" className="mt-4 inline-block text-pink-600 hover:text-pink-800 font-semibold">Read More</a>
               </div>
             </div>
+
             {/* Blog Post Card 3 */}
             <div className="bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition duration-300 overflow-hidden">
-              <img src="https://via.placeholder.com/600x400" alt="Blog Post 3" className="w-full h-48 object-cover" />
+              <img src="/blog_3.png" alt="Blog Post 3" className="w-full h-48 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Sustainable Shopping Guide</h3>
-                <p className="text-gray-600 text-sm">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p className="text-gray-600 text-sm">
+                  Learn how to make eco-friendly choices while shopping online, including sustainable brands, reusable packaging, and energy-efficient shipping options.
+                </p>
                 <a href="#" className="mt-4 inline-block text-pink-600 hover:text-pink-800 font-semibold">Read More</a>
               </div>
             </div>
@@ -121,8 +159,8 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <TestimonialsSection />
+      {/* Testimonials Section
+      <TestimonialsSection /> */}
     </div>
   );
 };
