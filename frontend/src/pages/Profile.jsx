@@ -83,163 +83,163 @@ const Profile = () => {
             console.log(error);
             toast.error("Failed to update profile");
 
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
     return (
-        <div className="pt-24 min-h-screen bg-gray-50 flex justify-center items-start">
-            <Tabs defaultValue="profile" className="max-w-7xl mx-auto items-center">
+        <div className="pt-24 min-h-screen bg-gray-50 flex justify-center items-start px-4 sm:px-6 lg:px-8">
+            <Tabs defaultValue="profile" className="max-w-7xl w-full">
 
                 {/* Tabs */}
-                <TabsList className="bg-gray-100 border">
-                    <TabsTrigger value="profile">Profile</TabsTrigger>
-                    <TabsTrigger value="orders">orders</TabsTrigger>
+                <TabsList className="bg-gray-100 border flex flex-col sm:flex-row">
+                    <TabsTrigger value="profile" className="w-full sm:w-auto text-center">Profile</TabsTrigger>
+                    <TabsTrigger value="orders" className="w-full sm:w-auto text-center">Orders</TabsTrigger>
                 </TabsList>
 
                 {/* Profile Tab */}
-                <TabsContent value="profile">
-                    <div>
-                        <div className="flex flex-col justify-center items-center bg-gray-100 rounded-xl p-5">
-                            <h1 className="font-bold mb-7 text-2xl text-gray-800">Update Profile</h1>
-                            <div className="w-full flex gap-10 justify-between items-start px-7 max-w-2xl">
-                                {/* profile picture */}
-                                <div className="flex flex-col items-center">
-                                    <img src={updateUser?.profilePic || userLogo} alt="profile" className="w-32 h-32 rounded-full object-fill border-4 border-pink-800" />
+                <TabsContent value="profile" className="mt-6">
+                    <div className="flex flex-col justify-center items-center bg-gray-100 rounded-xl p-5">
+                        <h1 className="font-bold mb-6 text-2xl text-gray-800 text-center">Update Profile</h1>
 
-                                    <Label className='mt-4 cusor-pointer bg-pink-600 text-white px-4 py-2 rounded-xl hover:bg-pink-700'>Change Picture
-                                        <input
-                                            type='file'
-                                            accept='image/*'
-                                            className="hidden"
-                                            onChange={handleFileChange}
-                                        ></input>
-                                    </Label>
-                                </div>
-                                {/* profile form */}
-                                <form onSubmit={handleSubmit} className="space-y-4 shadow-lg p-5 rounded-lg bg-white">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label
-                                                className="block text-sm font-medium">
-                                                First Name
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="firstName"
-                                                placeholder="John"
-                                                value={updateUser.firstName}
-                                                onChange={handleChange}
-                                                className="w-full border rounded-lg px-3 py-2 mt-1" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-medium">Last Name</label>
-                                            <input
-                                                type="text"
-                                                name="lastName"
-                                                placeholder="Doe"
-                                                value={updateUser.lastName}
-                                                onChange={handleChange}
-                                                className="w-full border rounded-lg px-3 py-2 mt-1" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <Label className='block text-sm font-medium'>Email</Label>
-                                        <Input
-                                            type='email'
-                                            name="email"
-                                            disabled
-                                            value={updateUser.email}
-                                            onChange={handleChange}
-                                            className='w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100' />
-                                    </div>
+                        <div className="w-full flex flex-col sm:flex-row gap-8 justify-center items-start max-w-2xl">
 
-                                    <div>
-                                        <Label className='block text-sm font-medium'>Phone Number</Label>
-                                        <input
-                                            type='text'
-                                            name="phoneNo"
-                                            value={updateUser.phoneNo}
-                                            onChange={handleChange}
-                                            placeholder="Enter your contact No"
-                                            className='w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100'
-                                        />
-                                    </div>
-                                    <div>
-                                        <Label className='block text-sm font-medium'>Address</Label>
-                                        <input
-                                            type='text'
-                                            name="address"
-                                            value={updateUser.address}
-                                            onChange={handleChange}
-                                            placeholder="Enter your address"
-                                            className='w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100'
-                                        />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <Label className='block text-sm font-medium'>City</Label>
-                                            <input
-                                                type='text'
-                                                name="city"
-                                                value={updateUser.city}
-                                                onChange={handleChange}
-                                                placeholder="Enter your city"
-                                                className='w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100'
-                                            />
-                                        </div>
-                                        <div>
-                                            <Label className='block text-sm font-medium'>Zip Code</Label>
-                                            <input
-                                                type='text'
-                                                name="zipCode"
-                                                value={updateUser.zipCode}
-                                                onChange={handleChange}
-                                                placeholder="Enter your zipCode"
-                                                className='w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100'
-                                            />
-                                        </div>
-                                    </div>
-                                    <Button 
-                                    type='submit' 
-                                    className='w-full mt-4 bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2 rounded-lg' 
-                                    disabled={loading}>
-                                    {loading ? "Updating..." : "Update Profile"}
-                                    </Button>
-
-                                </form>
+                            {/* profile picture */}
+                            <div className="flex flex-col items-center">
+                                <img
+                                    src={updateUser?.profilePic || userLogo}
+                                    alt="profile"
+                                    className="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-pink-800"
+                                />
+                                <Label className="mt-4 cursor-pointer bg-pink-600 text-white px-4 py-2 rounded-xl hover:bg-pink-700 text-sm sm:text-base">
+                                    Change Picture
+                                    <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                                </Label>
                             </div>
+
+                            {/* profile form */}
+                            <form onSubmit={handleSubmit} className="w-full sm:w-[400px] space-y-4 shadow-lg p-5 rounded-lg bg-white">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium">First Name</label>
+                                        <input
+                                            type="text"
+                                            name="firstName"
+                                            placeholder="John"
+                                            value={updateUser.firstName}
+                                            onChange={handleChange}
+                                            className="w-full border rounded-lg px-3 py-2 mt-1"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium">Last Name</label>
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            placeholder="Doe"
+                                            value={updateUser.lastName}
+                                            onChange={handleChange}
+                                            className="w-full border rounded-lg px-3 py-2 mt-1"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <Label className="block text-sm font-medium">Email</Label>
+                                    <Input
+                                        type="email"
+                                        name="email"
+                                        disabled
+                                        value={updateUser.email}
+                                        className="w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100"
+                                    />
+                                </div>
+
+                                <div>
+                                    <Label className="block text-sm font-medium">Phone Number</Label>
+                                    <input
+                                        type="text"
+                                        name="phoneNo"
+                                        value={updateUser.phoneNo}
+                                        onChange={handleChange}
+                                        placeholder="Enter your contact No"
+                                        className="w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100"
+                                    />
+                                </div>
+
+                                <div>
+                                    <Label className="block text-sm font-medium">Address</Label>
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        value={updateUser.address}
+                                        onChange={handleChange}
+                                        placeholder="Enter your address"
+                                        className="w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <Label className="block text-sm font-medium">City</Label>
+                                        <input
+                                            type="text"
+                                            name="city"
+                                            value={updateUser.city}
+                                            onChange={handleChange}
+                                            placeholder="Enter your city"
+                                            className="w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label className="block text-sm font-medium">Zip Code</Label>
+                                        <input
+                                            type="text"
+                                            name="zipCode"
+                                            value={updateUser.zipCode}
+                                            onChange={handleChange}
+                                            placeholder="Enter your zipCode"
+                                            className="w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100"
+                                        />
+                                    </div>
+                                </div>
+
+                                <Button
+                                    type="submit"
+                                    className="w-full mt-4 bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2 rounded-lg"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Updating..." : "Update Profile"}
+                                </Button>
+                            </form>
+
                         </div>
                     </div>
                 </TabsContent>
 
-                {/* Password Tab */}
-                <TabsContent value="orders">
-                    <Card className="mt-4 shadow-sm">
+                {/* Orders Tab */}
+                <TabsContent value="orders" className="mt-6">
+                    <Card className="shadow-sm">
                         <CardHeader>
-                            <CardTitle>Password</CardTitle>
+                            <CardTitle>Orders</CardTitle>
                             <CardDescription>
-                                Change your orders here. After saving, you'll be logged out.
+                                Manage your orders here.
                             </CardDescription>
                         </CardHeader>
 
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-sm text-gray-600">
-                                    Current Password
-                                </label>
+                                <label className="text-sm text-gray-600">Current Password</label>
                                 <Input type="orders" />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm text-gray-600">
-                                    New Password
-                                </label>
+                                <label className="text-sm text-gray-600">New Password</label>
                                 <Input type="orders" />
                             </div>
 
-                            <Button className="bg-black text-white hover:bg-gray-800">
-                                Save orders
+                            <Button className="bg-black text-white hover:bg-gray-800 w-full">
+                                Save Orders
                             </Button>
                         </CardContent>
                     </Card>
