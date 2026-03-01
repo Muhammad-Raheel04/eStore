@@ -64,7 +64,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/products',
-    element: <ProtectedRoute><Navbar /><Products /><Footer /></ProtectedRoute>
+    element: <><Navbar /><Products /><Footer /></>
   },
   {
     path: '/products/:id',
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/cart',
-    element: <ProtectedRoute><Navbar /><Cart /><Footer /></ProtectedRoute>
+    element: <><Navbar /><Cart /><Footer /></>
   },
   {
     path: '/address',
