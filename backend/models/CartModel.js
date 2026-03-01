@@ -4,8 +4,12 @@ const cartSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
-        unique: true
+        required: false,
+    },
+    sessionId: {
+        type: String,
+        required: false,
+        trim: true,
     },
     items: [{
         productId: {
@@ -28,5 +32,9 @@ const cartSchema = new mongoose.Schema({
         default: 0,
     }
 }, { timestamps: true });
+
+// Ensure there is at most one cart per user or per guest session
+cartSchema.index({ userId: 1 }, { unique: true, sparse: true });
+cartSchema.index({ sessionId: 1 }, { unique: true, sparse: true });
 
 export const Cart = mongoose.model("Cart", cartSchema);
