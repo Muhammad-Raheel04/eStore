@@ -13,13 +13,8 @@ const ProductDesc = ({ product }) => {
 
     const addToCart = async () => {
         try {
-            const res = await API.post(
-                "cart/add",
-                { productId: product._id, quantity },
-                {
-                    headers: { Authorization: `Bearer ${accessToken}` },
-                }
-            );
+            const config = accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {};
+            const res = await API.post("cart/add", { productId: product._id, quantity }, config);
 
             if (res.data.success) {
                 toast.success("Added to cart");
