@@ -112,17 +112,38 @@ const Products = () => {
                         setPriceRange={setPriceRange}
                     />
                 </div>
+           
+                {/* Mobile Bottom Sheet Filter */}
+                <div
+                    className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${showSidebar ? "visible" : "invisible"
+                        }`}
+                >
+                    {/* Overlay */}
+                    <div
+                        onClick={() => setShowSidebar(false)}
+                        className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${showSidebar ? "opacity-100" : "opacity-0"
+                            }`}
+                    />
 
-                {/* Mobile Sidebar Drawer */}
-                {showSidebar && (
-                    <div className="fixed inset-0 bg-black/40 z-50 flex">
-                        <div className="bg-white w-[280px] p-5">
+                    {/* Bottom Sheet */}
+                    <div
+                        className={`absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-6 shadow-2xl transform transition-transform duration-300 ${showSidebar ? "translate-y-0" : "translate-y-full"
+                            }`}
+                    >
+                        {/* Drag Handle */}
+                        <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4"></div>
+
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-lg font-bold">Filters</h2>
                             <button
                                 onClick={() => setShowSidebar(false)}
-                                className="mb-4 text-pink-600 font-bold"
+                                className="text-gray-500 hover:text-black text-xl"
                             >
-                                ❌ Close
+                                ✕
                             </button>
+                        </div>
+
+                        <div className="max-h-[65vh] overflow-y-auto pr-2">
                             <FilterSidebar
                                 search={search}
                                 setSearch={setSearch}
@@ -133,10 +154,11 @@ const Products = () => {
                                 allProducts={allProducts}
                                 priceRange={priceRange}
                                 setPriceRange={setPriceRange}
+                                onFilterApply={() => setShowSidebar(false)}
                             />
                         </div>
                     </div>
-                )}
+                </div>
 
                 {/* Products */}
                 <div className="flex-1">
