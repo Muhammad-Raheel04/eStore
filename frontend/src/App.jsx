@@ -64,7 +64,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/products',
-    element: <ProtectedRoute><Navbar /><Products /><Footer /></ProtectedRoute>
+    element: <><Navbar /><Products /><Footer /></>
   },
   {
     path: '/products/:id',
