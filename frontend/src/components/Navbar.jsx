@@ -96,32 +96,94 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden bg-white shadow-lg transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-        <ul className="flex flex-col gap-4 items-center text-lg font-semibold">
-          <Link to="/" onClick={() => setIsMenuOpen(false)} className="hover:text-pink-600 transition">Home</Link>
-          <Link to="/products" onClick={() => setIsMenuOpen(false)} className="hover:text-pink-600 transition">Products</Link>
+      {/* Mobile Overlay */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Drawer */}
+      <div className={`fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}>
+
+        <div className="flex justify-between items-center p-4 border-b">
+          <h2 className="text-lg font-bold text-pink-600">Menu</h2>
+          <button onClick={() => setIsMenuOpen(false)}>
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        <div className="flex flex-col p-6 gap-6 text-lg font-medium">
+
+          <Link
+            to="/"
+            onClick={() => setIsMenuOpen(false)}
+            className="hover:text-pink-600 transition"
+          >
+            Home
+          </Link>
+
+          <Link
+            to="/products"
+            onClick={() => setIsMenuOpen(false)}
+            className="hover:text-pink-600 transition"
+          >
+            Products
+          </Link>
+
+          <Link
+            to="/cart"
+            onClick={() => setIsMenuOpen(false)}
+            className="flex items-center justify-between hover:text-pink-600 transition"
+          >
+            Cart
+            {cartCount > 0 && (
+              <span className="bg-pink-600 text-white text-xs font-bold rounded-full px-2 py-0.5">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
           {user && (
-            <Link to={`/profile/${user._id}`} onClick={() => setIsMenuOpen(false)} className="hover:text-pink-600 transition">
+            <Link
+              to={`/profile/${user._id}`}
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:text-pink-600 transition"
+            >
               Hello, {user.firstName}
             </Link>
           )}
-          <li>
+
+          {admin && (
+            <Link
+              to="/dashboard/sales"
+              onClick={() => setIsMenuOpen(false)}
+              className="hover:text-pink-600 transition"
+            >
+              Dashboard
+            </Link>
+          )}
+
+          <div className="mt-6">
             {user ? (
               <Button
                 onClick={() => { logoutHandler(); setIsMenuOpen(false); }}
-                className="bg-pink-600 text-white px-4 py-2 rounded-md transition"
+                className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg"
               >
                 Logout
               </Button>
             ) : (
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <Button className="bg-gradient-to-tr from-blue-600 to-purple-600 text-white px-4 py-2 rounded-md hover:opacity-90 transition">
+                <Button className="w-full bg-gradient-to-tr from-blue-600 to-purple-600 text-white py-3 rounded-lg">
                   Login
                 </Button>
               </Link>
             )}
-          </li>
-        </ul>
+          </div>
+
+        </div>
       </div>
     </header>
   );
