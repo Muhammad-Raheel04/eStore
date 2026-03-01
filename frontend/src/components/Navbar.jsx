@@ -58,7 +58,9 @@ const Navbar = () => {
         <nav className="hidden md:flex items-center gap-8">
           <Link to="/" className="hover:text-pink-600 transition">Home</Link>
           <Link to="/products" className="hover:text-pink-600 transition">Products</Link>
-          {user && <Link to={`/profile/${user._id}`} className="hover:text-pink-600 transition">Hello, {user.firstName}</Link>}
+          {user ?
+            <Link to={`/profile/${user._id}`} className="hover:text-pink-600 transition">Hello, {user.firstName}</Link> : <Link className="hover:text-pink-600 transition">Hello, Guest</Link>
+          }
           {admin && <Link to="/dashboard/sales" className="hover:text-pink-600 transition">Dashboard</Link>}
         </nav>
 
