@@ -6,9 +6,14 @@ import productRoute from './routes/productRoute.js'
 import cartRoute from './routes/cartRoute.js';
 import orderRoute from './routes/orderRoute.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 const app=express();
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
 app.use('/api/v1/user',userRoute);
 app.use('/api/v1/product',productRoute);
 app.use('/api/v1/cart',cartRoute);
