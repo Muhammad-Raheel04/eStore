@@ -186,6 +186,55 @@ export const login = async (req, res) => {
         }
         // Create a new session
         await Session.create({ userId: existingUser._id })
+
+        // Merge guest cart (if any) into user's cart
+        try {
+            const sessionId = req.cookies?.sessionId;
+            if (sessionId) {
+                const { Cart } = await import("../models/CartModel.js");
+                const guestCart = await Cart.findOne({ sessionId });
+                if (guestCart && guestCart.items.length > 0) {
+                    let userCart = await Cart.findOne({ userId: existingUser._id });
+
+                    if (!userCart) {
+                        // attach guest cart to user directly
+                        guestCart.userId = existingUser._id;
+                        guestCart.sessionId = undefined;
+                        await guestCart.save();
+                        userCart = guestCart;
+                    } else {
+                        // merge items
+                        const map = new Map();
+                        for (const item of userCart.items) {
+                            map.set(item.productId.toString(), { ...item.toObject() });
+                        }
+                        for (const item of guestCart.items) {
+                            const key = item.productId.toString();
+                            if (map.has(key)) {
+                                map.get(key).quantity += item.quantity;
+                            } else {
+                                map.set(key, { productId: item.productId, quantity: item.quantity, price: item.price });
+                            }
+                        }
+                        userCart.items = Array.from(map.values()).map(i => ({
+                            productId: i.productId,
+                            quantity: i.quantity,
+                            price: i.price
+                        }));
+                        userCart.totalPrice = userCart.items.reduce((sum, it) => sum + it.price * it.quantity, 0);
+                        await userCart.save();
+                        await Cart.deleteOne({ _id: guestCart._id });
+                    }
+                    // Clear guest cookie
+                    const isProd = process.env.NODE_ENV === "production";
+                    res.clearCookie("sessionId", { httpOnly: true, secure: isProd, sameSite: isProd ? "none" : "lax" });
+                }
+            }
+        } catch (mergeErr) {
+            // do not block login if merge fails
+            console.error("Cart merge failed:", mergeErr.message);
+        }
+
         return res.status(200).json({
             success: true,
             message: `Welcome back ${existingUser.firstName}`,
