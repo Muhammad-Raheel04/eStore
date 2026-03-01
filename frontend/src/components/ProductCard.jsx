@@ -36,11 +36,8 @@ const ProductCard = ({ product, loading, isAdmin }) => {
   const addToCart = async (productId) => {
     try {
       setLoadingCart(true);
-      const res = await API.post('cart/add', { productId }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
+      const config = accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {};
+      const res = await API.post('cart/add', { productId }, config);
       if (res.data.success) {
         toast.success("Product added to Cart");
         dispatch(setCart(res.data.cart));
