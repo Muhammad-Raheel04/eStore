@@ -28,15 +28,20 @@ const Cart = () => {
   const accessToken = localStorage.getItem("accessToken")
 
   const loadCart = async () => {
-
+    try {
+      const config = accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {};
+      const res = await API.get(`cart/`, config);
+      if (res.data.success) {
+        dispatch(setCart(res.data.cart))
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   const handleUpdateQuantity = async (productId, type) => {
     try {
-      const res = await API.put(`cart/update`, { productId, type }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
+      const config = accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {};
+      const res = await API.put(`cart/update`, { productId, type }, config);
       if (res.data.success) {
         dispatch(setCart(res.data.cart))
       }
@@ -47,12 +52,8 @@ const Cart = () => {
   }
   const handleRemove = async (productId) => {
     try {
-      const res = await API.delete(`cart/remove`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-        data: { productId }
-      });
+      const config = accessToken ? { headers: { Authorization: `Bearer ${accessToken}` }, data: { productId } } : { data: { productId } };
+      const res = await API.delete(`cart/remove`, config);
 
       if (res.data.success) {
         dispatch(setCart(res.data.cart))
