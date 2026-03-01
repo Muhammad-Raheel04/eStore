@@ -3,33 +3,42 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
 
-const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBrand, setPriceRange, allProducts, priceRange }) => {
+const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBrand, setPriceRange, allProducts, priceRange, onFilterApply }) => {
   const Categories = allProducts.map(p => p.category)
   const UniqueCategory = ["All", ...new Set(Categories)];
   const Brands = allProducts.map(p => p.brand)
   const UniqueBrand = ["All", ...new Set(Brands)];
   const handleCategoryClick = (val) => {
     setCategory(val)
+    onFilterApply?.()
   }
 
   const handleBrandChange = (e) => {
     setBrand(e.target.value);
+    onFilterApply?.();
   }
   const handleMinChange = (e) => {
     const value = Number(e.target.value);
-    if (value <= priceRange[1]) setPriceRange([value, priceRange[1]])
+    if (value <= priceRange[1]) {
+      setPriceRange([value, priceRange[1]])
+      onFilterApply?.();
+    }
   }
 
   const handleMaxChange = (e) => {
     const value = Number(e.target.value);
-    if (value >= priceRange[0]) setPriceRange([priceRange[0], value])
+    if (value >= priceRange[0]) {
+      setPriceRange([priceRange[0], value])
+      onFilterApply?.();
+    }
   }
 
   const resetFilters = () => {
     setSearch("");
     setCategory("All");
     setBrand("All");
-    setPriceRange([0,999999])
+    setPriceRange([0, 999999])
+    onFilterApply?.();
   }
   return (
     <div className="
@@ -61,8 +70,15 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
               name="category"
               checked={category === item}
               onChange={() => handleCategoryClick(item)}
-              id={`category-${index}`} />
-            <Label htmlFor={`category-${index}`}>{item}</Label>
+              id={`category-${index}`}
+              className="accent-pink-600"
+            />
+            <Label
+              htmlFor={`category-${index}`}
+              className={`${category === item ? "text-pink-600 font-medium" : ""}`}
+            >
+              {item}
+            </Label>
           </div>
         ))}
       </div>
