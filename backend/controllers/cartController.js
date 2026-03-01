@@ -3,9 +3,8 @@ import { Product } from "../models/productModel.js";
 
 export const getCart = async (req, res) => {
     try {
-        const userId = req.id;
-
-        const cart = await Cart.findOne({ userId }).populate("items.productId");
+        const query = req.cartQuery || {};
+        const cart = await Cart.findOne(query).populate("items.productId");
 
         if (!cart) {
             return res.json({
@@ -26,8 +25,8 @@ export const getCart = async (req, res) => {
 
 export const addToCart = async (req, res) => {
     try {
-        const userId = req.id;
-        const { productId } = req.body;
+        const { productId, quantity } = req.body;
+        const query = req.cartQuery || {};
 
         // Check if product exists
         const product = await Product.findById(productId);
@@ -39,19 +38,21 @@ export const addToCart = async (req, res) => {
             });
         }
 
-        // Find the user's cart (if exists)
-        let cart = await Cart.findOne({ userId });
+        // Find the user's/guest's cart (if exists)
+        let cart = await Cart.findOne(query);
 
         // If cart doesn't exist, create a new one
         if (!cart) {
+            const initialQty = Math.max(1, Number(quantity) || 1);
             cart = await Cart.create({
-                userId,
+                userId: req.userId || undefined,
+                sessionId: req.sessionId || undefined,
                 items: [{
                     productId,
-                    quantity: 1,
+                    quantity: initialQty,
                     price: product.productPrice
                 }],
-                totalPrice: product.productPrice
+                totalPrice: product.productPrice * initialQty
             });
         } else {
             // Find if product is already in the cart
@@ -59,12 +60,12 @@ export const addToCart = async (req, res) => {
 
             if (itemIndex > -1) {
                 // If product exists -> just increase quantity
-                cart.items[itemIndex].quantity += 1;
+                cart.items[itemIndex].quantity += Math.max(1, Number(quantity) || 1);
             } else {
                 // If new product -> push to cart
                 cart.items.push({
                     productId,
-                    quantity: 1,
+                    quantity: Math.max(1, Number(quantity) || 1),
                     price: product.productPrice
                 });
             }
@@ -98,11 +99,11 @@ export const addToCart = async (req, res) => {
 
 export const updateQuantity = async (req, res) => {
     try {
-        const userId = req.id;
+        const query = req.cartQuery || {};
         const { productId, type } = req.body;
 
         // Find user's cart
-        let cart = await Cart.findOne({ userId });
+        let cart = await Cart.findOne(query);
         if (!cart) {
             return res.status(404).json({
                 success: false,
@@ -166,11 +167,11 @@ export const updateQuantity = async (req, res) => {
 
 export const removeFromCart = async (req, res) => {
     try {
-        const userId = req.id;
+        const query = req.cartQuery || {};
         const { productId } = req.body;
 
         // Find user's cart
-        let cart = await Cart.findOne({ userId });
+        let cart = await Cart.findOne(query);
         if (!cart) {
             return res.status(404).json({
                 success: false,
