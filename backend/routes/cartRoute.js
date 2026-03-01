@@ -1,12 +1,12 @@
 import express from 'express';
-import { isAuthenticated } from '../middleware/isAuthenticated.js'
 import { addToCart, getCart, removeFromCart, updateQuantity } from '../controllers/cartController.js'
+import { identifyCart } from '../middleware/cartIdentity.js'
 
 const router = express.Router()
 
-router.get('/', isAuthenticated, getCart)
-router.post('/add', isAuthenticated, addToCart)
-router.put('/update', isAuthenticated, updateQuantity)
-router.delete('/remove', isAuthenticated, removeFromCart)
+router.get('/', identifyCart, getCart)
+router.post('/add', identifyCart, addToCart)
+router.put('/update', identifyCart, updateQuantity)
+router.delete('/remove', identifyCart, removeFromCart)
 
 export default router
