@@ -1,7 +1,7 @@
 import React from 'react';
 import FilterSidebar from '@/components/FilterSidebar';
 import ProductCard from '@/components/ProductCard';
-
+import TopFilterBar from '@/components/TopFilterBar';
 import {
     Select,
     SelectContent,
@@ -73,46 +73,53 @@ const Products = () => {
     }, []);
 
     return (
-        <div className='pt-20 pb-10 px-4 sm:px-6 lg:px-8'>
-            <div className='max-w-7xl mx-auto flex flex-col lg:flex-row gap-6'>
+        <div className='pt-3 pb-10 px-4 sm:px-6 lg:px-8'>
+            <div className='max-w-7xl mx-auto flex flex-col gap-6'>
 
-                {/* Mobile Filter Button */}
-                <div className="lg:hidden flex justify-between items-center mb-4">
+                {/* Desktop-only top filter bar */}
+                <div className="hidden lg:block">
+                    <TopFilterBar
+                        category={category}
+                        setCategory={setCategory}
+                        brand={brand}
+                        setBrand={setBrand}
+                        priceRange={priceRange}
+                        setPriceRange={setPriceRange}
+                        allProducts={allProducts}
+                        resetFilters={() => {
+                            setSearch("");
+                            setCategory("All");
+                            setBrand("All");
+                            setPriceRange([0, 999999]);
+                        }}
+                    />
+                </div>
+
+                {/* Mobile: Filter toggle */}
+                <div className="lg:hidden flex justify-between items-centergap-3 mb-4">
                     <button
                         onClick={() => setShowSidebar(true)}
-                        className="flex items-center gap-2 bg-pink-600 text-white px-4 py-2 rounded-xl"
+                        className="flex items-center gap-2 bg-white text-black border-1 border-black px-4 py-2 "
                     >
                         <Menu size={18} /> Filters
                     </button>
-
-                    <Select onValueChange={(value) => setSortOrder(value)}>
-                        <SelectTrigger className="w-[160px]">
-                            <SelectValue placeholder="Sort" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectItem value="lowToHigh">Low → High</SelectItem>
-                                <SelectItem value="highToLow">High → Low</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                    <div >
+                        <Select onValueChange={(value) => setSortOrder(value)}>
+                            <SelectTrigger className="w-[200px]  border-1 border-black py-5 rounded-none">
+                                <SelectValue className="text-black" placeholder="Sort by price" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectItem className="text-black" value="lowToHigh">Price: Low to High</SelectItem>
+                                    <SelectItem className="text-black" value="highToLow">Price: High to Low</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
 
-                {/* Sidebar Desktop */}
-                <div className="hidden lg:block w-[260px]">
-                    <FilterSidebar
-                        search={search}
-                        setSearch={setSearch}
-                        brand={brand}
-                        setBrand={setBrand}
-                        category={category}
-                        setCategory={setCategory}
-                        allProducts={allProducts}
-                        priceRange={priceRange}
-                        setPriceRange={setPriceRange}
-                    />
-                </div>
-           
+                {/* Desktop sidebar removed as per request */}
+
                 {/* Mobile Bottom Sheet Filter */}
                 <div
                     className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${showSidebar ? "visible" : "invisible"
