@@ -4,17 +4,17 @@ import { FaFacebook, FaInstagram, FaPinterest, FaTwitterSquare } from 'react-ico
 
 const Footer = () => {
   return (
-    <footer className='bg-gray-900 text-gray-200 py-10'>
+    <footer className='bg-black text-gray-200 py-10'>
       <div className='max-w-7xl mx-auto px-4 md:flex md:justify-between'>
         {/* info */}
         <div className='mb-6 md:mb-0'>
-       
+
           <p className='mt-2 text-sm'>Powering Your World with the Best in eCommerce.</p>
-          <p className='mt-2 text-sm'>123 Electronics St, Style City, NY 10001</p>
-          <p className='text-sm'>Email: support@Zaptro.com</p>
-          <p className='text-sm'>Phone: (123) 456-7890</p>
+          <p className='mt-2 text-sm'>Rajput & Co. Bahria Town Phase 8, RWP</p>
+          <p className='text-sm'>Email: hamzaraj541@gmail.com</p>
+          <p className='text-sm'>Phone:  <a href="tel:+923155098774" className="ml-1 hover:text-gray-100">0315-5098774</a></p>
         </div>
-        
+
         {/* customer service links */}
         <div className='mb-6 md:mb-0'>
           <h3 className='text-xl font-semibold'>Customer Service</h3>
@@ -31,17 +31,17 @@ const Footer = () => {
         <div className='mb-6 md:mb-0'>
           <h3 className='text-xl font-semibold'>Follow Us</h3>
           <div className='flex space-x-4 mt-4'>
-            <FaFacebook className='text-2xl hover:text-pink-600 cursor-pointer' />
-            <FaInstagram className='text-2xl hover:text-pink-600 cursor-pointer' />
-            <FaPinterest className='text-2xl hover:text-pink-600 cursor-pointer' />
-            <FaTwitterSquare className='text-2xl hover:text-pink-600 cursor-pointer' />
+            <FaFacebook className='text-2xl hover:text-white cursor-pointer' />
+            <FaInstagram className='text-2xl hover:text-white cursor-pointer' />
+            <FaPinterest className='text-2xl hover:text-white cursor-pointer' />
+            <FaTwitterSquare className='text-2xl hover:text-white cursor-pointer' />
           </div>
         </div>
       </div>
 
       {/* bottom section */}
       <div className='mt-8 border-t border-gray-700 pt-6 text-center text-sm'>
-        <p>&copy; {new Date().getFullYear()} <span className='text-pink-600'>Hamza Rajpoot</span>. All rights reserved</p>
+        <p>&copy; {new Date().getFullYear()} <span className='text-white'>Hamza Rajput</span>. All rights reserved</p>
       </div>
     </footer>
   );
