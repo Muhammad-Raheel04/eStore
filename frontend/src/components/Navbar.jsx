@@ -48,47 +48,47 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <span className="font-bold text-xl text-pink-600 inline-block tracking-widest hover:tracking-normal transition-all duration-500">
-            <i>Hamza Rajput</i>
+          <span className="text-xl text-black inline-block tracking-widest hover:tracking-normal transition-all duration-500">
+           Hamza Rajput
           </span>
 
         </Link>
 
         {/* Desktop Links */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link to="/" className="hover:text-pink-600 transition">Home</Link>
-          <Link to="/products" className="hover:text-pink-600 transition">Products</Link>
+          <Link to="/" className="hover:text-gray-500 transition">Home</Link>
+          <Link to="/products" className="hover:text-gray-500 transition">Products</Link>
           {user ?
-            <Link to={`/profile/${user._id}`} className="hover:text-pink-600 transition">Hello, {user.firstName}</Link> : <Link className="hover:text-pink-600 transition">Hello, Guest</Link>
+            <Link to={`/profile/${user._id}`} className="hover:text-gray-500 transition">Hello, {user.firstName}</Link> : <Link className="hover:text-gray-500 transition">Hello, Guest</Link>
           }
-          {admin && <Link to="/dashboard/sales" className="hover:text-pink-600 transition">Dashboard</Link>}
+          {admin && <Link to="/dashboard/sales" className="hover:text-gray-500 transition">Dashboard</Link>}
         </nav>
 
         {/* Right Section */}
         <div className="flex items-center gap-4">
           {/* Cart */}
-          <Link to="/cart" className="relative hover:text-pink-600 transition">
+          <Link to="/cart" className="relative hover:text-gray-500 transition">
             <ShoppingCart className="w-6 h-6" />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-3 bg-pink-600 text-white text-xs font-bold rounded-full px-2 py-0.5">{cartCount}</span>
+              <span className="absolute -top-2 -right-3 bg-black text-white text-xs font-bold rounded-full px-2 py-0.5">{cartCount}</span>
             )}
           </Link>
 
           {/* Login / Logout */}
-          {user ? (
+          {/* {user ? (
             <Button
               onClick={logoutHandler}
-              className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition"
+              className="bg-white hover:bg-black hover:text-white text-black border-1 border-black px-4 py-2  transition"
             >
               Logout
             </Button>
           ) : (
             <Link to="/login">
-              <Button className="bg-gradient-to-tr from-blue-600 to-purple-600 text-white px-4 py-2 rounded-md hover:opacity-90 transition">
+              <Button className="bg-white hover:bg-black hover:text-white text-black border-1 border-black px-4 py-2  transition">
                 Login
               </Button>
             </Link>
-          )}
+          )} */}
 
           {/* Mobile Menu Toggle */}
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -172,13 +172,13 @@ const Navbar = () => {
             {user ? (
               <Button
                 onClick={() => { logoutHandler(); setIsMenuOpen(false); }}
-                className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg"
+                className="w-full bg-white hover:bg-pink-700 text-white py-3 "
               >
                 Logout
               </Button>
             ) : (
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <Button className="w-full bg-gradient-to-tr from-blue-600 to-purple-600 text-white py-3 rounded-lg">
+                <Button className="w-full bg-gradient-to-tr from-blue-600 to-purple-600 text-white py-3 ">
                   Login
                 </Button>
               </Link>
