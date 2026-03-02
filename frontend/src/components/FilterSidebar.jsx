@@ -70,15 +70,8 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
               name="category"
               checked={category === item}
               onChange={() => handleCategoryClick(item)}
-              id={`category-${index}`}
-              className="accent-pink-600"
-            />
-            <Label
-              htmlFor={`category-${index}`}
-              className={`${category === item ? "text-pink-600 font-medium" : ""}`}
-            >
-              {item}
-            </Label>
+              id={`category-${index}`} />
+            <Label htmlFor={`category-${index}`}>{item === "All" ? "Categories" : item}</Label>
           </div>
         ))}
       </div>
@@ -90,11 +83,14 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
         value={brand}
         onChange={handleBrandChange}
       >
-        {UniqueBrand.map((item, index) => (
-          <option key={index} value={item}>
-            {item.toUpperCase()}
-          </option>
-        ))}
+        {UniqueBrand.map((item, index) => {
+          const label = item === "All" ? "BRANDS" : item.toUpperCase();
+          return (
+            <option key={index} value={item}>
+              {label}
+            </option>
+          );
+        })}
       </select>
       {/* price range */}
       <h1 className='mt-5 font-semibold text-xl mb-3'>Price Range</h1>
