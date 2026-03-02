@@ -75,7 +75,8 @@ const Navbar = () => {
           </Link>
 
           {/* Login / Logout */}
-          {/* {user ? (
+          <div className="hidden md:flex items-center">
+          {user ? (
             <Button
               onClick={logoutHandler}
               className="bg-white hover:bg-black hover:text-white text-black border-1 border-black px-4 py-2  transition"
@@ -88,7 +89,8 @@ const Navbar = () => {
                 Login
               </Button>
             </Link>
-          )} */}
+          )}
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
