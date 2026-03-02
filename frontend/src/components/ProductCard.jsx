@@ -68,8 +68,8 @@ const ProductCard = ({ product, loading, isAdmin }) => {
   }
 
   return (
-    <div className='shadow-lg rounded-lg overflow-hidden h-max'>
-      <div className='w-full h-full aspect-square overflow-hidden'>
+    <div className='border border-gray-400 shadow-lg overflow-hidden h-max'>
+      <div className=' w-full h-full aspect-square overflow-hidden'>
         {loading ? (
           <Skeleton className='w-full h-full rounded-lg' />
         ) : (
@@ -91,11 +91,11 @@ const ProductCard = ({ product, loading, isAdmin }) => {
       ) : (
         <div className='px-2 space-y-1'>
           <h1 className='font-semibold h-12 line-clamp-2'>{productName}</h1>
-          <h2 className='font-bold'>Rs{productPrice}</h2>
+          <h2 className='font-bold'>Rs. {productPrice}</h2>
           <div className='flex gap-2 mt-3 mb-4'>
             <Button
               onClick={() => addToCart(product._id)}
-              className='bg-pink-600 w-full'
+              className='bg-white text-black hover:text-white border-1 border-black w-full'
               disabled={loadingCart} 
             >
               {loadingCart ? (
