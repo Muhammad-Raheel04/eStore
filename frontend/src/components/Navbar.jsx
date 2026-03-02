@@ -109,30 +109,30 @@ const Navbar = () => {
       )}
 
       {/* Mobile Drawer */}
-      <div className={`fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+      <div className={`fixed top-0 right-0 h-90 border-l-1 border-b-1 border-black w-72 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}>
 
-        <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-lg font-bold text-pink-600">Menu</h2>
+        <div className="flex justify-between items-center border-b border-white p-4 border-b">
+          <h2 className="text-lg  text-black">Menu</h2>
           <button onClick={() => setIsMenuOpen(false)}>
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        <div className="flex flex-col p-6 gap-6 text-lg font-medium">
+        <div className="flex flex-col p-6 gap-6 ">
 
           <Link
             to="/"
             onClick={() => setIsMenuOpen(false)}
-            className="hover:text-pink-600 transition"
+            className="hover:text-gray-500 pb-2 border-b border-black transition"
           >
             Home
           </Link>
-
+          
           <Link
             to="/products"
             onClick={() => setIsMenuOpen(false)}
-            className="hover:text-pink-600 transition"
+            className="hover:text-gray-500 pb-2 border-b border-black transition"
           >
             Products
           </Link>
@@ -140,11 +140,11 @@ const Navbar = () => {
           <Link
             to="/cart"
             onClick={() => setIsMenuOpen(false)}
-            className="flex items-center justify-between hover:text-pink-600 transition"
+            className="flex items-center pb-2 border-b border-black justify-between hover:text-gray-500 transition"
           >
             Cart
             {cartCount > 0 && (
-              <span className="bg-pink-600 text-white text-xs font-bold rounded-full px-2 py-0.5">
+              <span className="bg-black text-white text-xs font-bold rounded-full px-2 py-0.5">
                 {cartCount}
               </span>
             )}
@@ -154,7 +154,7 @@ const Navbar = () => {
             <Link
               to={`/profile/${user._id}`}
               onClick={() => setIsMenuOpen(false)}
-              className="hover:text-pink-600 transition"
+              className="hover:text-gray-500 transition"
             >
               Hello, {user.firstName}
             </Link>
@@ -164,7 +164,7 @@ const Navbar = () => {
             <Link
               to="/dashboard/sales"
               onClick={() => setIsMenuOpen(false)}
-              className="hover:text-pink-600 transition"
+              className="hover:text-gray-500 transition"
             >
               Dashboard
             </Link>
@@ -180,7 +180,7 @@ const Navbar = () => {
               </Button>
             ) : (
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <Button className="w-full bg-gradient-to-tr from-blue-600 to-purple-600 text-white py-3 ">
+                <Button className="w-full bg-white text-black border-1 border-black hover:bg-black hover:text-white py-3 ">
                   Login
                 </Button>
               </Link>
