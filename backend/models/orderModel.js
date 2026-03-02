@@ -1,10 +1,19 @@
 import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
+    isGuest: {
+        type: Boolean,
+        default: false
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: false
+    },
+    guestInfo: {
+        fullName: String,
+        phone: String,
+        email: String
     },
     products: [{
         productId: {
@@ -26,6 +35,11 @@ const orderSchema = new mongoose.Schema({
         state: String,
         zip: String,
         country: String
+    },
+    orderId: {
+        type: String,
+        required: true,
+        unique: true
     },
     amount: { type: Number, required: true },
     tax: { type: Number, required: true },
