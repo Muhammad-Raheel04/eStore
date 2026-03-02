@@ -109,7 +109,7 @@ const Navbar = () => {
       )}
 
       {/* Mobile Drawer */}
-      <div className={`fixed top-0 right-0 h-90 border-l-1 border-b-1 border-black w-72 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+      <div className={`fixed top-0 right-0 h-auto  border-l-1 border-b-1 border-black w-72 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}>
 
         <div className="flex justify-between items-center border-b border-white p-4 border-b">
@@ -154,7 +154,7 @@ const Navbar = () => {
             <Link
               to={`/profile/${user._id}`}
               onClick={() => setIsMenuOpen(false)}
-              className="hover:text-gray-500 transition"
+              className="hover:text-gray-500 pb-2 border-b border-black transition"
             >
               Hello, {user.firstName}
             </Link>
@@ -164,7 +164,7 @@ const Navbar = () => {
             <Link
               to="/dashboard/sales"
               onClick={() => setIsMenuOpen(false)}
-              className="hover:text-gray-500 transition"
+              className="hover:text-gray-500 pb-2 border-b border-black transition"
             >
               Dashboard
             </Link>
@@ -174,7 +174,7 @@ const Navbar = () => {
             {user ? (
               <Button
                 onClick={() => { logoutHandler(); setIsMenuOpen(false); }}
-                className="w-full bg-white hover:bg-pink-700 text-white py-3 "
+                className="w-full bg-white hover:bg-black hover:text-white text-black border-1 border-black py-3 "
               >
                 Logout
               </Button>
