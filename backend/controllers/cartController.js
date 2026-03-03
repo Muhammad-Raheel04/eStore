@@ -44,16 +44,17 @@ export const addToCart = async (req, res) => {
         // If cart doesn't exist, create a new one
         if (!cart) {
             const initialQty = Math.max(1, Number(quantity) || 1);
-            cart = await Cart.create({
-                userId: req.userId || undefined,
-                sessionId: req.sessionId || undefined,
+            const doc = {
                 items: [{
                     productId,
                     quantity: initialQty,
                     price: product.productPrice
                 }],
                 totalPrice: product.productPrice * initialQty
-            });
+            };
+            if (req.userId) doc.userId = req.userId;
+            if (req.sessionId) doc.sessionId = req.sessionId;
+            cart = await Cart.create(doc);
         } else {
             // Find if product is already in the cart
             const itemIndex = cart.items.findIndex(item => item.productId.toString() === productId);
