@@ -100,7 +100,7 @@ const Profile = () => {
 
                 {/* Profile Tab */}
                 <TabsContent value="profile" className="mt-6">
-                    <div className="flex flex-col justify-center items-center bg-gray-100 rounded-xl p-5">
+                    <div className="flex flex-col justify-center items-center bg-gray-100  p-5">
                         <h1 className="font-bold mb-6 text-2xl text-gray-800 text-center">Update Profile</h1>
 
                         <div className="w-full flex flex-col sm:flex-row gap-8 justify-center items-start max-w-2xl">
@@ -119,7 +119,7 @@ const Profile = () => {
                             </div> */}
 
                             {/* profile form */}
-                            <form onSubmit={handleSubmit} className="w-full sm:w-[400px] space-y-4 shadow-lg p-5 rounded-lg bg-white">
+                            <form onSubmit={handleSubmit} className="w-full sm:w-[400px] space-y-4 shadow-lg p-5 border border-gray-300 bg-white">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium">First Name</label>
@@ -207,7 +207,7 @@ const Profile = () => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full mt-4 bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2 rounded-lg"
+                                    className="w-full mt-4 bg-white hover:bg-black text-black font-semibold py-2 border border-gray-300 hover:text-white"
                                     disabled={loading}
                                 >
                                     {loading ? "Updating..." : "Update Profile"}
