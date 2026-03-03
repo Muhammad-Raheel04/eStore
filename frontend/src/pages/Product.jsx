@@ -16,6 +16,7 @@ import API from '@/utils/API';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProducts } from '@/redux/productSlice';
 import { Menu } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 const Products = () => {
     const { products } = useSelector(store => store.product);
     const [allProducts, setAllProducts] = useState([]);
@@ -27,6 +28,7 @@ const Products = () => {
     const [sortOrder, setSortOrder] = useState('');
     const [showSidebar, setShowSidebar] = useState(false);
     const dispatch = useDispatch();
+    const location = useLocation();
     const getAllProducts = async () => {
         try {
             setLoading(true);
@@ -71,7 +73,14 @@ const Products = () => {
     useEffect(() => {
         getAllProducts();
     }, []);
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const categoryFromURL = params.get("category");
 
+        if (categoryFromURL) {
+            setCategory(categoryFromURL);
+        }
+    }, [location.search]);
     return (
         <div className='pt-3 pb-10 px-4 sm:px-6 lg:px-8'>
             <div className='max-w-7xl mx-auto flex flex-col gap-6'>
