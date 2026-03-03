@@ -3,9 +3,14 @@ import React from 'react';
 import HeroSection from '../components/HeroSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import { Truck, Lock, Headphones } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const handleCategoryClick = (category) => {
+    navigate(`/products?category=${category}`);
+  };
   return (
     <div className="min-h-screen bg-gray-50">
       <HeroSection />
@@ -55,39 +60,57 @@ const LandingPage = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
             {/* Category Card 1 */}
-            <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
-              <img
-                src="/men.jpg"
-                alt="Mens"
-                className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-40  flex items-center justify-center opacity-0 hover:opacity-45 transition-opacity duration-300">
-                <h3 className="text-white text-xl font-semibold">Mens</h3>
+            <div>
+              <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
+                <img
+                  src="/men.jpg"
+                  alt="Mens"
+                  className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40  flex items-center justify-center opacity-0 hover:opacity-45 transition-opacity duration-300">
+                  <h3 className="text-white text-xl font-semibold">Mens</h3>
+                </div>
               </div>
+              <div
+                onClick={() => handleCategoryClick("Mens")}
+                className="md:hidden relative group overflow-hidden p-2 shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black mt-2 text-center hover:bg-black hover:text-white"
+              >Men</div>
             </div>
 
             {/* Category Card 2 */}
-            <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
-              <img
-                src="/women.jpg"
-                alt="womens"
-                className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-45 transition-opacity duration-300">
-                <h3 className="text-white text-xl font-semibold">Women</h3>
+            <div>
+              <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
+                <img
+                  src="/women.jpg"
+                  alt="womens"
+                  className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-45 transition-opacity duration-300">
+                  <h3 className="text-white text-xl font-semibold">Women</h3>
+                </div>
               </div>
+              <div
+                onClick={() => handleCategoryClick("Women")}
+                className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer  border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
+              >Women</div>
             </div>
 
             {/* Category Card 3 */}
-            <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
-              <img
-                src="/leatherBags.avif"
-                alt="Leather Products"
-                className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-30 transition-opacity duration-300">
-                <h3 className="text-white text-xl font-semibold">Leather Product</h3>
+            <div>
+              <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
+                <img
+                  src="/leatherBags.avif"
+                  alt="Leather Products"
+                  className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-30 transition-opacity duration-300">
+                  <h3 className="text-white text-xl font-semibold">Leather Product</h3>
+                </div>
               </div>
+              <div
+                onClick={() => handleCategoryClick("Leather Product")}
+                className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
+              >Leather Product</div>
             </div>
 
             {/* Category Card 4 */}
