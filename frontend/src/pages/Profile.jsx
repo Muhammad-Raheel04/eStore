@@ -88,7 +88,8 @@ const Profile = () => {
         }
     }
     return (
-        <div className="pt-24 min-h-screen bg-gray-50 flex justify-center items-start px-4 sm:px-6 lg:px-8">
+        <div className="pt-2 min-h-screen bg-gray-50 flex justify-center items-start px-4 sm:px-6 lg:px-8">
+           
             <Tabs defaultValue="profile" className="max-w-7xl w-full">
 
                 {/* Tabs */}
@@ -104,7 +105,7 @@ const Profile = () => {
 
                         <div className="w-full flex flex-col sm:flex-row gap-8 justify-center items-start max-w-2xl">
 
-                            {/* profile picture */}
+                            {/* profile picture
                             <div className="flex flex-col items-center">
                                 <img
                                     src={updateUser?.profilePic || userLogo}
@@ -115,7 +116,7 @@ const Profile = () => {
                                     Change Picture
                                     <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
                                 </Label>
-                            </div>
+                            </div> */}
 
                             {/* profile form */}
                             <form onSubmit={handleSubmit} className="w-full sm:w-[400px] space-y-4 shadow-lg p-5 rounded-lg bg-white">
