@@ -90,7 +90,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
         </div>
       ) : (
         <div className='px-2 space-y-1'>
-          <h1 className='font-semibold h-12 line-clamp-2'>{productName}</h1>
+          <h1 className='text-center mt-2  h-12 line-clamp-2'>{productName}</h1>
           <h2 className='font-bold'>Rs. {productPrice}</h2>
           <div className='flex gap-2 mt-3 mb-4'>
             <Button
