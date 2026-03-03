@@ -13,21 +13,21 @@ const OrderSuccess = () => {
         dispatch(clearCart());
     }, [dispatch]);
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
             <Card className="max-w-md w-full shadow-lg">
                 <CardHeader>
-                    <CardTitle className="text-2xl text-green-600">🎉 Order Placed Successfully!</CardTitle>
+                    <CardTitle className="text-2xl text-black text-center ">Order Placed Successfully!</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <p className="text-gray-700">
+                    <p className="text-gray-700 text-center">
                         Your order has been placed successfully. Check your email for confirmation.
                     </p>
-                    <p className="text-gray-700">
+                    <p className="text-gray-700 text-center">
                         Our team will reach out to you soon with shipping details.
                     </p>
                     <Button
                         onClick={() => navigate("/products")}
-                        className="w-full bg-pink-600 hover:bg-pink-700"
+                        className="w-full bg-white text-black border border-black hover:bg-black hover:text-white"
                     >
                         Keep Shopping
                     </Button>
