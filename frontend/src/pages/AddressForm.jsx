@@ -102,36 +102,37 @@ const AddressForm = () => {
     const total = subtotal + shipping + tax;
 
     return (
-        <div className="max-w-7xl mx-auto p-4 sm:p-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="max-w-7xl mx-auto p-2 sm:px-10 sm:pt-4 sm:pb-10">
+            <h1 className='text-center p-2  text-lg border-t  border-b border-gray-300  '>Checkout </h1>
+            <div className="pt-2 grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {/* Left: Address Form */}
-                <div className="space-y-4 p-6 bg-white rounded-lg shadow-md">
+                <div className="space-y-4 p-6 bg-white border border-gray-300 shadow-md">
                     {showForm ? (
                         <>
                             <div>
-                                <Label htmlFor="fullName">Full Name</Label>
+                                <Label htmlFor="fullName"></Label>
                                 <Input
                                     id="fullName"
                                     name="fullName"
                                     required
-                                    placeholder="John Doe"
+                                    placeholder="Full Name"
                                     value={formData.fullName}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="phone">Phone Number</Label>
+                                <Label htmlFor="phone"></Label>
                                 <Input
                                     id="phone"
                                     name="phone"
                                     required
-                                    placeholder="+92300 0000000"
+                                    placeholder="Phone Number"
                                     value={formData.phone}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email"></Label>
                                 <Input
                                     id="email"
                                     name="email"
@@ -142,35 +143,35 @@ const AddressForm = () => {
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="address">Address</Label>
+                                <Label htmlFor="address"></Label>
                                 <Input
                                     id="address"
                                     name="address"
                                     required
-                                    placeholder="123 street, Area"
+                                    placeholder="Address e.g,123 street, Area"
                                     value={formData.address}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <Label htmlFor="city">City</Label>
+                                    <Label htmlFor="city"></Label>
                                     <Input
                                         id="city"
                                         name="city"
                                         required
-                                        placeholder="Islamabad"
+                                        placeholder="Enter Your City"
                                         value={formData.city}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor="state">State</Label>
+                                    <Label htmlFor="state"></Label>
                                     <Input
                                         id="state"
                                         name="state"
                                         required
-                                        placeholder="Punjab"
+                                        placeholder="Your Province"
                                         value={formData.state}
                                         onChange={handleChange}
                                     />
@@ -178,23 +179,23 @@ const AddressForm = () => {
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <Label htmlFor="zip">Zip Code</Label>
+                                    <Label htmlFor="zip"></Label>
                                     <Input
                                         id="zip"
                                         name="zip"
                                         required
-                                        placeholder="40927"
+                                        placeholder="Provide Zip Code"
                                         value={formData.zip}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor="country">Country</Label>
+                                    <Label htmlFor="country"></Label>
                                     <Input
                                         id="country"
                                         name="country"
                                         required
-                                        placeholder="Pakistan"
+                                        placeholder="Your country"
                                         value={formData.country}
                                         onChange={handleChange}
                                     />
@@ -210,13 +211,13 @@ const AddressForm = () => {
                         </>
                     ) : (
                         <div>
-                            <h2 className="text-lg font-semibold mb-4">Saved Addresses</h2>
+                            <h2 className="text-lg font-semibold mb-4 text-center">Saved Addresses</h2>
                             {addresses.map((addr, index) => (
                                 <div
                                     key={index}
                                     onClick={() => dispatch(setSelectedAddress(index))}
-                                    className={`border p-4 rounded-md cursor-pointer relative mb-3 ${selectedAddress === index
-                                            ? "border-pink-600 bg-pink-50"
+                                    className={`border p-4  hover:bg-gray-50 cursor-pointer relative mb-3 ${selectedAddress === index
+                                            ? "border-gray-500 bg-gray-100"
                                             : "border-gray-300"
                                         }`}
                                 >
@@ -232,7 +233,7 @@ const AddressForm = () => {
                                             e.stopPropagation();
                                             dispatch(deleteAddress(index));
                                         }}
-                                        className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm"
+                                        className="absolute top-2 right-2 text-gray-500 hover:text-black text-sm"
                                     >
                                         Delete
                                     </button>
@@ -240,7 +241,7 @@ const AddressForm = () => {
                             ))}
                             <Button
                                 variant="outline"
-                                className="w-full mt-2"
+                                className="w-full mt-2 border border-gray-300 hover:bg-black hover:text-white"
                                 onClick={() => setShowForm(true)}
                             >
                                 + Add new Address
@@ -258,42 +259,38 @@ const AddressForm = () => {
                         <CardContent className="space-y-4">
                             <div className="flex justify-between">
                                 <span>Subtotal ({cart.items.length} items)</span>
-                                <span>Rs{subtotal.toLocaleString("en-IN")}</span>
+                                <span>Rs. {subtotal.toLocaleString("en-IN")}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Shipping</span>
-                                <span>Rs{shipping}</span>
-                            </div>
+                                <span>Rs. {shipping}</span>
+                            </div> 
                             <div className="flex justify-between">
                                 <span>Tax</span>
-                                <span>Rs{tax}</span>
+                                <span>Rs. {tax}</span>
                             </div>
                             <Separator />
                             <div className="flex justify-between font-bold text-lg">
                                 <span>Total</span>
-                                <span>Rs{total.toLocaleString("en-IN")}</span>
+                                <span>Rs. {total.toLocaleString("en-IN")}</span>
                             </div>
                             <div className="space-y-3 pt-4">
                                 <div className="flex flex-col sm:flex-row gap-2">
                                     <Input placeholder="Promo Code" className="flex-1" />
-                                    <Button variant="outline">Apply</Button>
+                                    <Button variant="outline" className='bg-white text-black border border-gray-300 hover:bg-black hover:text-white'>Apply</Button>
                                 </div>
                                 <Button
                                     disabled={selectedAddress === null || placingOrder}
-                                    className="w-full bg-pink-600"
+                                    className="w-full bg-white text-black border border-gray-300 hover:bg-black hover:text-white"
                                     onClick={handleplaceOrder}
                                 >
                                     {placingOrder ? "Placing Order..." : "Place order (Cash on Delivery)"}
                                 </Button>
-                                <Button variant="outline" className="w-full">
+                                <Button variant="outline" className="w-full bg-white text-black border border-gray-300 hover:bg-black hover:text-white">
                                     <Link to="/products">Continue Shopping</Link>
                                 </Button>
                             </div>
-                            <div className="text-sm text-muted-foreground pt-4 space-y-1">
-                                <p>* Free shipping on orders over 299</p>
-                                <p>* 30-days return policy</p>
-                                <p>* Secure checkout with SSL encryption</p>
-                            </div>
+                           
                         </CardContent>
                     </Card>
                 </div>
