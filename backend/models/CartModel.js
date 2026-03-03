@@ -34,7 +34,19 @@ const cartSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Ensure there is at most one cart per user or per guest session
-cartSchema.index({ userId: 1 }, { unique: true, sparse: true });
-cartSchema.index({ sessionId: 1 }, { unique: true, sparse: true });
+cartSchema.index(
+    { userId: 1 },
+    {
+        unique: true,
+        partialFilterExpression: { userId: { $exists: true, $type: "objectId" } },
+    }
+);
+cartSchema.index(
+    { sessionId: 1 },
+    {
+        unique: true,
+        partialFilterExpression: { sessionId: { $exists: true, $type: "string" } },
+    }
+);
 
 export const Cart = mongoose.model("Cart", cartSchema);
