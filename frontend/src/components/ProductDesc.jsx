@@ -28,14 +28,14 @@ const ProductDesc = ({ product }) => {
     return (
         <>
             {/* Content Card */}
-            <div className="bg-white rounded-t-3xl -mt-6 p-6 shadow-lg space-y-4">
+            <div className="bg-white rounded-t-3xl -mt-6 mb-10 p-6 shadow-lg space-y-4">
 
-                <h1 className="text-2xl font-bold">{product.productName}</h1>
+                <h1 className="text-2xl font-bold text-gray-500 text-center">{product.productName}</h1>
 
                 <p className="text-gray-500 text-sm">{product.category}</p>
 
                 <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-pink-600">
+                    <span className="text-2xl font-bold text-black">
                         Rs. {product.productPrice}
                     </span>
                 </div>
@@ -90,13 +90,17 @@ const ProductDesc = ({ product }) => {
                     disabled={loading}
                     className={`
     w-full 
-    bg-pink-600 
-    text-white 
+    bg-white
+    text-black
+    border
+    border-black
+    hover:bg-black
+    hover:text-white
     py-3 
-    rounded-lg 
+     
     transition-all 
     duration-300
-    ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-pink-700'}
+    ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-black'}
   `}
                 >
                     {loading ? "Processing" : `Add to Cart • Rs. ${product.productPrice * quantity}`}
