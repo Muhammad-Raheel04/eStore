@@ -22,6 +22,14 @@ const AddressForm = () => {
         zip: "",
         country: "",
     });
+  const requiredFields = ["fullName", "phone", "email", "address", "city", "state", "zip", "country"];
+  const getMissingFields = (addr) => {
+    if (!addr) return requiredFields;
+    return requiredFields.filter((k) => {
+      const v = addr[k];
+      return typeof v !== "string" || v.trim() === "";
+    });
+  };
 
     const { cart, addresses, selectedAddress } = useSelector((store) => store.product);
     const [showForm, setShowForm] = useState(addresses?.length > 0 ? false : true);
@@ -34,7 +42,12 @@ const AddressForm = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSave = () => {
+  const handleSave = () => {
+    const missing = getMissingFields(formData);
+    if (missing.length) {
+      toast.error(`Please fill: ${missing.join(", ")}`);
+      return;
+    }
         setSavingAddress(true);
         setTimeout(() => {
             dispatch(addAddress(formData));
@@ -52,25 +65,32 @@ const AddressForm = () => {
             return;
         }
 
-        if (selectedAddress === null || !addresses[selectedAddress]) {
-            toast.error("Please select a shipping address");
-            return;
-        }
+    const addr = selectedAddress !== null ? addresses[selectedAddress] : null;
+    if (!addr) {
+      toast.error("Please select a shipping address");
+      return;
+    }
+    const missing = getMissingFields(addr);
+    if (missing.length) {
+      toast.error(`Please complete address fields: ${missing.join(", ")}`);
+      setShowForm(true);
+      setFormData({ ...formData, ...addr });
+      return;
+    }
 
         try {
             setPlacingOrder(true);
-            const res = await API.post(
-                "order/cod",
-                { shippingAddress: addresses[selectedAddress] },
-                { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } }
-            );
+            const token = localStorage.getItem("accessToken");
+            const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+      const res = await API.post("order/cod", { shippingAddress: addr }, config);
             if (res.data.success) {
                 toast.success("Order Placed Successfully!");
                 navigate("/order-success");
             }
         } catch (error) {
             console.log(error);
-            toast.error("Failed to place order. Try again!");
+            const apiMsg = error?.response?.data?.message || error.message || "Failed to place order. Try again!";
+            toast.error(apiMsg);
         } finally {
             setPlacingOrder(false);
         }
