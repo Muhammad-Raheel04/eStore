@@ -69,14 +69,14 @@ const Cart = () => {
     loadCart()
   }, [dispatch])
   return (
-    <div className="pt-2 bg-gray-50 min-h-screen">
+    <div className="pt-4 bg-gray-50 min-h-screen">
       {cart?.items?.length > 0 ?
         <div className="max-w-7xl mx-auto">
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-7 px-4">
             <div className="flex flex-col gap-5 flex-1">
               {cart?.items?.length > 0 ? (
                 <div className='max-w-7xl mx-auto'>
-                  <h1 className="text-2xl font-bold text-gray-800 mb-7">Shopping Cart</h1>
+                  <h1 className="text-2xl p-2 text-gray-800 mb-7 text-center border-t border-b border-gray-500 w-full">Shopping Cart</h1>
                   <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-7">
                     <div className="flex flex-col gap-5 flex-1">
                       {cart?.items?.map((product, index) => {
