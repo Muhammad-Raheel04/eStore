@@ -85,7 +85,11 @@ const Products = () => {
                         setBrand={setBrand}
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
+                        sortOrder={sortOrder}
+                        setSortOrder={setSortOrder}
                         allProducts={allProducts}
+                        search={search}
+                        setSearch={setSearch}
                         resetFilters={() => {
                             setSearch("");
                             setCategory("All");
@@ -167,23 +171,10 @@ const Products = () => {
                     </div>
                 </div>
 
-                {/* Products */}
-                <div className="flex-1">
-                    <div className='hidden lg:flex justify-end mb-4'>
-                        <Select onValueChange={(value) => setSortOrder(value)}>
-                            <SelectTrigger className="w-[200px]">
-                                <SelectValue placeholder="Sort by price" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectItem value="lowToHigh">Price: Low to High</SelectItem>
-                                    <SelectItem value="highToLow">Price: High to Low</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
 
-                    <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6 '>
+                <div className="flex-1">
+                    {/* Products */}
+                    <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-2'>
                         {products.filter(Boolean).map((product) => (
                             <ProductCard
                                 key={product._id}
