@@ -77,11 +77,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/address',
-    element: <ProtectedRoute><AddressForm/></ProtectedRoute>
+    element: <><Navbar></Navbar><AddressForm/></>
   },
   {
     path: '/order-success',
-    element: <ProtectedRoute><OrderSuccess></OrderSuccess></ProtectedRoute>
+    element: <><OrderSuccess></OrderSuccess></>
   },
   {
     path: '/dashboard',
