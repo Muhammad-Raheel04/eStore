@@ -107,7 +107,7 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
           <input type="range" min="0" value={priceRange[1]} onChange={handleMaxChange} max="999999" step="100" className='w-full' />
         </div>
         {/* Reset button */}
-        <Button onClick={resetFilters} className="bg-pink-600 text-white mt-5 cursor-pointer w-full" >Reset Filter</Button>
+        <Button onClick={resetFilters} className="bg-white text-black border border-black hover:bg-black hover:text-white mt-5 cursor-pointer w-full" >Reset Filter</Button>
       </div>
     </div>
   );
