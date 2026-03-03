@@ -77,7 +77,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/address',
-    element: <><Navbar></Navbar><AddressForm/></>
+    element: <><Navbar></Navbar><AddressForm/><Footer/></>
   },
   {
     path: '/order-success',
