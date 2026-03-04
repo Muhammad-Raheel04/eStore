@@ -19,7 +19,7 @@ const Footer = () => {
         <div className='mb-6 md:mb-0'>
           <h3 className='text-xl font-semibold'>Customer Service</h3>
           <ul className='mt-2 text-sm space-y-2'>
-            <li>Contact Us</li>
+            <li><a href="mailto:raheel31102004@gmail.com">Contact Us</a></li>
             <li>Shipping & Returns</li>
             <li>FAQs</li>
             <li>Order Tracking</li>
