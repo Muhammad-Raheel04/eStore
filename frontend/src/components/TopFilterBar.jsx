@@ -13,19 +13,40 @@ import { Input } from "./ui/input";
 const TopFilterBar = ({
     category,
     setCategory,
-    brand,
-    setBrand,
+    type,
+    setType,
     sortOrder,
     setSortOrder,
     search,
-    setSearch, 
+    setSearch,
     priceRange,
     setPriceRange,
-    allProducts,
     resetFilters,
+    allProducts
 }) => {
-    const categories = ["All", ...new Set(allProducts.map(p => p.category))];
-    const brands = ["All", ...new Set(allProducts.map(p => p.brand))];
+
+    const showCategory = type && type !== "All";
+
+    // Dynamically extract categories from products
+    const categories = showCategory
+        ? [
+            "All",
+            ...new Set(
+                allProducts
+                    .filter(p => p.type === type)
+                    .map(p => p.category)
+                    .filter(Boolean)
+            )
+        ]
+        : [];
+
+    const types = ["All", "men", "women", "kids", "unisex"];
+
+    const handleTypeChange = (val) => {
+        setType(val);
+        setCategory("All"); // Reset category when type changes
+    };
+
     return (
         <div className="w-full border-y bg-white py-4 px-4 flex flex-wrap gap-4 items-center justify-between">
 
@@ -36,41 +57,43 @@ const TopFilterBar = ({
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search..."
-                    className="w-[220px] bg-white rounded-md border-gray-200 border " />
-                {/* Category */}
-                <Select onValueChange={setCategory} value={category}>
+                    className="w-[220px] bg-white rounded-md border-gray-200 border"
+                />
+
+
+
+                {/* Type */}
+                <Select onValueChange={handleTypeChange} value={type}>
                     <SelectTrigger className="w-[160px]">
-                        <SelectValue placeholder="CATEGORY" />
+                        <SelectValue placeholder="TYPE" />
                     </SelectTrigger>
                     <SelectContent>
-
-                        {categories.map((item, index) => {
-                            const label = item === "All" ? "Categories" : item;
-                            return (
-                                <SelectItem key={index} value={item}>
-                                    {label}
-                                </SelectItem>
-                            );
-                        })}
+                        {types.map((item, index) => (
+                            <SelectItem key={index} value={item}>
+                                {item === "All"
+                                    ? "Types"
+                                    : item.charAt(0).toUpperCase() + item.slice(1)}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
-
-                {/* Brand */}
-                <Select onValueChange={setBrand} value={brand}>
-                    <SelectTrigger className="w-[160px]">
-                        <SelectValue placeholder="BRAND" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {brands.map((item, index) => {
-                            const label = item === "All" ? "Brands" : item;
-                            return (
+                {/* Category (Only visible when type selected) */}
+                {showCategory && categories.length > 0 && (
+                    <Select onValueChange={setCategory} value={category}>
+                        <SelectTrigger className="w-[160px]">
+                            <SelectValue placeholder="CATEGORY" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {categories.map((item, index) => (
                                 <SelectItem key={index} value={item}>
-                                    {label}
+                                    {item === "All"
+                                        ? "Categories"
+                                        : item.charAt(0).toUpperCase() + item.slice(1)}
                                 </SelectItem>
-                            );
-                        })}
-                    </SelectContent>
-                </Select>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                )}
 
                 {/* Price */}
                 <Select
@@ -96,11 +119,12 @@ const TopFilterBar = ({
             {/* Reset Button */}
             <Button
                 onClick={resetFilters}
-                className="bg-white  !p-2 text-black !font-normal border border-gray-200 rounded-md hover:text-white"
+                className="bg-white !p-2 text-black !font-normal border border-gray-200 rounded-md hover:text-white"
             >
                 Reset Filter
             </Button>
-            {/* Right Side - Sort */}
+
+            {/* Sort */}
             <div>
                 <Select onValueChange={(value) => setSortOrder(value)} value={sortOrder}>
                     <SelectTrigger className="w-[200px]">
