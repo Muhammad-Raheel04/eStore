@@ -10,6 +10,14 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader } from 'lucide-react'
 import { toast } from 'sonner'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { categoriesMap, types } from '@/constants/categories'
 
 
 const AddProduct = () => {
@@ -22,8 +30,8 @@ const AddProduct = () => {
     productPrice: 0,
     productDesc: "",
     productImg: [],
-    brand: "",
-    category: ""
+    category: "",
+    type: "men"
   });
 
   const handleChange = (e) => {
@@ -31,13 +39,6 @@ const AddProduct = () => {
     setProductData((prev) => ({
       ...prev,
       [name]: value
-    }))
-  }
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setProductData((prev) => ({
-      ...prev,
-      productImg: files
     }))
   }
 
@@ -52,7 +53,7 @@ const AddProduct = () => {
     formData.append("productPrice", productData.productPrice);
     formData.append("productDesc", productData.productDesc);
     formData.append("category", productData.category);
-    formData.append("brand", productData.brand);
+    formData.append("type", productData.type);
 
     // Check if productImg exists and has length
     if (!productData.productImg || productData.productImg.length === 0) {
@@ -83,8 +84,8 @@ const AddProduct = () => {
           productPrice: 0,
           productDesc: "",
           productImg: [],
-          brand: "",
-          category: ""
+          category: "",
+          type: "men"
         });
       }
     } catch (error) {
@@ -126,27 +127,35 @@ const AddProduct = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label>Brand</Label>
-                <Input
-                  type="text"
-                  name="brand"
-                  value={productData.brand}
-                  onChange={handleChange}
-                  placeholder="Ex-apple"
-                  required />
+                <Label>Type</Label>
+                <Select value={productData.type} onValueChange={(val) => setProductData(prev => ({ ...prev, type: val, category: "" }))}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {types.map(t => (
+                      <SelectItem key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="grid gap-2">
                 <Label>Category</Label>
-                <Input
-                  type="text"
-                  name="category"
-                  value={productData.category}
-                  onChange={handleChange}
-                  placeholder="Ex-mobile"
-                  required />
+                <Select value={productData.category} onValueChange={(val)=> setProductData(prev=>({...prev, category: val}))}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {(categoriesMap[productData.type] || []).map(c => (
+                      <SelectItem key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
+
+            
 
             <div className="grid gap-2">
               <div className="flex items-center">
