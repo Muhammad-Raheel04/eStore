@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const handleCategoryClick = (category) => {
-    navigate(`/products?category=${category}`);
+  const handleTypeClick = (type) => {
+    navigate(`/products?type=${type}`);
   };
   return (
     <div className="min-h-screen bg-gray-50">
@@ -61,7 +61,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
             {/* Category Card 1 */}
             <div>
-              <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
+              <div onClick={() => handleTypeClick("men")} className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
                 <img
                   src="/men.jpg"
                   alt="Mens"
@@ -72,14 +72,14 @@ const LandingPage = () => {
                 </div>
               </div>
               <div
-                onClick={() => handleCategoryClick("Mens")}
+                onClick={() => handleTypeClick("men")}
                 className="md:hidden relative group overflow-hidden p-2 shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black mt-2 text-center hover:bg-black hover:text-white"
               >Men</div>
             </div>
 
             {/* Category Card 2 */}
             <div>
-              <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
+              <div onClick={() => handleTypeClick("women")} className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
                 <img
                   src="/women.jpg"
                   alt="womens"
@@ -90,14 +90,14 @@ const LandingPage = () => {
                 </div>
               </div>
               <div
-                onClick={() => handleCategoryClick("Women")}
+                onClick={() => handleTypeClick("women")}
                 className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer  border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
               >Women</div>
             </div>
 
             {/* Category Card 3 */}
             <div>
-              <div className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300">
+              <div onClick={() => handleTypeClick("unisex")} className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
                 <img
                   src="/leatherBags.avif"
                   alt="Leather Products"
@@ -108,7 +108,7 @@ const LandingPage = () => {
                 </div>
               </div>
               <div
-                onClick={() => handleCategoryClick("Leather Product")}
+                onClick={() => handleTypeClick("unisex")}
                 className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
               >Leather Product</div>
             </div>
