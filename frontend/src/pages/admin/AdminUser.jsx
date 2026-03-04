@@ -39,8 +39,8 @@ const AdminUsers = () => {
   }, [])
   return (
     <div className='pl-[350px] py-20 pr-20 mx-auto px-4'>
-      <h1 className='font-bold text-2xl'>User Management</h1>
-      <p>View and manage registered users</p>
+      <h1 className='font-bold text-2xl text-center'>User Management</h1>
+      <p className='text-center'>View and manage registered users</p>
       <div className='flex relative w-[300px] mt-6'>
         <Search className='absolute left-2 top-1 text-gray-600 w-5' />
         <Input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='pl-10' placeholder="Search Users..." />
@@ -48,7 +48,7 @@ const AdminUsers = () => {
       <div className='grid grid-cols-2 gap-7 mt-7'>
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className='bg-pink-100 p-5 rounded-lg'>
+            <div key={index} className='bg-gray-300 p-5 '>
               <div className='flex items-center gap-2'>
                 <Skeleton className='rounded-full w-16 h-16' />
                 <div>
@@ -65,9 +65,9 @@ const AdminUsers = () => {
         ) : (
           filteredUsers.map((user) => {
             return (
-              <div key={user._id} className='bg-pink-100 p-5 rounded-lg'>
+              <div key={user._id} className='bg-gray-200 border border-black p-5'>
                 <div className='flex items-center gap-2'>
-                  <img src={user.profilePic || UserLogo} alt="" className='rounded-full w-16 aspect-square object-cover border border-pink-600' />
+                  <img src={user.profilePic || UserLogo} alt="" className='rounded-full w-16 aspect-square object-cover border border-black' />
                   <div>
                     <h1 className='font-semibold'>@{user.firstName} {user.lastName}</h1>
                     <h3>{user.email}</h3>
