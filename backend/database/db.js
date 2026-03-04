@@ -1,10 +1,20 @@
 import mongoose  from "mongoose";
 import { Cart } from "../models/CartModel.js";
+import { Product } from "../models/productModel.js";
 
 const connectDB=async()=>{
     try{
         await mongoose.connect(`${process.env.MONGO_URI}/eStore`);
         console.log("Mongodb connected successfully");
+        try{
+            await Product.updateMany(
+                { $or: [{ type: { $exists: false } }, { type: null }, { type: "" }] },
+                { $set: { type: "unisex" } }
+            );
+            console.log("Backfilled product.type for legacy documents");
+        }catch(err){
+            console.log("Backfill error:",err?.message);
+        }
         try{
             // Ensure correct partial unique indexes for carts
             const indexes = await Cart.collection.indexes();
