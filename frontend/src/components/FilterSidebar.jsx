@@ -3,18 +3,19 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
 
-const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBrand, setPriceRange, allProducts, priceRange, onFilterApply }) => {
-  const Categories = allProducts.map(p => p.category)
-  const UniqueCategory = ["All", ...new Set(Categories)];
-  const Brands = allProducts.map(p => p.brand)
-  const UniqueBrand = ["All", ...new Set(Brands)];
+const FilterSidebar = ({ search, setSearch, category, setCategory, type, setType, allProducts, setPriceRange, priceRange, onFilterApply }) => {
+  const UniqueCategory = type && type !== "All"
+    ? ["All", ...new Set(allProducts.filter(p => p.type === type).map(p => p.category).filter(Boolean))]
+    : ["All"];
+  const Types = ["All", "men", "women", "kids", "unisex"];
   const handleCategoryClick = (val) => {
     setCategory(val)
     onFilterApply?.()
   }
 
-  const handleBrandChange = (e) => {
-    setBrand(e.target.value);
+  const handleTypeClick = (val) => {
+    setType(val);
+    setCategory("All");
     onFilterApply?.();
   }
   const handleMinChange = (e) => {
@@ -36,7 +37,7 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
   const resetFilters = () => {
     setSearch("");
     setCategory("All");
-    setBrand("All");
+    setType("All");
     setPriceRange([0, 999999])
     onFilterApply?.();
   }
@@ -76,22 +77,21 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, brand, setBra
         ))}
       </div>
 
-      {/* Brands */}
-      <h1 className="mt-5 font-semibold text-xl">Brand</h1>
-      <select
-        className="bg-white w-full p-2 border border-gray-400 rounded-md mt-3"
-        value={brand}
-        onChange={handleBrandChange}
-      >
-        {UniqueBrand.map((item, index) => {
-          const label = item === "All" ? "BRANDS" : item.toUpperCase();
-          return (
-            <option key={index} value={item}>
-              {label}
-            </option>
-          );
-        })}
-      </select>
+      {/* Type */}
+      <h1 className="mt-5 font-semibold text-xl">Type</h1>
+      <div className="flex flex-col gap-2 mt-3">
+        {Types.map((item, index) => (
+          <div key={index} className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="type"
+              checked={type === item}
+              onChange={() => handleTypeClick(item)}
+              id={`type-${index}`} />
+            <Label htmlFor={`type-${index}`}>{item === "All" ? "Types" : item.charAt(0).toUpperCase() + item.slice(1)}</Label>
+          </div>
+        ))}
+      </div>
       {/* price range */}
       <h1 className='mt-5 font-semibold text-xl mb-3'>Price Range</h1>
       <div className='flex flex-col gap-2'>
