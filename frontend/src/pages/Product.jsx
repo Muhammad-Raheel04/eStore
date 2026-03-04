@@ -23,7 +23,7 @@ const Products = () => {
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All");
-    const [brand, setBrand] = useState("All");
+    const [typeFilter, setTypeFilter] = useState("All");
     const [priceRange, setPriceRange] = useState([0, 999999]);
     const [sortOrder, setSortOrder] = useState('');
     const [showSidebar, setShowSidebar] = useState(false);
@@ -57,8 +57,8 @@ const Products = () => {
             filtered = filtered.filter(p => p.category === category);
         }
 
-        if (brand !== "All") {
-            filtered = filtered.filter(p => p.brand === brand);
+        if (typeFilter !== "All") {
+            filtered = filtered.filter(p => p.type === typeFilter);
         }
 
         filtered = filtered.filter(p => p.productPrice >= priceRange[0] && p.productPrice <= priceRange[1]);
@@ -69,7 +69,7 @@ const Products = () => {
         }
 
         dispatch(setProducts(filtered))
-    }, [sortOrder, allProducts, search, category, brand, priceRange, dispatch])
+    }, [sortOrder, allProducts, search, category, typeFilter, priceRange, dispatch])
     useEffect(() => {
         getAllProducts();
     }, []);
@@ -91,8 +91,8 @@ const Products = () => {
                     <TopFilterBar
                         category={category}
                         setCategory={setCategory}
-                        brand={brand}
-                        setBrand={setBrand}
+                        type={typeFilter}
+                        setType={setTypeFilter}
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
                         sortOrder={sortOrder}
@@ -103,7 +103,7 @@ const Products = () => {
                         resetFilters={() => {
                             setSearch("");
                             setCategory("All");
-                            setBrand("All");
+                            setTypeFilter("All");
                             setPriceRange([0, 999999]);
                         }}
                     />
@@ -168,10 +168,10 @@ const Products = () => {
                             <FilterSidebar
                                 search={search}
                                 setSearch={setSearch}
-                                brand={brand}
-                                setBrand={setBrand}
                                 category={category}
                                 setCategory={setCategory}
+                                type={typeFilter}
+                                setType={setTypeFilter}
                                 allProducts={allProducts}
                                 priceRange={priceRange}
                                 setPriceRange={setPriceRange}
