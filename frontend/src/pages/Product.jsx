@@ -76,10 +76,11 @@ const Products = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const categoryFromURL = params.get("category");
+        const typeFromURL = params.get("type");
 
-        if (categoryFromURL) {
-            setCategory(categoryFromURL);
-        }
+        if (typeFromURL) setTypeFilter(typeFromURL);
+        if (categoryFromURL) setCategory(categoryFromURL);
+        if (typeFromURL && !categoryFromURL) setCategory("All");
     }, [location.search]);
     return (
         <div className='pt-3 pb-10 px-4 sm:px-6 lg:px-8'>
