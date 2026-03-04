@@ -49,8 +49,8 @@ const AdminOrders = () => {
     }
   };
   const filteredOrders = orders.filter(order => {
-    const email = order.user?.email?.toLowerCase() || '';
-    const orderId = order._id?.toLowerCase() || '';
+    const email = (order.user?.email || order.guestInfo?.email || '').toLowerCase();
+    const orderId = (order.orderId || order._id || '').toLowerCase();
     const term = searchTerm.toLowerCase();
     return email.includes(term) || orderId.includes(term);
   });
@@ -94,11 +94,36 @@ const AdminOrders = () => {
   }
 
   if (orders.length === 0) {
-    return <div className="text-center text-pink-600 flex items-center justify-center h-screen">No orders found.</div>;
+    return <div className="pl-[350px] pt-20  h-screen overflow-hidden flex flex-col">
+      <div className="flex-1 overflow-y-auto overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+          <thead className="bg-pink-600 text-white">
+            <tr>
+              <th className="text-left p-1 border-b">Order ID</th>
+              <th className="text-left p-1 border-b">User</th>
+              <th className="text-left p-1 border-b">Type</th>
+              <th className="text-left p-1 border-b">Address</th>
+              <th className="text-left p-1 border-b">Items</th>
+              <th className="text-left p-1 border-b">Status</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+            <tr>
+              <td colSpan="6" className="text-center p-2">
+                No Orders
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
   }
 
   return (
-    <div className="pl-[350px] py-20 pr-20 mx-auto px-4">
+    <div className="pl-[350px] pt-20  h-screen overflow-hidden flex flex-col">
       <h2 className="text-2xl font-bold mb-6">User Orders</h2>
       <div className="mb-4">
         <input
@@ -110,15 +135,16 @@ const AdminOrders = () => {
         />
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="flex-1 overflow-y-auto overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg">
           <thead className="bg-pink-600 text-white">
             <tr>
-              <th className="text-left p-3 border-b">Order ID</th>
-              <th className="text-left p-3 border-b">User</th>
-              <th className="text-left p-3 border-b">Address</th>
-              <th className="text-left p-3 border-b">Items</th>
-              <th className="text-left p-3 border-b">Status</th>
+              <th className="text-left p-1 border-b">Order ID</th>
+              <th className="text-left p-1 border-b">User</th>
+              <th className="text-left p-1 border-b">Type</th>
+              <th className="text-left p-1 border-b">Address</th>
+              <th className="text-left p-1 border-b">Items</th>
+              <th className="text-left p-1 border-b">Status</th>
             </tr>
           </thead>
 
@@ -130,18 +156,30 @@ const AdminOrders = () => {
 
               return (
                 <tr key={order._id} className="hover:bg-gray-50 align-top">
-                  <td className="p-3 border-b font-mono text-sm">{order._id}</td>
-                  <td className="p-3 border-b">
-                    <p className="font-medium">{order.user?.firstName} {order.user?.lastName}</p>
-                    <p className="text-gray-500 text-sm">{order.user?.email}</p>
+                  <td className="p-1 border-b font-mono text-sm">{order.orderId || order._id}</td>
+                  <td className="p-1 border-b">
+                    <p className="font-medium">
+                      {order.isGuest ? order.guestInfo?.fullName : `${order.user?.firstName || ''} ${order.user?.lastName || ''}`}
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      {order.isGuest ? order.guestInfo?.email : order.user?.email}
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      {order.isGuest ? order.guestInfo?.phone : ''}
+                    </p>
                   </td>
-                  <td className="p-3 border-b">
+                  <td className="p-1 border-b">
+                    <span className={`px-2 py-0.5 rounded-full text-xs ${order.isGuest ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}`}>
+                      {order.isGuest ? 'Guest Order' : 'Registered User'}
+                    </span>
+                  </td>
+                  <td className="p-1 border-b">
                     <p>{order?.shippingAddress?.address}, {order?.shippingAddress?.city}</p>
                     <p>{order?.shippingAddress?.phone}</p>
                     <p>Zip ({order?.shippingAddress?.zip})</p>
                     <p>{order?.shippingAddress?.country}</p>
                   </td>
-                  <td className="p-3 border-b">
+                  <td className="p-1 border-b">
                     {order.products?.map((item, index) => (
                       <div key={index} className="mb-2">
                         <p className="font-medium">{item.productId?.productName}</p>
@@ -151,15 +189,15 @@ const AdminOrders = () => {
                       </div>
                     ))}
                   </td>
-                  <td className="p-3 border-b">
+                  <td className="p-1 border-b">
                     <div className="mb-2">
-                      <span className={`px-3 py-1 rounded-full text-white text-sm ${status === 'pending' ? 'bg-yellow-500' : status === 'paid' ? 'bg-blue-500' : 'bg-green-500'}`}>
+                      <span className={`px-1 py-1 rounded-full text-white text-sm ${status === 'pending' ? 'bg-yellow-500' : status === 'paid' ? 'bg-blue-500' : 'bg-green-500'}`}>
                         {status}
                       </span>
                     </div>
                     <button
                       onClick={() => handleStatusChange(order._id, status)}
-                      className="px-3 py-1 rounded-full bg-pink-600 text-white text-sm hover:bg-gray-800"
+                      className="px-1 py-1 rounded-full bg-pink-600 text-white text-sm hover:bg-gray-800"
                     >
                       Change Status
                     </button>
