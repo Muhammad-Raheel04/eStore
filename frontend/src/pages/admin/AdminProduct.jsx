@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Select,
     SelectContent,
@@ -48,6 +48,22 @@ const AdminProduct = () => {
     const [sortOrder, setSortOrder] = useState("");
     const accessToken = localStorage.getItem('accessToken');
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchAll = async () => {
+            try {
+                const res = await API.get('product/getallproducts');
+                if (res.data?.success) {
+                    dispatch(setProducts(res.data.products));
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        if (!products || products.length === 0) {
+            fetchAll();
+        }
+    }, [dispatch]);
 
     let filteredProducts = products.filter((product) => {
         return (
