@@ -38,6 +38,7 @@ import ImageUpload from '@/components/ImageUpload'
 import API from '@/utils/API'
 import { toast } from 'sonner'
 import { setProducts } from '@/redux/productSlice'
+import { categoriesMap, types } from '@/constants/categories'
 
 const AdminProduct = () => {
     const { products } = useSelector((store) => store.product)
@@ -51,8 +52,8 @@ const AdminProduct = () => {
     let filteredProducts = products.filter((product) => {
         return (
             product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            product.category.toLowerCase().includes(searchTerm.toLowerCase())
+            (product.category || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (product.type || '').toLowerCase().includes(searchTerm.toLowerCase())
         )
     });
 
@@ -78,7 +79,9 @@ const AdminProduct = () => {
         formData.append("productDesc", editProduct.productDesc)
         formData.append("productPrice", editProduct.productPrice)
         formData.append("category", editProduct.category)
-        formData.append("brand", editProduct.brand)
+        if (editProduct.type) {
+            formData.append("type", editProduct.type)
+        }
 
         const existingImages = editProduct.productImg
             .filter((img) => !(img instanceof File) && img.public_id)
@@ -197,24 +200,30 @@ const AdminProduct = () => {
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4">
                                                     <div className="grid gap-2">
-                                                        <Label>Brand</Label>
-                                                        <Input
-                                                            value={editProduct?.brand}
-                                                            onChange={handleChange}
-                                                            type="text"
-                                                            name="brand"
-                                                            placeholder="Ex-apple"
-                                                            required />
+                                                        <Label>Type</Label>
+                                                        <Select value={editProduct?.type || 'unisex'} onValueChange={(val)=> setEditProduct(prev=>({...prev, type: val, category: ""}))}>
+                                                            <SelectTrigger className="w-full bg-white">
+                                                                <SelectValue placeholder="Select Type" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {types.map(t=>(
+                                                                    <SelectItem key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
                                                     </div>
                                                     <div className="grid gap-2">
                                                         <Label>Category</Label>
-                                                        <Input
-                                                            value={editProduct?.category}
-                                                            onChange={handleChange}
-                                                            type="text"
-                                                            name="category"
-                                                            placeholder="Ex-mobile"
-                                                            required />
+                                                        <Select value={editProduct?.category || ''} onValueChange={(val)=> setEditProduct(prev=>({...prev, category: val}))}>
+                                                            <SelectTrigger className="w-full bg-white">
+                                                                <SelectValue placeholder="Select Category" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {(categoriesMap[editProduct?.type || 'unisex'] || []).map(c=>(
+                                                                    <SelectItem key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
                                                     </div>
                                                 </div>
                                                 <div className='grid gap-2'>
