@@ -2,11 +2,10 @@ import React from 'react'
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
+import { categoriesMap } from '@/constants/categories';
 
-const FilterSidebar = ({ search, setSearch, category, setCategory, type, setType, allProducts, setPriceRange, priceRange, onFilterApply }) => {
-  const UniqueCategory = type && type !== "All"
-    ? ["All", ...new Set(allProducts.filter(p => p.type === type).map(p => p.category).filter(Boolean))]
-    : ["All"];
+const FilterSidebar = ({ search, setSearch, category, setCategory, type, setType, setPriceRange, priceRange, onFilterApply }) => {
+  const UniqueCategory = type && type !== "All" ? ["All", ...(categoriesMap[type] || [])] : ["All"];
   const Types = ["All", "men", "women", "kids", "unisex"];
   const handleCategoryClick = (val) => {
     setCategory(val)
@@ -22,7 +21,7 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, type, setType
     const value = Number(e.target.value);
     if (value <= priceRange[1]) {
       setPriceRange([value, priceRange[1]])
-      onFilterApply?.();
+      // onFilterApply?.();
     }
   }
 
@@ -30,7 +29,7 @@ const FilterSidebar = ({ search, setSearch, category, setCategory, type, setType
     const value = Number(e.target.value);
     if (value >= priceRange[0]) {
       setPriceRange([priceRange[0], value])
-      onFilterApply?.();
+      // onFilterApply?.();
     }
   }
 
