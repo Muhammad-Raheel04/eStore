@@ -62,7 +62,7 @@ const AdminOrders = () => {
 
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-            <thead className="bg-pink-600 text-white">
+            <thead className="bg-gray-500 text-white">
               <tr>
                 <th className="p-3 border-b">Order ID</th>
                 <th className="p-3 border-b">User</th>
@@ -97,7 +97,7 @@ const AdminOrders = () => {
     return <div className="pl-[350px] pt-20  h-screen overflow-hidden flex flex-col">
       <div className="flex-1 overflow-y-auto overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-          <thead className="bg-pink-600 text-white">
+          <thead className="bg-gray-500 text-white">
             <tr>
               <th className="text-left p-1 border-b">Order ID</th>
               <th className="text-left p-1 border-b">User</th>
@@ -137,7 +137,7 @@ const AdminOrders = () => {
 
       <div className="flex-1 overflow-y-auto overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-          <thead className="bg-pink-600 text-white">
+          <thead className="bg-gray-500 text-white">
             <tr>
               <th className="text-left p-1 border-b">Order ID</th>
               <th className="text-left p-1 border-b">User</th>
