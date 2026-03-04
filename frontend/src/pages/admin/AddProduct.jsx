@@ -96,7 +96,7 @@ const AddProduct = () => {
     }
   }
   return (
-    <div className="pl-[300px] py-10 pr-20 mx-auto px-4 bg-gray-100">
+    <div className="pl-[300px] pr-20 mx-auto px-4 bg-gray-100">
       <Card className="w-full my-20">
         <CardHeader>
           <CardTitle>Add Product</CardTitle>
@@ -174,7 +174,7 @@ const AddProduct = () => {
             <Button
               disabled={loading}
               onClick={submitHandler}
-              className='w-full bg-pink-600 cursor-pointer mt-4' type='submit'>
+              className='w-full bg-white text-black border border-black hover:bg-black hover:text-white cursor-pointer mt-4' type='submit'>
               {
                 loading ? <span className='flex gap-l items-center'><Loader className='animate-spin' /></span> : "Add Product"
               }
