@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-import { Edit, Search, Trash2 } from 'lucide-react'
+import { Bold, Edit, Search, Trash2 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -78,6 +78,29 @@ const AdminProduct = () => {
     }
     if (sortOrder === 'highToLow') {
         filteredProducts = [...filteredProducts].sort((a, b) => b.productPrice - a.productPrice)
+    }
+    if (sortOrder === 'categoryAsc') {
+        filteredProducts = [...filteredProducts].sort((a, b) =>
+            (a.category || '').localeCompare(b.category || '')
+        )
+    }
+
+    if (sortOrder === 'categoryDesc') {
+        filteredProducts = [...filteredProducts].sort((a, b) =>
+            (b.category || '').localeCompare(a.category || '')
+        )
+    }
+
+    if (sortOrder === 'typeAsc') {
+        filteredProducts = [...filteredProducts].sort((a, b) =>
+            (a.type || '').localeCompare(b.type || '')
+        )
+    }
+
+    if (sortOrder === 'typeDesc') {
+        filteredProducts = [...filteredProducts].sort((a, b) =>
+            (b.type || '').localeCompare(a.type || '')
+        )
     }
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -154,18 +177,24 @@ const AdminProduct = () => {
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        placeholder="Search Product..."
+                        placeholder="Search Product by name, type or category..."
                         className='w-[400px] items-center' />
                     <Search className='absolute right-3 top-1.5 text-gray-500' />
                 </div>
             </div>
-            <Select onValueChange={(value)=>setSortOrder(value)}>
+            <Select onValueChange={(value) => setSortOrder(value)}>
                 <SelectTrigger className='w-[200px] bg-white'>
-                    <SelectValue placeholder="Sort by Price" />
+                    <SelectValue placeholder="Sort" />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="lowToHigh">Price: Low to High</SelectItem>
                     <SelectItem value="highToLow">Price: High to Low</SelectItem>
+
+                    <SelectItem value="categoryAsc">Category: A - Z</SelectItem>
+                    <SelectItem value="categoryDesc">Category: Z - A</SelectItem>
+
+                    <SelectItem value="typeAsc">Type: A - Z</SelectItem>
+                    <SelectItem value="typeDesc">Type: Z - A</SelectItem>
                 </SelectContent>
             </Select>
             {
@@ -176,8 +205,10 @@ const AdminProduct = () => {
                                 <div className="flex gap-2 items-center">
                                     <img src={product.productImg && product.productImg.length > 0 ? product.productImg[0].url : ''} alt="" className="w-25 h-25" />
                                     <h1 className="font-bold w-96 text-gray-700">{product?.productName}</h1>
+                                    <div className="font-semibold text-black">Category {product?.category}</div>
+                                    <div className="font-semibold text-black">Type <bold>{product?.type}</bold></div>
                                 </div>
-                                <div className="font-semibold text-gray-800">{product?.productPrice}</div>
+                                <div className="font-semibold text-gray-800 px-2">{product?.productPrice}</div>
                                 <div className="flex gap-3">
 
                                     <Dialog open={open} onOpenChange={setOpen}>
@@ -217,12 +248,12 @@ const AdminProduct = () => {
                                                 <div className="grid grid-cols-2 gap-4">
                                                     <div className="grid gap-2">
                                                         <Label>Type</Label>
-                                                        <Select value={editProduct?.type || 'unisex'} onValueChange={(val)=> setEditProduct(prev=>({...prev, type: val, category: ""}))}>
+                                                        <Select value={editProduct?.type || 'unisex'} onValueChange={(val) => setEditProduct(prev => ({ ...prev, type: val, category: "" }))}>
                                                             <SelectTrigger className="w-full bg-white">
                                                                 <SelectValue placeholder="Select Type" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {types.map(t=>(
+                                                                {types.map(t => (
                                                                     <SelectItem key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</SelectItem>
                                                                 ))}
                                                             </SelectContent>
@@ -230,12 +261,12 @@ const AdminProduct = () => {
                                                     </div>
                                                     <div className="grid gap-2">
                                                         <Label>Category</Label>
-                                                        <Select value={editProduct?.category || ''} onValueChange={(val)=> setEditProduct(prev=>({...prev, category: val}))}>
+                                                        <Select value={editProduct?.category || ''} onValueChange={(val) => setEditProduct(prev => ({ ...prev, category: val }))}>
                                                             <SelectTrigger className="w-full bg-white">
                                                                 <SelectValue placeholder="Select Category" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {(categoriesMap[editProduct?.type || 'unisex'] || []).map(c=>(
+                                                                {(categoriesMap[editProduct?.type || 'unisex'] || []).map(c => (
                                                                     <SelectItem key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</SelectItem>
                                                                 ))}
                                                             </SelectContent>
