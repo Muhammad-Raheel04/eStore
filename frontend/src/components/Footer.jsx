@@ -11,7 +11,7 @@ const Footer = () => {
 
           <p className='mt-2 text-sm'>Powering Your World with the Best in eCommerce.</p>
           <p className='mt-2 text-sm'>Rajput & Co. Bahria Town Phase 8, RWP</p>
-          <p className='text-sm'>Email: hamzaraj541@gmail.com</p>
+          <p className='text-sm'><a href="mailto:raheel31102004@gmail.com">Email: hamzaraj541@gmail.com</a></p>
           <p className='text-sm'>Phone:  <a href="tel:+923155098774" className="ml-1 hover:text-gray-100">0315-5098774</a></p>
         </div>
 
