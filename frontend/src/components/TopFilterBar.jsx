@@ -26,8 +26,6 @@ const TopFilterBar = ({
 }) => {
 
     const showCategory = type && type !== "All";
-
-    // Dynamically extract categories from products
     const categories = showCategory
         ? [
             "All",
@@ -44,23 +42,22 @@ const TopFilterBar = ({
 
     const handleTypeChange = (val) => {
         setType(val);
-        setCategory("All"); // Reset category when type changes
+        setCategory("All");
     };
 
     return (
-        <div className="w-full border-y bg-white py-4 px-4 flex flex-wrap gap-4 items-center justify-between">
+        <div className="w-full border-y bg-white py-4 px-4 flex items-center gap-4">
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap items-center gap-4 flex-1">
 
+                {/* Search */}
                 <Input
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search..."
-                    className="w-[220px] bg-white rounded-md border-gray-200 border"
+                    className="flex-1 min-w-[220px] bg-white rounded-md border-gray-200 border"
                 />
-
-
 
                 {/* Type */}
                 <Select onValueChange={handleTypeChange} value={type}>
@@ -77,7 +74,8 @@ const TopFilterBar = ({
                         ))}
                     </SelectContent>
                 </Select>
-                {/* Category (Only visible when type selected) */}
+
+                {/* Category */}
                 {showCategory && categories.length > 0 && (
                     <Select onValueChange={setCategory} value={category}>
                         <SelectTrigger className="w-[160px]">
@@ -114,20 +112,16 @@ const TopFilterBar = ({
                         <SelectItem value="3000-999999">3000+</SelectItem>
                     </SelectContent>
                 </Select>
+
             </div>
 
-            {/* Reset Button */}
-            <Button
-                onClick={resetFilters}
-                className="bg-white !p-2 text-black !font-normal border border-gray-200 rounded-md hover:text-white"
-            >
-                Reset Filter
-            </Button>
 
-            {/* Sort */}
-            <div>
+            {/* RIGHT SIDE */}
+            <div className="flex items-center gap-4 ml-auto">
+
+                {/* Sort */}
                 <Select onValueChange={(value) => setSortOrder(value)} value={sortOrder}>
-                    <SelectTrigger className="w-[200px]">
+                    <SelectTrigger className="w-[160px]">
                         <SelectValue placeholder="Sort by price" />
                     </SelectTrigger>
                     <SelectContent>
@@ -137,7 +131,17 @@ const TopFilterBar = ({
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+
+                {/* Reset */}
+                <Button
+                    onClick={resetFilters}
+                    className="bg-black px-4 py-2 text-white font-normal border border-gray-200 rounded-md hover:bg-white hover:text-black"
+                >
+                    Reset Filter
+                </Button>
+
             </div>
+
         </div>
     );
 };
