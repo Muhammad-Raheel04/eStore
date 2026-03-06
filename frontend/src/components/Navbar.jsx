@@ -79,13 +79,13 @@ const Navbar = () => {
           {user ? (
             <Button
               onClick={logoutHandler}
-              className="hidden bg-white hover:bg-black hover:text-white text-black border-1 border-black px-4 py-2  transition"
+              className=" bg-white hover:bg-black hover:text-white text-black border-1 border-black px-4 py-2  transition"
             >
               Logout
             </Button>
           ) : (
             <Link to="/login">
-              <Button className="hidden bg-white hover:bg-black hover:text-white text-black border-1 border-black px-4 py-2  transition">
+              <Button className=" bg-white hover:bg-black hover:text-white text-black border-1 border-black px-4 py-2  transition">
                 Login
               </Button>
             </Link>
@@ -174,13 +174,13 @@ const Navbar = () => {
             {user ? (
               <Button
                 onClick={() => { logoutHandler(); setIsMenuOpen(false); }}
-                className="hidden w-full bg-white hover:bg-black hover:text-white text-black border-1 border-black py-3 "
+                className=" w-full bg-white hover:bg-black hover:text-white text-black border-1 border-black py-3 "
               >
                 Logout
               </Button>
             ) : (
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <Button className="hidden w-full bg-white text-black border-1 border-black hover:bg-black hover:text-white py-3 ">
+                <Button className=" w-full bg-white text-black border-1 border-black hover:bg-black hover:text-white py-3 ">
                   Login
                 </Button>
               </Link>
