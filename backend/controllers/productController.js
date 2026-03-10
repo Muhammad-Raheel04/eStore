@@ -1,10 +1,11 @@
-import { Product, categoriesByType } from "../models/productModel.js";
+import { Product } from "../models/productModel.js";
+import { ProductType } from "../models/productTypeModel.js";
 import cloudinary from "../utils/cloudinary.js";
 import getDataUri from "../utils/dataURI.js";
 
 export const addProduct = async (req, res) => {
     try {
-        const { productName, productDesc, productPrice, category, type } = req.body;
+        let { productName, productDesc, productPrice, category, type } = req.body;
         const userId = req.id;
 
         if (!productName || !productDesc || !productPrice || !category || !type) {
@@ -13,11 +14,11 @@ export const addProduct = async (req, res) => {
                 message: "All fields are required"
             });
         }
-        if (!categoriesByType[type] || !categoriesByType[type].includes(category)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid category for selected type"
-            });
+        type = String(type).toLowerCase().trim();
+        category = String(category).toLowerCase().trim();
+        const reg = await ProductType.findOne({ type });
+        if (reg && !reg.categories.includes(category)) {
+            return res.status(400).json({ success: false, message: "Invalid category for selected type" });
         }
 
         // Handle multiple image uploads
@@ -118,7 +119,7 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try {
         const { productId } = req.params;
-        const { productName, productDesc, productPrice, category, type, existingImages } = req.body;
+        let { productName, productDesc, productPrice, category, type, existingImages } = req.body;
 
         const product = await Product.findById(productId);
         if (!product) {
@@ -127,14 +128,12 @@ export const updateProduct = async (req, res) => {
                 message: "Product not found"
             });
         }
-        const nextType = type || product.type;
-        const nextCategory = category || product.category;
+        const nextType = (type ? String(type).toLowerCase().trim() : product.type);
+        const nextCategory = (category ? String(category).toLowerCase().trim() : product.category);
         if (nextType && nextCategory) {
-            if (!categoriesByType[nextType] || !categoriesByType[nextType].includes(nextCategory)) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Invalid category for selected type"
-                });
+            const reg2 = await ProductType.findOne({ type: nextType });
+            if (reg2 && !reg2.categories.includes(nextCategory)) {
+                return res.status(400).json({ success: false, message: "Invalid category for selected type" });
             }
         }
 
@@ -174,9 +173,9 @@ export const updateProduct = async (req, res) => {
         product.productName = productName || product.productName;
         product.productDesc = productDesc || product.productDesc;
         product.productPrice = productPrice || product.productPrice;
-        product.category = category || product.category;
+        product.category = category ? String(category).toLowerCase().trim() : product.category;
         if (type) {
-            product.type = type;
+            product.type = String(type).toLowerCase().trim();
         }
         product.productImg = updatedImages;
 
