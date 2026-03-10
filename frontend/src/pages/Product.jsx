@@ -27,6 +27,7 @@ const Products = () => {
     const [priceRange, setPriceRange] = useState([0, 999999]);
     const [sortOrder, setSortOrder] = useState('');
     const [showSidebar, setShowSidebar] = useState(false);
+    const [typeDefs, setTypeDefs] = useState([]);
     const dispatch = useDispatch();
     const location = useLocation();
     const getAllProducts = async () => {
@@ -42,6 +43,16 @@ const Products = () => {
             toast.error(error.response.data.message);
         } finally {
             setLoading(false);
+        }
+    };
+    const getTypes = async () => {
+        try {
+            const res = await API.get('types');
+            if (res.data?.success) {
+                setTypeDefs(res.data.types || []);
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
     useEffect(() => {
@@ -72,6 +83,7 @@ const Products = () => {
     }, [sortOrder, allProducts, search, category, typeFilter, priceRange, dispatch])
     useEffect(() => {
         getAllProducts();
+        getTypes();
     }, []);
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -94,11 +106,11 @@ const Products = () => {
                         setCategory={setCategory}
                         type={typeFilter}
                         setType={setTypeFilter}
+                        typeDefs={typeDefs}
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
                         sortOrder={sortOrder}
                         setSortOrder={setSortOrder}
-                        allProducts={allProducts}
                         search={search}
                         setSearch={setSearch}
                         resetFilters={() => {
@@ -106,6 +118,7 @@ const Products = () => {
                             setCategory("All");
                             setTypeFilter("All");
                             setPriceRange([0, 999999]);
+                            getTypes();
                         }}
                     />
                 </div>
@@ -173,7 +186,7 @@ const Products = () => {
                                 setCategory={setCategory}
                                 type={typeFilter}
                                 setType={setTypeFilter}
-                                allProducts={allProducts}
+                                typeDefs={typeDefs}
                                 priceRange={priceRange}
                                 setPriceRange={setPriceRange}
                                 onFilterApply={() => setShowSidebar(false)}
