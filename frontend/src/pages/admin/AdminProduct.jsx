@@ -38,7 +38,6 @@ import ImageUpload from '@/components/ImageUpload'
 import API from '@/utils/API'
 import { toast } from 'sonner'
 import { setProducts } from '@/redux/productSlice'
-import { categoriesMap, types } from '@/constants/categories'
 
 const AdminProduct = () => {
     const { products } = useSelector((store) => store.product)
@@ -48,6 +47,7 @@ const AdminProduct = () => {
     const [sortOrder, setSortOrder] = useState("");
     const accessToken = localStorage.getItem('accessToken');
     const dispatch = useDispatch();
+    const [typeDefs, setTypeDefs] = useState([]);
 
     useEffect(() => {
         const fetchAll = async () => {
@@ -60,9 +60,20 @@ const AdminProduct = () => {
                 console.log(err);
             }
         };
+        const fetchTypes = async () => {
+            try{
+                const res = await API.get('types');
+                if (res.data?.success) {
+                    setTypeDefs(res.data.types || []);
+                }
+            }catch(err){
+                console.log(err);
+            }
+        };
         if (!products || products.length === 0) {
             fetchAll();
         }
+        fetchTypes();
     }, [dispatch]);
 
     let filteredProducts = products.filter((product) => {
@@ -253,8 +264,8 @@ const AdminProduct = () => {
                                                                 <SelectValue placeholder="Select Type" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {types.map(t => (
-                                                                    <SelectItem key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</SelectItem>
+                                                                {typeDefs.map(t => (
+                                                                    <SelectItem key={t.type} value={t.type}>{t.type.charAt(0).toUpperCase() + t.type.slice(1)}</SelectItem>
                                                                 ))}
                                                             </SelectContent>
                                                         </Select>
@@ -266,9 +277,10 @@ const AdminProduct = () => {
                                                                 <SelectValue placeholder="Select Category" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {(categoriesMap[editProduct?.type || 'unisex'] || []).map(c => (
-                                                                    <SelectItem key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</SelectItem>
-                                                                ))}
+                                                                {(typeDefs.find(td => td.type === (editProduct?.type || 'unisex'))?.categories || [])
+                                                                    .map(c => (
+                                                                        <SelectItem key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</SelectItem>
+                                                                    ))}
                                                             </SelectContent>
                                                         </Select>
                                                     </div>
