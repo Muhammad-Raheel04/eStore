@@ -2,11 +2,12 @@ import React from 'react'
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
-import { categoriesMap } from '@/constants/categories';
 
-const FilterSidebar = ({ search, setSearch, category, setCategory, type, setType, setPriceRange, priceRange, onFilterApply }) => {
-  const UniqueCategory = type && type !== "All" ? ["All", ...(categoriesMap[type] || [])] : ["All"];
-  const Types = ["All", "men", "women", "kids", "unisex"];
+const FilterSidebar = ({ search, setSearch, category, setCategory, type, setType, typeDefs, setPriceRange, priceRange, onFilterApply }) => {
+  const Types = ["All", ...(Array.isArray(typeDefs) ? typeDefs.map(t => t.type) : [])];
+  const UniqueCategory = type && type !== "All"
+    ? ["All", ...(typeDefs?.find(t => t.type === type)?.categories || [])]
+    : ["All"];
   const handleCategoryClick = (val) => {
     setCategory(val)
     onFilterApply?.()
