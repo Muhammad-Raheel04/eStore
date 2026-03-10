@@ -5,6 +5,7 @@ import userRoute from './routes/userRoute.js';
 import productRoute from './routes/productRoute.js'
 import cartRoute from './routes/cartRoute.js';
 import orderRoute from './routes/orderRoute.js';
+import typeRoute from './routes/typeRoute.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 const app=express();
@@ -18,6 +19,7 @@ app.use('/api/v1/user',userRoute);
 app.use('/api/v1/product',productRoute);
 app.use('/api/v1/cart',cartRoute);
 app.use('/api/v1/order',orderRoute);
+app.use('/api/v1', typeRoute);
 const PORT=process.env.PORT;
 app.listen(PORT,()=>{
     connectDB();
