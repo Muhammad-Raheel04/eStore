@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { setProducts } from '@/redux/productSlice'
 import API from '@/utils/API'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader } from 'lucide-react'
 import { toast } from 'sonner'
@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { categoriesMap, types } from '@/constants/categories'
+// types and categories will be fetched from backend
 
 
 const AddProduct = () => {
@@ -25,6 +25,9 @@ const AddProduct = () => {
   const accessToken = localStorage.getItem('accessToken');
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [typeDefs, setTypeDefs] = useState([]); // [{type, categories: []}]
+  const [newType, setNewType] = useState("");
+  const [newCategory, setNewCategory] = useState("");
   const [productData, setProductData] = useState({
     productName: "",
     productPrice: 0,
@@ -33,6 +36,21 @@ const AddProduct = () => {
     category: "",
     type: "men"
   });
+
+  const loadTypes = async () => {
+    try {
+      const res = await API.get('types');
+      if (res.data?.success) {
+        setTypeDefs(res.data.types || []);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    loadTypes();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -133,9 +151,9 @@ const AddProduct = () => {
                     <SelectValue placeholder="Select Type" />
                   </SelectTrigger>
                   <SelectContent>
-                    {types.map(t => (
-                      <SelectItem key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</SelectItem>
-                    ))}
+                    {typeDefs.map(t => (
+                      <SelectItem key={t.type} value={t.type}>{t.type.charAt(0).toUpperCase() + t.type.slice(1)}</SelectItem>
+                    ))} 
                   </SelectContent>
                 </Select>
               </div>
@@ -147,11 +165,92 @@ const AddProduct = () => {
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
-                    {(categoriesMap[productData.type] || []).map(c => (
+                    {(typeDefs.find(t=>t.type===productData.type)?.categories || []).map(c => (
                       <SelectItem key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</SelectItem>
-                    ))}
+                    ))} 
                   </SelectContent>
                 </Select>
+              </div>
+            </div>
+
+            {/* Admin Controls for managing Types & Categories */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label>Add New Type</Label>
+                <div className="flex gap-2">
+                  <Input value={newType} onChange={(e)=>setNewType(e.target.value)} placeholder="e.g. pets" />
+                  <Button onClick={async ()=>{
+                    try{
+                      await API.post('type', { type: newType }, { headers: { Authorization: `Bearer ${accessToken}` }});
+                      setNewType(""); 
+                      await loadTypes();
+                      toast.success("Type added");
+                    }catch(e){ toast.error(e.response?.data?.message || "Failed to add type"); }
+                  }}>Add</Button>
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label>Delete Type</Label>
+                <div className="flex gap-2">
+                  <Select value={productData.type} onValueChange={(val)=> setProductData(prev=>({...prev, type: val, category: ""}))}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {typeDefs.map(t => (
+                        <SelectItem key={t.type} value={t.type}>{t.type}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button variant="destructive" onClick={async ()=>{
+                    try{
+                      await API.delete(`type/${productData.type}`, { headers: { Authorization: `Bearer ${accessToken}` }});
+                      await loadTypes();
+                      setProductData(prev=>({...prev, type: "men", category: ""}));
+                      toast.success("Type deleted");
+                    }catch(e){ toast.error(e.response?.data?.message || "Failed to delete type"); }
+                  }}>Delete</Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label>Add Category to Selected Type</Label>
+                <div className="flex gap-2">
+                  <Input value={newCategory} onChange={(e)=>setNewCategory(e.target.value)} placeholder="e.g. sneakers" />
+                  <Button onClick={async ()=>{
+                    try{
+                      await API.post('category', { type: productData.type, category: newCategory }, { headers: { Authorization: `Bearer ${accessToken}` }});
+                      setNewCategory(""); 
+                      await loadTypes();
+                      toast.success("Category added");
+                    }catch(e){ toast.error(e.response?.data?.message || "Failed to add category"); }
+                  }}>Add</Button>
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label>Delete Category from Selected Type</Label>
+                <div className="flex gap-2">
+                  <Select value={productData.category} onValueChange={(val)=> setProductData(prev=>({...prev, category: val}))}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {(typeDefs.find(t=>t.type===productData.type)?.categories || []).map(c => (
+                        <SelectItem key={c} value={c}>{c}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button variant="destructive" onClick={async ()=>{
+                    try{
+                      await API.delete(`category/${productData.type}/${productData.category}`, { headers: { Authorization: `Bearer ${accessToken}` }});
+                      await loadTypes();
+                      setProductData(prev=>({...prev, category: ""}));
+                      toast.success("Category deleted");
+                    }catch(e){ toast.error(e.response?.data?.message || "Failed to delete category"); }
+                  }}>Delete</Button>
+                </div>
               </div>
             </div>
 
