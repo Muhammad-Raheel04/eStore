@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
-
-export const categoriesByType = {
-    men: ["shirts", "pants", "shoes", "watches"],
-    women: ["dresses", "heels", "bags", "jewelry"],
-    kids: ["toys", "school-wear", "kids-shoes"],
-    unisex: ["hoodies", "caps"]
-};
+import { ProductType } from "./productTypeModel.js";
 
 const productSchema = new mongoose.Schema({
     userId: {
@@ -24,18 +18,22 @@ const productSchema = new mongoose.Schema({
     category: { 
         type: String,
         required: true,
-        validate: {
-            validator: function (val) {
-                if (!this.type) return true;
-                const allowed = categoriesByType[this.type] || [];
-                return allowed.includes(val);
-            },
-            message: props => `Invalid category '${props.value}' for type`
-        }
+        validate: [
+            {
+                validator: async function (val) {
+                    if (!this.type) return true;
+                    const rec = await ProductType.findOne({ type: this.type });
+                    if (!rec) return true; // allow if registry missing to keep backward compatibility
+                    return rec.categories.includes(val);
+                },
+                message: props => `Invalid category '${props.value}' for selected type`
+            }
+        ]
     },
     type: {
         type: String,
-        enum: ["men", "women", "kids", "unisex"],
+        trim: true,
+        lowercase: true,
         required: true,
         default: "unisex"
     }
