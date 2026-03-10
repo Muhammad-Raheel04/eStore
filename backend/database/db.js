@@ -1,6 +1,7 @@
 import mongoose  from "mongoose";
 import { Cart } from "../models/CartModel.js";
 import { Product } from "../models/productModel.js";
+import { ProductType } from "../models/productTypeModel.js";
 
 const connectDB=async()=>{
     try{
@@ -14,6 +15,22 @@ const connectDB=async()=>{
             console.log("Backfilled product.type for legacy documents");
         }catch(err){
             console.log("Backfill error:",err?.message);
+        }
+        try{
+            // Seed initial types & categories if collection empty
+            const count = await ProductType.countDocuments();
+            if (count === 0) {
+                const initial = [
+                    { type: "men", categories: ["shirts","pants","shoes","watches"] },
+                    { type: "women", categories: ["dresses","heels","bags","jewelry"] },
+                    { type: "kids", categories: ["toys","school-wear","kids-shoes"] },
+                    { type: "unisex", categories: ["hoodies","caps"] },
+                ];
+                await ProductType.insertMany(initial);
+                console.log("Seeded ProductType registry");
+            }
+        }catch(err){
+            console.log("Seeding ProductType error:", err?.message);
         }
         try{
             // Ensure correct partial unique indexes for carts
