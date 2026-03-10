@@ -15,30 +15,21 @@ const TopFilterBar = ({
     setCategory,
     type,
     setType,
+    typeDefs,
     sortOrder,
     setSortOrder,
     search,
     setSearch,
     priceRange,
     setPriceRange,
-    resetFilters,
-    allProducts
+    resetFilters
 }) => {
 
     const showCategory = type && type !== "All";
+    const types = ["All", ...(Array.isArray(typeDefs) ? typeDefs.map(t => t.type) : [])];
     const categories = showCategory
-        ? [
-            "All",
-            ...new Set(
-                allProducts
-                    .filter(p => p.type === type)
-                    .map(p => p.category)
-                    .filter(Boolean)
-            )
-        ]
+        ? ["All", ...(typeDefs?.find(t => t.type === type)?.categories || [])]
         : [];
-
-    const types = ["All", "men", "women", "kids", "unisex"];
 
     const handleTypeChange = (val) => {
         setType(val);
