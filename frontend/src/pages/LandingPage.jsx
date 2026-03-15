@@ -169,7 +169,7 @@ const LandingPage = () => {
             <div>
               <div onClick={() => handleTypeClick("men")} className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
                 <img
-                  src="/men.jpg"
+                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570076/men_pwzico.jpg"
                   alt="Mens"
                   className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -187,7 +187,7 @@ const LandingPage = () => {
             <div>
               <div onClick={() => handleTypeClick("women")} className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
                 <img
-                  src="/women.jpg"
+                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570030/women_ucamwu.jpg"
                   alt="womens"
                   className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -205,7 +205,7 @@ const LandingPage = () => {
             <div>
               <div onClick={() => handleTypeClick("unisex")} className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
                 <img
-                  src="/leatherBags.avif"
+                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570038/leatherBags_fjtrd7.avif"
                   alt="Leather Products"
                   className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -251,7 +251,7 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Blog Post Card 1 */}
             <div className="bg-white  shadow-md hover:shadow-lg transition duration-300 overflow-hidden">
-              <img src="/blog_1.png" alt="Blog Post 1" className="w-full h-48 object-cover" />
+              <img src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570043/blog_1_zngocx.png" alt="Blog Post 1" className="w-full h-48 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">The Future of E-commerce</h3>
                 <p className="text-gray-600 text-sm">
@@ -263,7 +263,7 @@ const LandingPage = () => {
 
             {/* Blog Post Card 2 */}
             <div className="bg-white  shadow-md hover:shadow-lg transition duration-300 overflow-hidden">
-              <img src="/blog_2.png" alt="Blog Post 2" className="w-full h-48 object-cover" />
+              <img src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570048/blog_2_p0i8s0.png" alt="Blog Post 2" className="w-full h-48 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Top 10 Must-Have Gadgets</h3>
                 <p className="text-gray-600 text-sm">
@@ -275,7 +275,7 @@ const LandingPage = () => {
 
             {/* Blog Post Card 3 */}
             <div className="bg-white shadow-md hover:shadow-lg transition duration-300 overflow-hidden">
-              <img src="/blog_3.png" alt="Blog Post 3" className="w-full h-48 object-cover" />
+              <img src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570049/blog_3_rhuwhp.png" alt="Blog Post 3" className="w-full h-48 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Sustainable Shopping Guide</h3>
                 <p className="text-gray-600 text-sm">
