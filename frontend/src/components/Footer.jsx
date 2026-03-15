@@ -11,7 +11,7 @@ const Footer = () => {
 
           <p className='mt-2 text-sm'>Powering Your World with the Best in eCommerce.</p>
           <p className='mt-2 text-sm'>Rajput & Co. Bahria Town Phase 8, RWP</p>
-          <p className='text-sm'><a href="mailto:raheel31102004@gmail.com">Email: hamzaraj541@gmail.com</a></p>
+          <p className='text-sm'><a href="mailto:hamzaraj541@gmail.com">Email: hamzaraj541@gmail.com</a></p>
           <p className='text-sm'>Phone:  <a href="tel:+923155098774" className="ml-1 hover:text-gray-100">0315-5098774</a></p>
         </div>
 
@@ -19,7 +19,7 @@ const Footer = () => {
         <div className='mb-6 md:mb-0'>
           <h3 className='text-xl font-semibold'>Customer Service</h3>
           <ul className='mt-2 text-sm space-y-2'>
-            <li><a href="mailto:raheel31102004@gmail.com">Contact Us</a></li>
+            <li><a href="mailto:hamzaraj541@gmail.com">Contact Us</a></li>
             <li>Shipping & Returns</li>
             <li>FAQs</li>
             <li>Order Tracking</li>
