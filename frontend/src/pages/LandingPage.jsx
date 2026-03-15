@@ -324,7 +324,7 @@ const Carousel = ({ arrivals, loading, addToCart, loadingCart, navigate }) => {
     : undefined;
 
   return (
-    <div className="relative mx-auto h-[78vh] w-full max-w-[320px] sm:max-w-[360px]">
+    <div className="relative mx-auto md:h-[78vh] sm:h-[40vh] w-full max-w-[320px] sm:max-w-[360px]">
 
       <div className="h-full flex flex-col overflow-hidden rounded-md border bg-white shadow-sm">
 
