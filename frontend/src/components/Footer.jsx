@@ -17,7 +17,7 @@ const Footer = () => {
               href="https://wa.me/923295694485"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white"
+              className="text-orange-300 hover:text-white"
             >
               Contact Developer
             </a>
