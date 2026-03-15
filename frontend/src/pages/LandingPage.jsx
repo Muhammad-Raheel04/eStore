@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import HeroSection from '../components/HeroSection';
 import TestimonialsSection from '../components/TestimonialsSection';
-import { Truck, Lock, Headphones ,ShoppingCart} from 'lucide-react';
+import { Truck, Lock, Headphones, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -31,8 +31,14 @@ const LandingPage = () => {
   const [loadingCart, setLoadingCart] = useState(false);
   const dispatch = useDispatch()
   useEffect(() => {
-    const timer = setTimeout(() => setOpen(true), 2500);
-    return () => clearTimeout(timer);
+    const hasSeen = localStorage.getItem('seenArrivals');
+    if (!hasSeen) {
+      const timer = setTimeout(() => {
+        setOpen(true);
+        localStorage.setItem('seenArrivals', 'true');
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   useEffect(() => {
@@ -105,6 +111,7 @@ const LandingPage = () => {
               loading={loadingArrivals}
               addToCart={addToCart}
               loadingCart={loadingCart}
+              navigate={navigate}
             />
           )}
 
@@ -289,7 +296,7 @@ const LandingPage = () => {
 
 export default LandingPage;
 
-const Carousel = ({ arrivals, loading, addToCart,loadingCart }) => {
+const Carousel = ({ arrivals, loading, addToCart, loadingCart, navigate }) => {
   const [index, setIndex] = useState(0);
   const count = arrivals?.length || 0;
 
@@ -325,6 +332,7 @@ const Carousel = ({ arrivals, loading, addToCart,loadingCart }) => {
           <img
             src={img0}
             alt={p.productName}
+            onClick={() => navigate(`/products/${p._id}`)}
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           />
         </div>
@@ -340,21 +348,21 @@ const Carousel = ({ arrivals, loading, addToCart,loadingCart }) => {
             Rs. {p.productPrice}
           </div>
 
-         
-  <Button
-              onClick={() => addToCart(p._id)}
-              className='bg-white text-black hover:text-white border-1 border-black w-full'
-              disabled={loadingCart} 
-            >
-              {loadingCart ? (
-                <span className="animate-pulse">Adding...</span> 
-              ) : (
-                <>
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  Add to Cart
-                </>
-              )}
-            </Button>
+
+          <Button
+            onClick={() => addToCart(p._id)}
+            className='bg-white text-black hover:text-white border-1 border-black w-full'
+            disabled={loadingCart}
+          >
+            {loadingCart ? (
+              <span className="animate-pulse">Adding...</span>
+            ) : (
+              <>
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                Add to Cart
+              </>
+            )}
+          </Button>
         </div>
 
       </div>
