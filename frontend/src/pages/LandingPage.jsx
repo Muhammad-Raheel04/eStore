@@ -31,11 +31,11 @@ const LandingPage = () => {
   const [loadingCart, setLoadingCart] = useState(false);
   const dispatch = useDispatch()
   useEffect(() => {
-    const hasSeen = localStorage.getItem('seenArrivals');
+    const hasSeen = sessionStorage.getItem('seenArrivals');
     if (!hasSeen) {
       const timer = setTimeout(() => {
         setOpen(true);
-        localStorage.setItem('seenArrivals', 'true');
+        sessionStorage.setItem('seenArrivals', 'true');
       }, 2500);
       return () => clearTimeout(timer);
     }
