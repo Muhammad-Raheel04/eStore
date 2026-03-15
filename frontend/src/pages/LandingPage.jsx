@@ -333,7 +333,7 @@ const Carousel = ({ arrivals, loading, addToCart, loadingCart, navigate }) => {
             src={img0}
             alt={p.productName}
             onClick={() => navigate(`/products/${p._id}`)}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            className="w-full h-full max-h-[300px] sm:max-h-[60vh] md:max-h-[70vh] object-cover transition-transform duration-300 hover:scale-105"
           />
         </div>
 
