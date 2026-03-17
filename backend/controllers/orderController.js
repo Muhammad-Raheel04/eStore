@@ -1,6 +1,7 @@
 import { sendOrderEmail } from "../emailVerify/sendOrderEmail.js";
 import { Cart } from "../models/CartModel.js";
 import { Order } from '../models/orderModel.js';
+import { Product } from "../models/productModel.js";
 import { User } from "../models/userModel.js";
 
 export const createCODOrder = async (req, res) => {
@@ -158,3 +159,56 @@ export const updateOrderStatus = async (req, res) => {
         });
     }
 };
+export const getSalesData = async (req, res) => {
+    try {
+        const totalUsers = await User.countDocuments({})
+        const totalProducts = await Product.countDocuments({})
+        const totalOrders = await Order.countDocuments({ orderStatus: "Delivered" })
+
+        const totalSalesAgg = await Order.aggregate([
+            { $match: { orderStatus: "Delivered" } },
+            { $group: { _id: null, total: { $sum: "$amount" } } }
+        ])
+
+        const totalSales = totalSalesAgg.length > 0 ? totalSalesAgg[0].total : 0;
+
+        const thirtyDaysAgo = new Date()
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        const salesByDate = await Order.aggregate([
+            { $match: { orderStatus: "Delivered", createdAt: { $gte: thirtyDaysAgo } } },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+                    },
+                    amount: { $sum: "$amount" }
+                }
+            },
+            { $sort: { _id: 1 } }
+        ])
+        console.log(salesByDate);
+
+        const formattedSales = salesByDate.map((item) => ({
+            date: item._id,
+            amount: item.amount,
+        }))
+
+        console.log(formattedSales);
+
+        res.json({
+            success: true,
+            totalUsers,
+            totalOrders,
+            totalProducts,
+            totalSales,
+            sales: formattedSales
+        })
+    } catch (error) {
+        console.error("Error fetching sales data", error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
