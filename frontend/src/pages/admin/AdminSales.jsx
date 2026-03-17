@@ -34,7 +34,7 @@ const AdminSales = () => {
     fetchStats()
   }, [])
   return (
-    <div className='pl-[350px] bg-gray-100 py-20 pr-20 mx-auto px-4'>
+    <div className='pl-[350px] bg-gray-100 py-10 pr-20 mx-auto px-4'>
       <h1 className='text-center text-3xl'>Stats Matter!</h1>
       <div className='p-6 grid gap-6 lg:grid-cols-4'>
         {/* stats card */}
