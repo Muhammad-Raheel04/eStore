@@ -91,7 +91,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
       ) : (
         <div className='px-2 space-y-1'>
           <h1 className='text-center mt-2  h-12 line-clamp-2'>{productName}</h1>
-          <h2 className='font-bold'>Rs. {productPrice}</h2>
+          <h2 className='font-normal text-red-500'>Rs. {productPrice}</h2>
           <div className='flex gap-2 mt-3 mb-4'>
             <Button
               onClick={() => addToCart(product._id)}
