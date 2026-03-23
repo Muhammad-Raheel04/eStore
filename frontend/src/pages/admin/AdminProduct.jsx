@@ -33,12 +33,20 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import ImageUpload from '@/components/ImageUpload'
 import API from '@/utils/API'
 import { toast } from 'sonner'
 import { setProducts } from '@/redux/productSlice'
-
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
+const quillModules = {
+    toolbar: [
+        ['bold', 'italic'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['clean'],
+        [{ 'table': true }]
+    ]
+};
 const AdminProduct = () => {
     const { products } = useSelector((store) => store.product)
     const [editProduct, setEditProduct] = useState(null);
@@ -61,12 +69,12 @@ const AdminProduct = () => {
             }
         };
         const fetchTypes = async () => {
-            try{
+            try {
                 const res = await API.get('types');
                 if (res.data?.success) {
                     setTypeDefs(res.data.types || []);
                 }
-            }catch(err){
+            } catch (err) {
                 console.log(err);
             }
         };
@@ -228,7 +236,7 @@ const AdminProduct = () => {
                                             <Edit onClick={() => { setOpen(true), setEditProduct(product) }} className="text-green-500 cursor-pointer" />
                                         </DialogTrigger>
 
-                                        <DialogContent className='sm:max-w[625px] max-h-[740px] overflow-y-scroll'>
+                                        <DialogContent className='sm:max-w[625px] max-h-[650px] overflow-y-scroll'>
                                             <DialogHeader>
                                                 <DialogTitle>Edit Product</DialogTitle>
                                                 <DialogDescription>
@@ -291,11 +299,16 @@ const AdminProduct = () => {
                                                             Description
                                                         </Label>
                                                     </div>
-                                                    <Textarea
-                                                        name='productDesc'
-                                                        value={editProduct?.productDesc}
-                                                        onChange={handleChange}
-                                                        placeholder='Enter brief description of product' />
+                                                    <div className="h-48 overflow-y-auto">
+                                                        <ReactQuill
+                                                            modules={quillModules}
+                                                            value={editProduct?.productDesc || ''}
+                                                            onChange={(value) =>
+                                                                setEditProduct(prev => ({ ...prev, productDesc: value }))
+                                                            }
+                                                            placeholder="Enter brief description of product..."
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <ImageUpload
                                                     productData={editProduct} setProductData={setEditProduct} />
