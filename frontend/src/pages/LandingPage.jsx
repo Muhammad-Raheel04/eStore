@@ -344,7 +344,7 @@ const Carousel = ({ arrivals, loading, addToCart, loadingCart, navigate }) => {
           </div>
 
 
-          <div className="font-bold">
+          <div className="font-normal text-red-500">
             Rs. {p.productPrice}
           </div>
 
