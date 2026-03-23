@@ -36,15 +36,17 @@ const ProductDesc = ({ product }) => {
                 <p className="text-gray-500 text-sm">{product?.category}</p>
 
                 <div className="flex items-center justify-between md:justify-start md:gap-4">
-                    <span className="text-2xl font-bold text-black">
+                    <span className="text-2xl font-normal text-red-500">
                         Rs. {product?.productPrice}
                     </span>
                 </div>
-
-                <p className="text-gray-600 text-sm leading-relaxed">
-                    {product?.productDesc}
-                </p>
-
+                <div
+                    className="prose prose-sm max-w-none w-full text-gray-700
+                               prose-p:my-1 prose-ul:my-1 prose-ul:pl-4 
+                               prose-li:my-0 prose-headings:mb-1 prose-headings:mt-3 
+                             prose-strong:text-black break-words overflow-hidden"
+                    dangerouslySetInnerHTML={{ __html: product?.productDesc }}
+                />
                 {/* Quantity Stepper with Add to Cart below for Desktop */}
                 <div className="space-y-4 pt-4">
                     <div className="flex items-center justify-between md:justify-start md:gap-8">
