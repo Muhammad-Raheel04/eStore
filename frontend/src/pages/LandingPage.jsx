@@ -187,7 +187,7 @@ const LandingPage = () => {
             <div>
               <div onClick={() => handleTypeClick("women")} className="relative group overflow-hidden rounded-sm shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
                 <img
-                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774254795/women_ucamwu.avif"
+                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774465500/women_ucamwu.avif"
                   alt="womens"
                   className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
