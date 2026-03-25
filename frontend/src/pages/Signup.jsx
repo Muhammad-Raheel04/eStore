@@ -55,7 +55,7 @@ const Signup = () => {
         }
     }
     return (
-        <div className='flex justify-center items-center min-h-screen bg-pink-100 p-5'>
+        <div className='flex justify-center items-center min-h-screen bg-gray-200 p-5'>
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle>Create your account</CardTitle>
@@ -125,10 +125,10 @@ const Signup = () => {
                     </div>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button onClick={submitHandler} type="submit" className="w-full cursor-pointer bg-pink-600 hover:bg-pink-500">
+                    <Button onClick={submitHandler} type="submit" className="w-full cursor-pointer bg-white text-black border border-gray-500 hover:bg-black hover:text-white">
                         {loading ? <><Loader2 className='h-4 w-4 animate-spin mr-2' />Please wait</> : 'Signup'}
                     </Button>
-                    <p className="text-gray-700 text-sm">Already have an account? <Link to={'/login'} className='hover:underline cursor-pointer text-pink-800'>Login</Link></p>
+                    <p className="text-gray-700 text-sm">Already have an account? <Link to={'/login'} className='hover:underline cursor-pointer text-gray-500 hover:text-black'>Login</Link></p>
                 </CardFooter>
             </Card>
         </div>
