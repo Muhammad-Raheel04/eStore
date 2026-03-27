@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const HeroSection = () => {
   const navigate=useNavigate();
   return (
-    <section className="relative bg-cover bg-center h-[60vh] md:h-[80vh]" style={{ backgroundImage: "url('https://res.cloudinary.com/dxdywv9xl/image/upload/v1774628315/hero_image_1_bwssy3.avif')" }}>
+    <section className="relative bg-cover bg-center h-[60vh] md:h-[80vh]" style={{ backgroundImage: "url('https://res.cloudinary.com/dxdywv9xl/image/upload/v1774630691/hero_image_1_bwssy3.avif')" }}>
       <div className="absolute inset-0 bg-black opacity-25"></div>
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">New Arrivals & Exciting Sales!</h1>
