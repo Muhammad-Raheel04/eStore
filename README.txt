@@ -1,4 +1,4 @@
-live Preview https://authentic-learning-production.up.railway.app
+live Preview http://www.rajputco.com
 =========================================
                  eStore 
 =========================================
