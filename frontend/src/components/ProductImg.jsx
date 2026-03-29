@@ -14,7 +14,7 @@ const ProductImg = ({ images }) => {
                 <img
                     src={mainImg}
                     alt=""
-                    className="w-full h-[500px] object-cover"
+                    className="w-full h-[500px] object-fill"
                 />
             </Zoom>
 
