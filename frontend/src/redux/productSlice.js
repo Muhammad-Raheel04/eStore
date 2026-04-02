@@ -9,7 +9,8 @@ const productsSlice = createSlice({
             totalPrice: 0
         },
         addresses: [],
-        selectedAddress: null // currently chosen address
+        selectedAddress: null, // currently chosen address
+        isCartOpen: false
     },
     reducers: {
         // actions
@@ -18,6 +19,9 @@ const productsSlice = createSlice({
         },
         setCart: (state, action) => {
             state.cart = action.payload;
+        },
+        setCartOpen: (state, action) => {
+            state.isCartOpen = action.payload;
         },
         // Address Management
         addAddress: (state, action) => {
@@ -46,5 +50,5 @@ const productsSlice = createSlice({
     }
 })
 
-export const { setProducts, setCart, addAddress, setSelectedAddress, deleteAddress ,clearCart} = productsSlice.actions
+export const { setProducts, setCart, setCartOpen, addAddress, setSelectedAddress, deleteAddress, clearCart } = productsSlice.actions;
 export default productsSlice.reducer
