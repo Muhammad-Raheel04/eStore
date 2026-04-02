@@ -188,6 +188,7 @@ const LandingPage = () => {
             {/* Category Card 1 */}
             <div onClick={() => handleTypeClick("men")} className="relative group overflow-hidden cursor-pointer">
               <img
+                loading='lazy'
                 src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774254627/men_pwzico.avif"
                 alt="Mens"
                 className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-700"
@@ -203,6 +204,7 @@ const LandingPage = () => {
             {/* Category Card 2 */}
             <div onClick={() => handleTypeClick("women")} className="relative group overflow-hidden cursor-pointer">
               <img
+                loading='lazy'
                 src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774465500/women_ucamwu.avif"
                 alt="womens"
                 className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-700"
@@ -218,6 +220,7 @@ const LandingPage = () => {
             {/* Category Card 3 */}
             <div onClick={() => handleTypeClick("unisex")} className="relative group overflow-hidden cursor-pointer">
               <img
+                loading='lazy'
                 src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570038/leatherBags_fjtrd7.avif"
                 alt="Leather Products"
                 className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-700"
@@ -353,6 +356,7 @@ const Carousel = ({ arrivals, loading, addToCart, loadingCart, navigate }) => {
 
         <div className="flex-1 overflow-hidden">
           <img
+            loading='lazy'
             src={img0}
             alt={p.productName}
             onClick={() => navigate(`/products/${p._id}`)}
