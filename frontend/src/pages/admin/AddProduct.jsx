@@ -34,7 +34,8 @@ const AddProduct = () => {
     productDesc: "",
     productImg: [],
     category: "",
-    type: "men"
+    type: "men",
+    featured: false
   });
 
   const loadTypes = async () => {
@@ -72,6 +73,7 @@ const AddProduct = () => {
     formData.append("productDesc", productData.productDesc);
     formData.append("category", productData.category);
     formData.append("type", productData.type);
+    formData.append("featured", productData.featured);
 
     // Check if productImg exists and has length
     if (!productData.productImg || productData.productImg.length === 0) {
@@ -171,6 +173,17 @@ const AddProduct = () => {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            <div className="flex items-center gap-2 py-2">
+              <input
+                type="checkbox"
+                id="featured"
+                checked={productData.featured}
+                onChange={(e) => setProductData(prev => ({ ...prev, featured: e.target.checked }))}
+                className="w-4 h-4 cursor-pointer"
+              />
+              <Label htmlFor="featured" className="cursor-pointer font-medium text-gray-700">Mark as Featured Product</Label>
             </div>
 
             {/* Admin Controls for managing Types & Categories */}
