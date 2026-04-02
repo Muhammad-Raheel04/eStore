@@ -4,18 +4,61 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBag, Menu, X, User, LayoutDashboard, Home, ShoppingBasket, LogOut, LogIn } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '@/redux/userSlice';
+import { setCartOpen } from '@/redux/productSlice';
 import API from '@/utils/API';
 import { toast } from "sonner";
+import CartDrawer from './CartDrawer';
+import NavTree from './NavTree';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { user } = useSelector(state => state.user);
-  const { cart } = useSelector(state => state.product);
+  const { cart, isCartOpen } = useSelector(state => state.product);
   const admin = user?.role === 'admin';
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [navData, setNavData] = useState([
+    { name: 'Home', path: '/', icon: Home },
+    {
+      name: 'Products',
+      icon: ShoppingBasket,
+      children: [],
+    },
+  ]);
+
+  const fetchNavData = async () => {
+    try {
+      const res = await API.get('types');
+      if (res.data?.success) {
+        const dynamicProducts = res.data.types.map((t) => ({
+          name: t.type.charAt(0).toUpperCase() + t.type.slice(1),
+          path: `/products?type=${t.type}`,
+          children: t.categories.map((c) => ({
+            name: c.charAt(0).toUpperCase() + c.slice(1),
+            path: `/products?type=${t.type}&category=${c}`,
+          })),
+        }));
+
+        setNavData([
+          { name: 'Home', path: '/', icon: Home },
+          {
+            name: 'Products',
+            icon: ShoppingBasket,
+            children: dynamicProducts,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.log("Error fetching nav data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchNavData();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +106,7 @@ const Navbar = () => {
     isHomePage 
       ? isScrolled 
         ? 'bg-white shadow-md py-3' 
-        : 'bg-transparent py-5'
+        : 'bg-transparent py-2'
       : 'bg-white shadow-md py-3'
   }`;
 
@@ -80,35 +123,38 @@ const Navbar = () => {
               className={`${textClasses} hover:opacity-70 transition-opacity p-2`}
               aria-label="Open Menu"
             >
-              <Menu className="w-7 h-7" />
+              <Menu className="w-4 h-4" />
             </button>
           </div>
 
-          {/* CENTER: Logo / Brand Name */}
-          <div className="flex-1 flex justify-center">
+          <div className="flex justify-center">
             <Link to="/" className="flex items-center">
-              <span className={`text-2xl md:text-3xl font-serif tracking-[0.2em] uppercase hover:tracking-normal transition-all duration-700 ${textClasses}`}>
+              <span className={`text-sm md:text-2xl font-serif font-light tracking-[0.2em] uppercase hover:tracking-normal transition-all duration-700 ${textClasses}`}>
                 Hamza Rajput
               </span>
             </Link>
           </div>
 
-          {/* RIGHT: Shopping Bag */}
           <div className="flex-1 flex justify-end">
-            <Link to="/cart" className={`relative hover:opacity-70 transition-opacity p-2 ${textClasses}`}>
-              <ShoppingBag className="w-7 h-7" />
+            <button 
+              onClick={() => dispatch(setCartOpen(true))}
+              className={`relative hover:opacity-70 transition-opacity p-2 ${textClasses}`}
+              aria-label="Open Shopping Bag"
+            >
+              <ShoppingBag className="w-4 h-4" />
               {cartCount > 0 && (
                 <span className={`absolute top-0 right-0 ${isHomePage && !isScrolled ? 'bg-[#e8d87f] text-black' : 'bg-black text-white'} text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce shadow-sm`}>
                   {cartCount}
                 </span>
               )}
-            </Link>
+            </button>
           </div>
 
         </div>
       </header>
 
-      {/* Slide-in Menu Drawer (Left Side) */}
+      <CartDrawer isOpen={isCartOpen} onClose={() => dispatch(setCartOpen(false))} />
+
       <div 
         className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${
           isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -120,7 +166,6 @@ const Navbar = () => {
         isMenuOpen ? "translate-x-0" : "-translate-x-full"
       }`}>
         
-        {/* Drawer Header */}
         <div className="flex justify-between items-center p-8 border-b border-gray-100">
           <h2 className="text-xl font-serif tracking-widest uppercase text-black">Menu</h2>
           <button 
@@ -131,50 +176,34 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Drawer Links */}
-        <nav className="flex-1 flex flex-col p-8 gap-8 overflow-y-auto">
-          <Link
-            to="/"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center gap-4 text-lg font-light tracking-widest uppercase hover:text-[#e8d87f] transition group"
-          >
-            <Home className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
-            Home
-          </Link>
-          
-          <Link
-            to="/products"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center gap-4 text-lg font-light tracking-widest uppercase hover:text-[#e8d87f] transition group"
-          >
-            <ShoppingBasket className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
-            Products
-          </Link>
+        <div className="flex-1 flex flex-col p-8 gap-8 overflow-y-auto">
+          <NavTree data={navData} onNavigate={() => setIsMenuOpen(false)} />
 
-          {user && (
-            <Link
-              to={`/profile/${user._id}`}
-              onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-4 text-lg font-light tracking-widest uppercase hover:text-[#e8d87f] transition group"
-            >
-              <User className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
-              Profile
-            </Link>
-          )}
+          <div className="flex flex-col gap-6 pt-6 border-t border-gray-100">
+            {user && (
+              <Link
+                to={`/profile/${user._id}`}
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-4 text-lg font-light tracking-widest uppercase text-gray-800 hover:text-[#e8d87f] transition group"
+              >
+                <User className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
+                Profile
+              </Link>
+            )}
 
-          {admin && (
-            <Link
-              to="/dashboard/sales"
-              onClick={() => setIsMenuOpen(false)}
-              className="flex items-center gap-4 text-lg font-light tracking-widest uppercase hover:text-[#e8d87f] transition group"
-            >
-              <LayoutDashboard className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
-              Dashboard
-            </Link>
-          )}
-        </nav>
+            {admin && (
+              <Link
+                to="/dashboard/sales"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-4 text-lg font-light tracking-widest uppercase text-gray-800 hover:text-[#e8d87f] transition group"
+              >
+                <LayoutDashboard className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
+                Dashboard
+              </Link>
+            )}
+          </div>
+        </div>
 
-        {/* Drawer Footer: Login/Logout */}
         <div className="p-8 border-t border-gray-100">
           {user ? (
             <button
