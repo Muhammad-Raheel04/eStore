@@ -137,6 +137,7 @@ const AdminProduct = () => {
         formData.append("productDesc", editProduct.productDesc)
         formData.append("productPrice", editProduct.productPrice)
         formData.append("category", editProduct.category)
+        formData.append("featured", editProduct.featured)
         if (editProduct.type) {
             formData.append("type", editProduct.type)
         }
@@ -223,7 +224,10 @@ const AdminProduct = () => {
                             <div className="flex items-center justify-between">
                                 <div className="flex gap-2 items-center">
                                     <img src={product.productImg && product.productImg.length > 0 ? product.productImg[0].url : ''} alt="" className="w-25 h-25" />
-                                    <h1 className="font-bold w-96 text-gray-700">{product?.productName}</h1>
+                                    <div className="flex flex-col">
+                                        <h1 className="font-bold w-96 text-gray-700">{product?.productName}</h1>
+                                        {product.featured && <span className="text-[10px] bg-[#e8d87f] text-black px-2 py-0.5 rounded-full w-fit font-bold uppercase tracking-wider">Featured</span>}
+                                    </div>
                                     <div className="font-semibold text-black">Category {product?.category}</div>
                                     <div className="font-semibold text-black">Type <bold>{product?.type}</bold></div>
                                 </div>
@@ -292,6 +296,16 @@ const AdminProduct = () => {
                                                             </SelectContent>
                                                         </Select>
                                                     </div>
+                                                </div>
+                                                <div className="flex items-center gap-2 py-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        id="featured"
+                                                        checked={editProduct?.featured || false}
+                                                        onChange={(e) => setEditProduct(prev => ({ ...prev, featured: e.target.checked }))}
+                                                        className="w-4 h-4 cursor-pointer"
+                                                    />
+                                                    <Label htmlFor="featured" className="cursor-pointer">Mark as Featured Product</Label>
                                                 </div>
                                                 <div className='grid gap-2'>
                                                     <div className='flex items-center'>
