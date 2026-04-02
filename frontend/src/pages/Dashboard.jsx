@@ -9,7 +9,7 @@ const Dashboard = () => {
       <Sidebar />
 
       {/* Main content */}
-      <div className="flex-1 bg-gray-100 min-h-screen p-10">
+      <div className="flex-1 bg-gray-100 min-h-screen p-10 pt-24">
        <Outlet/>
       </div>
     </div>
