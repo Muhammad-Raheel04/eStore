@@ -4,7 +4,7 @@ import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setCart, setProducts } from '@/redux/productSlice'
+import { setCart, setCartOpen, setProducts } from '@/redux/productSlice'
 import API from '@/utils/API'
 import { toast } from 'sonner'
 
@@ -39,12 +39,13 @@ const ProductCard = ({ product, loading, isAdmin }) => {
       const config = accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {};
       const res = await API.post('cart/add', { productId }, config);
       if (res.data.success) {
-        toast.success("Product added to Cart");
+        toast.success("Product added to bag");
         dispatch(setCart(res.data.cart));
+        dispatch(setCartOpen(true));
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add to cart");
+      toast.error("Failed to add to bag");
     } finally {
       setLoadingCart(false);
     }
