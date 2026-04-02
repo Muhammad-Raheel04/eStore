@@ -36,6 +36,10 @@ const productSchema = new mongoose.Schema({
         lowercase: true,
         required: true,
         default: "unisex"
+    },
+    featured: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
