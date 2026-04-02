@@ -84,7 +84,7 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-white">
       <HeroSection />
-      
+
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="w-[90vw]  max-w-[380px] sm:max-w-[420px] rounded-xl p-4 animate-in fade-in-0 zoom-in-95 duration-300">
           <DialogHeader>
@@ -124,6 +124,17 @@ const LandingPage = () => {
       {/* Categories Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-[0.2em] text-gray-900 uppercase">
+              Our Collection
+            </h2>
+
+            <div className="w-16 h-[2px] bg-black mx-auto mt-4"></div>
+
+            <p className="mt-4 text-gray-500 text-sm md:text-base max-w-xl mx-auto">
+              Crafted for those who value timeless design, premium quality, and everyday elegance.
+            </p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-0">
             {/* Category Card 1 */}
             <div>
@@ -131,7 +142,7 @@ const LandingPage = () => {
                 <img
                   src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774254627/men_pwzico.avif"
                   alt="Mens"
-                  className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/* DARK OVERLAY */}
                 <div className="absolute inset-0 bg-black/1 group-hover:bg-black/40 transition"></div>
@@ -139,8 +150,8 @@ const LandingPage = () => {
                 {/* LEFT TEXT */}
                 <div className="absolute inset-0 flex flex-col justify-end">
                   <div className="pl-4 pb-4">
-                    <h3 className="inline-block text-white text-2xl border border-white p-1">Mens</h3>
-                    <p className="text-[#FFD700] text-xl mt-1 ">Shop latest collection</p>
+                    <h3 className="inline-block text-white text-4xl">Mens</h3>
+                    <p className="text-[#FFD700] text-2xl mt-2">Shop latest collection</p>
                   </div>
                 </div>
               </div>
@@ -156,7 +167,7 @@ const LandingPage = () => {
                 <img
                   src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774465500/women_ucamwu.avif"
                   alt="womens"
-                  className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/* DARK OVERLAY */}
                 <div className="absolute inset-0 bg-black/1 group-hover:bg-black/40 transition"></div>
@@ -164,8 +175,8 @@ const LandingPage = () => {
                 {/* LEFT TEXT */}
                 <div className="absolute inset-0 flex flex-col justify-end">
                   <div className="pl-4 pb-4">
-                    <h3 className="inline-block text-white text-2xl  border border-white p-1">Women</h3>
-                    <p className="text-[#FFD700] text-xl mt-1">Shop latest collection</p>
+                    <h3 className="inline-block text-white text-4xl ">Women</h3>
+                    <p className="text-[#FFD700] text-2xl mt-2">Shop latest collection</p>
                   </div>
                 </div>
               </div>
@@ -181,16 +192,16 @@ const LandingPage = () => {
                 <img
                   src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570038/leatherBags_fjtrd7.avif"
                   alt="Leather Products"
-                  className="w-full h-90 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/* DARK OVERLAY */}
                 <div className="absolute inset-0 bg-black/1 group-hover:bg-black/40 transition"></div>
 
                 {/* LEFT TEXT */}
                 <div className="absolute inset-0 flex flex-col justify-end">
-                  <div className="pl-4 pb-4">
-                    <h3 className="inline-block text-white text-2xl border border-white p-1">Leather</h3>
-                    <p className="text-[#FFD700] text-xl mt-1">Premimum Leather Products</p>
+                  <div className="pl-4 pb-6">
+                    <h3 className="inline-block text-white text-4xl">Leather</h3>
+                    <p className="text-[#FFD700] text-2xl mt-2">Premimum Leather Products</p>
                   </div>
                 </div>
               </div>
@@ -212,7 +223,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-  
+
       {/* Features Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
