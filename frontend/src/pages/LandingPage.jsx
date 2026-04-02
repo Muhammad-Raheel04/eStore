@@ -155,10 +155,10 @@ const LandingPage = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 onClick={() => handleTypeClick("men")}
                 className="md:hidden relative group overflow-hidden p-2 shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black mt-2 text-center hover:bg-black hover:text-white"
-              >Men</div>
+              >Men</div> */}
             </div>
 
             {/* Category Card 2 */}
@@ -180,10 +180,10 @@ const LandingPage = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 onClick={() => handleTypeClick("women")}
                 className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer  border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
-              >Women</div>
+              >Women</div> */}
             </div>
 
             {/* Category Card 3 */}
@@ -205,10 +205,10 @@ const LandingPage = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 onClick={() => handleTypeClick("unisex")}
                 className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
-              >Leather Product</div>
+              >Leather Product</div> */}
             </div>
           </div>
 
