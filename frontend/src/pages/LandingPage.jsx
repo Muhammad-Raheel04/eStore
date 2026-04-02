@@ -165,7 +165,7 @@ const LandingPage = () => {
                 <div className="absolute inset-0 flex flex-col justify-end">
                   <div className="pl-4 pb-4">
                     <h3 className="inline-block text-white text-2xl  border border-white p-1">Women</h3>
-                    <p className="text-[#FFD700] text-xl mt-1 font-bold">Shop latest collection</p>
+                    <p className="text-[#FFD700] text-xl mt-1">Shop latest collection</p>
                   </div>
                 </div>
               </div>
