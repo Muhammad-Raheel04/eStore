@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "./ui/button";
 import API from "@/utils/API";
 import { toast } from "sonner";
-import { setCart } from "@/redux/productSlice";
+import { setCart, setCartOpen } from "@/redux/productSlice";
 
 const ProductDesc = ({ product }) => {
     const [loading, setLoading] = useState();
@@ -17,8 +17,9 @@ const ProductDesc = ({ product }) => {
             const res = await API.post("cart/add", { productId: product._id, quantity }, config);
 
             if (res.data.success) {
-                toast.success("Added to cart");
+                toast.success("Added to bag");
                 dispatch(setCart(res.data.cart));
+                dispatch(setCartOpen(true));
             }
         } catch (error) {
             toast.error("Failed to add product");
