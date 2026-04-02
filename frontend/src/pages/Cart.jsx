@@ -69,7 +69,7 @@ const Cart = () => {
     loadCart()
   }, [dispatch])
   return (
-    <div className="pt-4 bg-gray-50 min-h-screen">
+    <div className="pt-24 bg-gray-50 min-h-screen">
       {cart?.items?.length > 0 ?
         <div className="max-w-7xl mx-auto">
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-7 px-4">
