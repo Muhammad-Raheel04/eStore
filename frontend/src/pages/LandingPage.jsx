@@ -15,7 +15,8 @@ import { Button } from '@/components/ui/button';
 import API from '@/utils/API';
 import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
-import { setCart } from '@/redux/productSlice';
+import { setCart, setCartOpen } from '@/redux/productSlice';
+import BespokeSection from '@/components/Bespoke';
 
 
 const LandingPage = () => {
@@ -72,6 +73,7 @@ const LandingPage = () => {
       const res = await API.post('cart/add', { productId, quantity: 1 }, config);
       if (res.data.success) {
         dispatch(setCart(res.data.cart));
+        dispatch(setCartOpen(true));
         toast.success("Added to bag");
       }
     } catch (e) {
@@ -86,11 +88,11 @@ const LandingPage = () => {
       <HeroSection />
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-[90vw]  max-w-[380px] sm:max-w-[420px] rounded-xl p-4 animate-in fade-in-0 zoom-in-95 duration-300">
-          <DialogHeader>
-            <DialogTitle>New Arrivals</DialogTitle>
-            <DialogDescription>
-              Fresh products just added. Check them out!
+        <DialogContent className="w-[90vw] max-w-[380px] sm:max-w-[420px] rounded-none p-6 animate-in fade-in-0 zoom-in-95 duration-300 border-none bg-white">
+          <DialogHeader className="mb-6">
+            <DialogTitle className="text-xl font-light tracking-[0.2em] uppercase text-center">New Arrivals</DialogTitle>
+            <DialogDescription className="text-center font-light text-gray-500 text-xs tracking-widest mt-2 uppercase">
+              Fresh products just added
             </DialogDescription>
           </DialogHeader>
 
@@ -122,93 +124,65 @@ const LandingPage = () => {
       </Dialog>
 
       {/* Categories Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-[0.2em] text-gray-900 uppercase">
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto ">
+          <div className="text-center mb-24 px-4">
+
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.35em] text-gray-900 uppercase leading-tight">
               Our Collection
             </h2>
 
-            <div className="w-16 h-[2px] bg-black mx-auto mt-4"></div>
+            <div className="w-16 h-[1px] bg-black mx-auto mt-6"></div>
 
-            <p className="mt-4 text-gray-500 text-sm md:text-base max-w-xl mx-auto">
+            <p className="mt-6 text-gray-500 text-sm md:text-base max-w-lg mx-auto font-light leading-relaxed">
               Crafted for those who value timeless design, premium quality, and everyday elegance.
             </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-0">
-            {/* Category Card 1 */}
-            <div>
-              <div onClick={() => handleTypeClick("men")} className="relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
-                <img
-                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774254627/men_pwzico.avif"
-                  alt="Mens"
-                  className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                {/* DARK OVERLAY */}
-                <div className="absolute inset-0 bg-black/1 group-hover:bg-black/40 transition"></div>
 
-                {/* LEFT TEXT */}
-                <div className="absolute inset-0 flex flex-col justify-end">
-                  <div className="pl-4 pb-4">
-                    <h3 className="inline-block text-white text-4xl">Mens</h3>
-                    <p className="text-[#FFD700] text-2xl mt-2">Shop latest collection</p>
-                  </div>
-                </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
+            {/* Category Card 1 */}
+            <div onClick={() => handleTypeClick("men")} className="relative group overflow-hidden cursor-pointer">
+              <img
+                src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774254627/men_pwzico.avif"
+                alt="Mens"
+                className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <h3 className="text-white text-2xl md:text-3xl font-light tracking-[0.2em] uppercase mb-2">Mens</h3>
+                <p className="text-[#e8d87f] text-xs md:text-sm tracking-widest uppercase font-light opacity-0 group-hover:opacity-100 transition-opacity duration-500">Shop Collection</p>
               </div>
-              {/* <div
-                onClick={() => handleTypeClick("men")}
-                className="md:hidden relative group overflow-hidden p-2 shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black mt-2 text-center hover:bg-black hover:text-white"
-              >Men</div> */}
             </div>
 
             {/* Category Card 2 */}
-            <div>
-              <div onClick={() => handleTypeClick("women")} className="relative group overflow-hidden  shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
-                <img
-                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774465500/women_ucamwu.avif"
-                  alt="womens"
-                  className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                {/* DARK OVERLAY */}
-                <div className="absolute inset-0 bg-black/1 group-hover:bg-black/40 transition"></div>
+            <div onClick={() => handleTypeClick("women")} className="relative group overflow-hidden cursor-pointer">
+              <img
+                src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774465500/women_ucamwu.avif"
+                alt="womens"
+                className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
 
-                {/* LEFT TEXT */}
-                <div className="absolute inset-0 flex flex-col justify-end">
-                  <div className="pl-4 pb-4">
-                    <h3 className="inline-block text-white text-4xl ">Women</h3>
-                    <p className="text-[#FFD700] text-2xl mt-2">Shop latest collection</p>
-                  </div>
-                </div>
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <h3 className="text-white text-2xl md:text-3xl font-light tracking-[0.2em] uppercase mb-2">Women</h3>
+                <p className="text-[#e8d87f] text-xs md:text-sm tracking-widest uppercase font-light opacity-0 group-hover:opacity-100 transition-opacity duration-500">Shop Collection</p>
               </div>
-              {/* <div
-                onClick={() => handleTypeClick("women")}
-                className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer  border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
-              >Women</div> */}
             </div>
 
             {/* Category Card 3 */}
-            <div>
-              <div onClick={() => handleTypeClick("unisex")} className="relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
-                <img
-                  src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570038/leatherBags_fjtrd7.avif"
-                  alt="Leather Products"
-                  className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                {/* DARK OVERLAY */}
-                <div className="absolute inset-0 bg-black/1 group-hover:bg-black/40 transition"></div>
+            <div onClick={() => handleTypeClick("unisex")} className="relative group overflow-hidden cursor-pointer">
+              <img
+                src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570038/leatherBags_fjtrd7.avif"
+                alt="Leather Products"
+                className="w-full h-150 object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
 
-                {/* LEFT TEXT */}
-                <div className="absolute inset-0 flex flex-col justify-end">
-                  <div className="pl-4 pb-6">
-                    <h3 className="inline-block text-white text-4xl">Leather</h3>
-                    <p className="text-[#FFD700] text-2xl mt-2">Premimum Leather Products</p>
-                  </div>
-                </div>
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <h3 className="text-white text-2xl md:text-3xl font-light tracking-[0.2em] uppercase mb-2">Leather</h3>
+                <p className="text-[#e8d87f] text-xs md:text-sm tracking-widest uppercase font-light opacity-0 group-hover:opacity-100 transition-opacity duration-500">Shop Collection</p>
               </div>
-              {/* <div
-                onClick={() => handleTypeClick("unisex")}
-                className="md:hidden relative group overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer border border-black p-2 mt-2 text-center hover:bg-black hover:text-white"
-              >Leather Product</div> */}
             </div>
           </div>
 
@@ -224,48 +198,68 @@ const LandingPage = () => {
               <span className="absolute left-0 top-0 w-0 h-full bg-black transition-all duration-500 group-hover:w-full"></span>
 
               <span className="relative z-10 transform group-hover:translate-x-1 transition-transform duration-300">
-                
+
               </span>
             </a>
           </div>
         </div>
       </section>
 
+      <BespokeSection />
+
       {/* Features Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Why Choose Us?</h2>
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Feature Card 1 */}
-            <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
-              <Truck className="w-16 h-16 text-black mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Free Shipping</h3>
-              <p className="text-gray-600">
-                Enjoy free shipping on all orders above $50, delivered right to your doorstep.
-              </p>
-            </div>
-
-            {/* Feature Card 2 */}
-            <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
-              <Lock className="w-16 h-16 text-black mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Secure Payment</h3>
-              <p className="text-gray-600">
-                Your payments are safe and secure with our encrypted payment gateway.
-              </p>
-            </div>
-
-            {/* Feature Card 3 */}
-            <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
-              <Headphones className="w-16 h-16 text-black mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Support</h3>
-              <p className="text-gray-600">
-                Our dedicated support team is available round the clock to assist you.
-              </p>
-            </div>
+          {/* Heading */}
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-5xl font-light tracking-[0.3em] uppercase text-gray-900">
+              Why Choose Us
+            </h2>
+            <div className="w-12 h-[1px] bg-black mx-auto mt-6"></div>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+            {/* Feature 1 */}
+            <div className="text-center group">
+              <Truck className="w-10 h-10 mx-auto text-gray-800 mb-6 transition-transform duration-500 group-hover:-translate-y-1" />
 
+              <h3 className="text-sm font-light tracking-[0.25em] uppercase text-gray-900 mb-4">
+                Fast Delivery
+              </h3>
+
+              <p className="text-gray-500 text-sm font-light leading-relaxed max-w-xs mx-auto">
+                We ensure that your premium products reach you in the shortest possible time.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="text-center group">
+              <Lock className="w-10 h-10 mx-auto text-gray-800 mb-6 transition-transform duration-500 group-hover:-translate-y-1" />
+
+              <h3 className="text-sm font-light tracking-[0.25em] uppercase text-gray-900 mb-4">
+                Secure Payment
+              </h3>
+
+              <p className="text-gray-500 text-sm font-light leading-relaxed max-w-xs mx-auto">
+                Your transactions are protected with the highest level of security protocols.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="text-center group">
+              <Headphones className="w-10 h-10 mx-auto text-gray-800 mb-6 transition-transform duration-500 group-hover:-translate-y-1" />
+
+              <h3 className="text-sm font-light tracking-[0.25em] uppercase text-gray-900 mb-4">
+                Dedicated Support
+              </h3>
+
+              <p className="text-gray-500 text-sm font-light leading-relaxed max-w-xs mx-auto">
+                Our team is always available to assist you with a seamless experience.
+              </p>
+            </div>
+
+          </div>
         </div>
       </section>
 
@@ -319,30 +313,27 @@ const Carousel = ({ arrivals, loading, addToCart, loadingCart, navigate }) => {
           />
         </div>
 
-        <div className="p-4 space-y-2 text-center">
+        <div className="p-4 space-y-4 text-center bg-white">
 
-          <div className="font-semibold line-clamp-1">
+          <h4 className="text-sm font-light tracking-[0.15em] uppercase line-clamp-1 text-gray-900">
             {p.productName}
-          </div>
+          </h4>
 
 
-          <div className="font-normal text-red-500">
+          <div className="text-xs font-light tracking-widest text-gray-500 uppercase">
             Rs. {p.productPrice}
           </div>
 
 
           <Button
             onClick={() => addToCart(p._id)}
-            className='bg-white text-black hover:text-white border-1 border-black w-full'
+            className='bg-black text-white hover:bg-[#e8d87f] hover:text-black border-none w-full py-6 rounded-none tracking-[0.2em] uppercase text-[10px]'
             disabled={loadingCart}
           >
             {loadingCart ? (
               <span className="animate-pulse">Adding...</span>
             ) : (
-              <>
-                <ShoppingCart className="mr-2 h-4 w-4" />
-                Add to Cart
-              </>
+              "Add to Bag"
             )}
           </Button>
         </div>
