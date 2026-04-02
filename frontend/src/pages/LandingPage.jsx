@@ -17,6 +17,7 @@ import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { setCart, setCartOpen } from '@/redux/productSlice';
 import BespokeSection from '@/components/Bespoke';
+import ProductCard from '@/components/ProductCard';
 
 
 const LandingPage = () => {
@@ -26,7 +27,9 @@ const LandingPage = () => {
   };
   const [open, setOpen] = useState(false);
   const [arrivals, setArrivals] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loadingArrivals, setLoadingArrivals] = useState(false);
+  const [loadingFeatured, setLoadingFeatured] = useState(false);
   const [fetched, setFetched] = useState(false);
   const accessToken = localStorage.getItem('accessToken');
   const [loadingCart, setLoadingCart] = useState(false);
@@ -65,6 +68,23 @@ const LandingPage = () => {
       fetchNewArrivals();
     }
   }, [open, fetched]);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        setLoadingFeatured(true);
+        const res = await API.get('product/featured');
+        if (res.data?.success) {
+          setFeaturedProducts(res.data.products);
+        }
+      } catch (e) {
+        console.log("Error fetching featured products:", e);
+      } finally {
+        setLoadingFeatured(false);
+      }
+    };
+    fetchFeatured();
+  }, []);
 
   const addToCart = async (productId) => {
     try {
@@ -122,7 +142,32 @@ const LandingPage = () => {
           </div>
         </DialogContent>
       </Dialog>
+      {/* Featured Products Section */}
+      {featuredProducts.length > 0 && (
+        <section className="py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-20">
+              <h2 className="text-3xl md:text-5xl font-light tracking-[0.3em] uppercase text-gray-900">
+                Featured Products
+              </h2>
+              <div className="w-12 h-[1px] bg-black mx-auto mt-6"></div>
+              <p className="mt-6 text-gray-500 text-sm md:text-base max-w-lg mx-auto font-light leading-relaxed">
+                Handpicked premium pieces curated just for you.
+              </p>
+            </div>
 
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {featuredProducts.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                  loading={loadingFeatured}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
       {/* Categories Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto ">
@@ -206,6 +251,8 @@ const LandingPage = () => {
       </section>
 
       <BespokeSection />
+
+
 
       {/* Features Section */}
       <section className="py-24 bg-gray-50">
