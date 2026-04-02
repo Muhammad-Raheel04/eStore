@@ -8,7 +8,7 @@ const slides = [
     heading: 'CRAFTED\nELEGANCE',
     subtext: 'Premium leather bags designed for modern men & women.',
     cta: 'Shop Bags',
-    path: '/products?category=bags',
+    path: '/products',
   },
   {
     image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775058388/hero_img_2_kx0wac.avif',
@@ -16,7 +16,7 @@ const slides = [
     heading: 'EVERYDAY\nESSENTIALS',
     subtext: 'Sleek wallets and accessories built for style and function.',
     cta: 'Shop Wallets',
-    path: '/products?category=wallets',
+    path: '/products',
   },
   {
     image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775058382/hero_img_1_u58buo.avif',
@@ -24,7 +24,7 @@ const slides = [
     heading: 'LATEST\nARRIVALS',
     subtext: 'Discover fresh designs crafted with precision and premium leather.',
     cta: 'Explore Collection',
-    path: '/products?sort=new',
+    path: '/products',
   },
 ];
 const HeroSection = () => {
@@ -87,7 +87,7 @@ const HeroSection = () => {
             {slide.tag}
           </p>
 
-          <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-bold leading-[1.1] uppercase mb-8 animate-fadeInLeft delay-200">
+          <h1 className="text-4xl md:text-7xl lg:text-6xl font-serif font-light leading-[1.1] uppercase mb-8 animate-fadeInLeft delay-200 tracking-[0.2em] md:tracking-[0.2em]">
             {slide.heading}
           </h1>
 
