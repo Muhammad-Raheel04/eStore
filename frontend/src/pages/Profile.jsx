@@ -88,7 +88,7 @@ const Profile = () => {
         }
     }
     return (
-        <div className="pt-2 min-h-screen bg-gray-50 flex justify-center items-start px-4 sm:px-6 lg:px-8">
+        <div className="pt-24 min-h-screen bg-gray-50 flex justify-center items-start px-4 sm:px-6 lg:px-8">
            
             <Tabs defaultValue="profile" className="max-w-7xl w-full">
 
