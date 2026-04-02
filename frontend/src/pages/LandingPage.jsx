@@ -212,13 +212,20 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* Button to Products Page */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-12 flex justify-center">
             <a
               href="/products"
-              className="px-6 py-3 bg-white  border-1 border-black text-black font-semibold  shadow-md hover:bg-black hover:text-white transition duration-300"
+              className="group relative inline-flex items-center gap-2 px-10 py-4 border border-black text-black text-sm tracking-[0.2em] uppercase font-medium overflow-hidden transition-all duration-500"
             >
-              View All Products
+              <span className="relative z-10 group-hover:text-white transition-colors duration-500">
+                View Collection
+              </span>
+
+              <span className="absolute left-0 top-0 w-0 h-full bg-black transition-all duration-500 group-hover:w-full"></span>
+
+              <span className="relative z-10 transform group-hover:translate-x-1 transition-transform duration-300">
+                
+              </span>
             </a>
           </div>
         </div>
