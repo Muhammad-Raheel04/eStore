@@ -1,52 +1,75 @@
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaInstagram, FaPinterest, FaTwitterSquare } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaPinterestP, FaTwitter } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className='bg-black text-gray-200 py-10'>
-      <div className='max-w-7xl mx-auto px-4 md:flex md:justify-between'>
-        {/* info */}
-        <div className='mb-6 md:mb-0'>
+    <footer className="bg-[#0A0A0A] text-gray-400 py-20">
+      <div className="max-w-6xl mx-auto px-6">
 
-          <p className='mt-2 text-sm'>Powering Your World with the Best in eCommerce.</p>
-          <p className='mt-2 text-sm'>Rajput & Co. Bahria Town Phase 8, RWP</p>
-          <p className='text-sm'><a href="mailto:hamzaraj541@gmail.com">Email: hamzaraj541@gmail.com</a></p>
-          <p className='text-sm mt-2'>
-            <a
-              href="https://wa.me/923295694485"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-orange-300 hover:text-white"
-            >
-              Contact Developer
-            </a>
-          </p>
-        </div>
+        <div className="grid md:grid-cols-3 gap-12 text-center md:text-left">
 
-        {/* customer service links */}
-        <div className='mb-6 md:mb-0'>
-          <h3 className='text-xl font-semibold'>Customer Service</h3>
-          <ul className='mt-2 text-sm space-y-2'>
-            <li><a href="mailto:hamzaraj541@gmail.com">Contact Us</a></li>
-          
-          </ul>
-        </div>
+          <div>
+            <h2 className="text-white text-lg tracking-[0.3em] uppercase mb-4">
+              Hamza Rajput
+            </h2>
+            <p className="text-sm leading-relaxed max-w-xs mx-auto md:mx-0">
+              Crafted with precision and passion — delivering timeless pieces that elevate everyday style.
+            </p>
+          </div>
 
-        {/* social media links */}
-        <div className='mb-6 md:mb-0'>
-          <h3 className='text-xl font-semibold'>Follow Us</h3>
-          <div className='flex space-x-4 mt-4'>
-            <FaFacebook className='text-2xl hover:text-white cursor-pointer' />
-            <FaInstagram className='text-2xl hover:text-white cursor-pointer' />
-            <FaPinterest className='text-2xl hover:text-white cursor-pointer' />
-            <FaTwitterSquare className='text-2xl hover:text-white cursor-pointer' />
+          <div>
+            <h3 className="text-white text-sm tracking-[0.25em] uppercase mb-6">
+              Contact
+            </h3>
+
+            <ul className="space-y-3 text-sm">
+              <li className="hover:text-white transition">
+                <a href="mailto:hamzaraj541@gmail.com">hamzaraj541@gmail.com</a>
+              </li>
+
+              <li>Rajput & Co. Bahria Town Phase 8, RWP</li>
+
+              <li className="pt-4 text-xs tracking-wide text-gray-500">
+                Developer:{' '}
+                <a
+                  href="https://wa.me/923295694485"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition underline underline-offset-4"
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-white text-sm tracking-[0.25em] uppercase mb-6">
+              Follow
+            </h3>
+
+            <div className="flex justify-center md:justify-start gap-5">
+              <FaFacebookF className="text-lg hover:text-white transition duration-300 cursor-pointer" />
+              <FaInstagram className="text-lg hover:text-white transition duration-300 cursor-pointer" />
+              <FaPinterestP className="text-lg hover:text-white transition duration-300 cursor-pointer" />
+              <FaTwitter className="text-lg hover:text-white transition duration-300 cursor-pointer" />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* bottom section */}
-      <div className='mt-8 border-t border-gray-700 pt-6 text-center text-sm'>
-        <p>&copy; {new Date().getFullYear()} <span className='text-white'>Hamza Rajput</span>. All rights reserved</p>
+        <div className="border-t border-gray-800 my-12"></div>
+
+        <div className="flex flex-col md:flex-row justify-between items-center text-xs tracking-wide text-gray-500">
+          <p>
+            &copy; {new Date().getFullYear()}
+            <span className="text-white ml-1">Hamza Rajput</span>. All rights reserved.
+          </p>
+
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <Link to="/" className="hover:text-white transition">Privacy</Link>
+            <Link to="/" className="hover:text-white transition">Terms</Link>
+          </div>
+        </div>
+
       </div>
     </footer>
   );
