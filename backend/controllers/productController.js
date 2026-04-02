@@ -5,7 +5,7 @@ import getDataUri from "../utils/dataURI.js";
 
 export const addProduct = async (req, res) => {
     try {
-        let { productName, productDesc, productPrice, category, type } = req.body;
+        let { productName, productDesc, productPrice, category, type, featured } = req.body;
         const userId = req.id;
 
         if (!productName || !productDesc || !productPrice || !category || !type) {
@@ -44,6 +44,7 @@ export const addProduct = async (req, res) => {
             productPrice,
             category,
             type,
+            featured: featured === 'true' || featured === true,
             productImg, // array of objects [{url, public_id},{url, public_id}]
         });
 
@@ -119,7 +120,7 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try {
         const { productId } = req.params;
-        let { productName, productDesc, productPrice, category, type, existingImages } = req.body;
+        let { productName, productDesc, productPrice, category, type, existingImages, featured } = req.body;
 
         const product = await Product.findById(productId);
         if (!product) {
@@ -178,6 +179,10 @@ export const updateProduct = async (req, res) => {
             product.type = String(type).toLowerCase().trim();
         }
         product.productImg = updatedImages;
+        
+        if (featured !== undefined) {
+            product.featured = featured === 'true' || featured === true;
+        }
 
         await product.save();
 
@@ -191,5 +196,40 @@ export const updateProduct = async (req, res) => {
             success: false,
             message: error.message
         });
+    }
+};
+
+export const toggleFeatured = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const { featured } = req.body;
+
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        product.featured = featured;
+        await product.save();
+
+        return res.status(200).json({
+            success: true,
+            message: `Product ${featured ? 'marked as featured' : 'removed from featured'}`,
+            product
+        });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+export const getFeaturedProducts = async (_, res) => {
+    try {
+        const products = await Product.find({ featured: true });
+        return res.status(200).json({
+            success: true,
+            products
+        });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
     }
 };
