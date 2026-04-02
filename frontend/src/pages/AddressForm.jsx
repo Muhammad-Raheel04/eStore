@@ -22,14 +22,14 @@ const AddressForm = () => {
         zip: "",
         country: "",
     });
-  const requiredFields = ["fullName", "phone", "email", "address", "city", "state", "zip", "country"];
-  const getMissingFields = (addr) => {
-    if (!addr) return requiredFields;
-    return requiredFields.filter((k) => {
-      const v = addr[k];
-      return typeof v !== "string" || v.trim() === "";
-    });
-  };
+    const requiredFields = ["fullName", "phone", "email", "address", "city", "state", "zip", "country"];
+    const getMissingFields = (addr) => {
+        if (!addr) return requiredFields;
+        return requiredFields.filter((k) => {
+            const v = addr[k];
+            return typeof v !== "string" || v.trim() === "";
+        });
+    };
 
     const { cart, addresses, selectedAddress } = useSelector((store) => store.product);
     const [showForm, setShowForm] = useState(addresses?.length > 0 ? false : true);
@@ -42,12 +42,12 @@ const AddressForm = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-  const handleSave = () => {
-    const missing = getMissingFields(formData);
-    if (missing.length) {
-      toast.error(`Please fill: ${missing.join(", ")}`);
-      return;
-    }
+    const handleSave = () => {
+        const missing = getMissingFields(formData);
+        if (missing.length) {
+            toast.error(`Please fill: ${missing.join(", ")}`);
+            return;
+        }
         setSavingAddress(true);
         setTimeout(() => {
             dispatch(addAddress(formData));
@@ -65,24 +65,24 @@ const AddressForm = () => {
             return;
         }
 
-    const addr = selectedAddress !== null ? addresses[selectedAddress] : null;
-    if (!addr) {
-      toast.error("Please select a shipping address");
-      return;
-    }
-    const missing = getMissingFields(addr);
-    if (missing.length) {
-      toast.error(`Please complete address fields: ${missing.join(", ")}`);
-      setShowForm(true);
-      setFormData({ ...formData, ...addr });
-      return;
-    }
+        const addr = selectedAddress !== null ? addresses[selectedAddress] : null;
+        if (!addr) {
+            toast.error("Please select a shipping address");
+            return;
+        }
+        const missing = getMissingFields(addr);
+        if (missing.length) {
+            toast.error(`Please complete address fields: ${missing.join(", ")}`);
+            setShowForm(true);
+            setFormData({ ...formData, ...addr });
+            return;
+        }
 
         try {
             setPlacingOrder(true);
             const token = localStorage.getItem("accessToken");
             const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
-      const res = await API.post("order/cod", { shippingAddress: addr }, config);
+            const res = await API.post("order/cod", { shippingAddress: addr }, config);
             if (res.data.success) {
                 toast.success("Order Placed Successfully!");
                 navigate("/order-success");
@@ -102,7 +102,7 @@ const AddressForm = () => {
     const total = subtotal + shipping + tax;
 
     return (
-        <div className="max-w-7xl mx-auto p-2 sm:px-10 sm:pt-4 sm:pb-10">
+        <div className="pt-24 max-w-7xl mx-auto p-2 sm:px-10 sm:pb-10">
             <h1 className='text-center p-2  text-lg border-t  border-b border-gray-300  '>Checkout </h1>
             <div className="pt-2 grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {/* Left: Address Form */}
@@ -112,6 +112,7 @@ const AddressForm = () => {
                             <div>
                                 <Label htmlFor="fullName"></Label>
                                 <Input
+                                    type='text'
                                     id="fullName"
                                     name="fullName"
                                     required
@@ -123,6 +124,7 @@ const AddressForm = () => {
                             <div>
                                 <Label htmlFor="phone"></Label>
                                 <Input
+                                    type='number'
                                     id="phone"
                                     name="phone"
                                     required
@@ -134,6 +136,7 @@ const AddressForm = () => {
                             <div>
                                 <Label htmlFor="email"></Label>
                                 <Input
+                                    type='text'
                                     id="email"
                                     name="email"
                                     required
@@ -145,6 +148,7 @@ const AddressForm = () => {
                             <div>
                                 <Label htmlFor="address"></Label>
                                 <Input
+                                    type='text'
                                     id="address"
                                     name="address"
                                     required
@@ -157,6 +161,7 @@ const AddressForm = () => {
                                 <div>
                                     <Label htmlFor="city"></Label>
                                     <Input
+                                        type='text'
                                         id="city"
                                         name="city"
                                         required
@@ -168,6 +173,7 @@ const AddressForm = () => {
                                 <div>
                                     <Label htmlFor="state"></Label>
                                     <Input
+                                        type='text'
                                         id="state"
                                         name="state"
                                         required
@@ -181,6 +187,7 @@ const AddressForm = () => {
                                 <div>
                                     <Label htmlFor="zip"></Label>
                                     <Input
+                                        type='number'
                                         id="zip"
                                         name="zip"
                                         required
@@ -192,6 +199,7 @@ const AddressForm = () => {
                                 <div>
                                     <Label htmlFor="country"></Label>
                                     <Input
+                                        type='text'
                                         id="country"
                                         name="country"
                                         required
@@ -217,8 +225,8 @@ const AddressForm = () => {
                                     key={index}
                                     onClick={() => dispatch(setSelectedAddress(index))}
                                     className={`border p-4  hover:bg-gray-50 cursor-pointer relative mb-3 ${selectedAddress === index
-                                            ? "border-gray-500 bg-gray-100"
-                                            : "border-gray-300"
+                                        ? "border-gray-500 bg-gray-100"
+                                        : "border-gray-300"
                                         }`}
                                 >
                                     <p className="font-medium">{addr.fullName}</p>
@@ -264,7 +272,7 @@ const AddressForm = () => {
                             <div className="flex justify-between">
                                 <span>Shipping</span>
                                 <span>Rs. {shipping}</span>
-                            </div> 
+                            </div>
                             <div className="flex justify-between">
                                 <span>Tax</span>
                                 <span>Rs. {tax}</span>
@@ -290,7 +298,7 @@ const AddressForm = () => {
                                     <Link to="/products">Continue Shopping</Link>
                                 </Button>
                             </div>
-                           
+
                         </CardContent>
                     </Card>
                 </div>
