@@ -81,7 +81,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
               onClick={() => navigate(`/products/${product._id}`)}
               alt={productName}
               draggable={false}
-              className="w-full h-full object-fill transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+              className="w-auto h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
             />
             {isAdmin && (
               <Button 
