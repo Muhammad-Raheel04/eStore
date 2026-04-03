@@ -19,7 +19,7 @@ const slides = [
     path: '/products',
   },
   {
-    image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775058382/hero_img_1_u58buo.avif',
+    image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775217788/hero_img_3_r8sbwr.avif',
     tag: 'new collection',
     heading: 'LATEST\nARRIVALS',
     subtext: 'Discover fresh designs crafted with precision and premium leather.',
