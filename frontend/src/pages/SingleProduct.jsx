@@ -20,6 +20,11 @@ const SingleProduct = () => {
     const [fetched, setFetched] = useState(false)
 
     useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth' // optional (can remove if you want instant jump)
+        });
         // Only fetch if product is not found in Redux
         if (!productFromRedux) {
             const fetchSingleProduct = async () => {
@@ -81,7 +86,7 @@ const SingleProduct = () => {
 
     return (
         <div className="pt-24 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            
+
             <Breadcrumbs product={product} />
 
             <div className="
@@ -110,13 +115,13 @@ const SingleProduct = () => {
                         </h2>
                         <div className="h-[1px] w-24 bg-[#b08d57] mx-auto mt-4 opacity-50" />
                     </div>
-                    
+
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-12 sm:gap-x-6 sm:gap-y-16">
                         {relatedProducts.map((related) => (
-                            <ProductCard 
-                                key={related._id} 
-                                product={related} 
-                                loading={false} 
+                            <ProductCard
+                                key={related._id}
+                                product={related}
+                                loading={false}
                             />
                         ))}
                     </div>
