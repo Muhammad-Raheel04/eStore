@@ -54,7 +54,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute><Navbar /><Profile /><Footer /></ProtectedRoute>
   },
   { path: '/products', element: <><Navbar /><Products /><Footer /></> },
-  { path: '/products/:id', element: <><Navbar /><SingleProduct /></> },
+  { path: '/products/:id', element: <><Navbar /><SingleProduct /><Footer/></> },
   { path: '/cart', element: <><Navbar /><Cart /><Footer /></> },
   { path: '/address', element: <><Navbar /><AddressForm /><Footer /></> },
   { path: '/order-success', element: <OrderSuccess /> },
