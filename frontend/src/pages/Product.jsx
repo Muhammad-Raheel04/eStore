@@ -96,7 +96,19 @@ const Products = () => {
     }, [location.search]);
     return (
         <div className='pt-24 pb-10 px-4 sm:px-6 lg:px-8'>
-            <h1 className='text-center border-b border-t border-gray-300 py-2 mb-2 text-2xl'>Products</h1>
+            <div className="text-center mb-12 mt-4">
+
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.35em] uppercase text-gray-900">
+                    Collection
+                </h1>
+
+                <div className="w-12 h-[1px] bg-black mx-auto mt-6"></div>
+
+                <p className="mt-6 text-gray-500 text-sm tracking-wide max-w-md mx-auto font-light">
+                    Discover timeless pieces crafted with precision and elegance.
+                </p>
+
+            </div>
             <div className='max-w-7xl mx-auto flex flex-col gap-6'>
 
                 {/* Desktop-only top filter bar */}
