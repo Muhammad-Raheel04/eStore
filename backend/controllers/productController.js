@@ -83,7 +83,27 @@ export const getAllProduct = async (_, res) => {
         });
     }
 };
-
+export const getProductById = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            product
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
 export const deleteProduct = async (req, res) => {
     try {
         const { productId } = req.params;
@@ -104,7 +124,7 @@ export const deleteProduct = async (req, res) => {
         }
 
         // Delete product from MongoDB
-        await Product.findByIdAndDelete({_id:productId});
+        await Product.findByIdAndDelete({ _id: productId });
         return res.status(200).json({
             success: true,
             message: "Product deleted successfully"
@@ -179,7 +199,7 @@ export const updateProduct = async (req, res) => {
             product.type = String(type).toLowerCase().trim();
         }
         product.productImg = updatedImages;
-        
+
         if (featured !== undefined) {
             product.featured = featured === 'true' || featured === true;
         }
