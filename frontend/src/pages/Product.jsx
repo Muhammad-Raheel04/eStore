@@ -18,7 +18,7 @@ import { setProducts } from '@/redux/productSlice';
 import { Menu } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 const Products = () => {
-    const { products } = useSelector(store => store.product);
+    const products = useSelector(store => store.product?.products) || [];
     const [allProducts, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
