@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const slides = [
   {
-    image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775059588/hero_img_3_ncukir.avif',
+    image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775202726/hero1_1_n1j5oo.avif',
     tag: 'timeless leather',
     heading: 'CRAFTED\nELEGANCE',
     subtext: 'Premium leather bags designed for modern men & women.',
@@ -11,7 +11,7 @@ const slides = [
     path: '/products',
   },
   {
-    image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775058388/hero_img_2_kx0wac.avif',
+    image: 'https://res.cloudinary.com/dxdywv9xl/image/upload/v1775210403/archive_bfwqkh.zip.avif',
     tag: 'minimal & refined',
     heading: 'EVERYDAY\nESSENTIALS',
     subtext: 'Sleek wallets and accessories built for style and function.',
