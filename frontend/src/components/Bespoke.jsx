@@ -4,7 +4,7 @@ const BespokeSection = () => {
   return (
     <section className="relative w-full h-[80vh] md:h-[90vh] overflow-hidden">
       <img
-        src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1775059588/hero_img_3_ncukir.avif" // replace with your image
+        src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1775202726/hero1_1_n1j5oo.avif" // replace with your image
         alt="Bespoke Process"
         className="w-full h-full object-cover"
       />
