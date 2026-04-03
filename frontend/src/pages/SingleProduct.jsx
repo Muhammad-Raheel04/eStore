@@ -1,14 +1,17 @@
 import Breadcrumbs from '@/components/Breadcrums';
 import ProductDesc from '@/components/ProductDesc'
 import ProductImg from '@/components/ProductImg'
+import ProductCard from '@/components/ProductCard'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import API from '@/utils/API';
+import { setProducts } from '@/redux/productSlice';
 
 const SingleProduct = () => {
     const params = useParams()
     const productId = params.id
+    const dispatch = useDispatch()
     const products = useSelector(store => store.product?.products) || []
     const productFromRedux = products.find(item => item?._id === productId)
 
@@ -35,9 +38,29 @@ const SingleProduct = () => {
             }
             fetchSingleProduct()
         }
-    }, [productId, productFromRedux])
+
+        // Fetch all products if they aren't in Redux to populate "You May Also Like"
+        if (products.length === 0) {
+            const fetchAllProducts = async () => {
+                try {
+                    const res = await API.get('product/getallproducts');
+                    if (res.data?.success) {
+                        dispatch(setProducts(res.data.products));
+                    }
+                } catch (err) {
+                    console.error("Error fetching all products for related section:", err);
+                }
+            };
+            fetchAllProducts();
+        }
+    }, [productId, productFromRedux, products.length, dispatch])
 
     const product = productFromRedux || localProduct
+
+    // Filter related products
+    const relatedProducts = products
+        .filter(item => item?.category === product?.category && item?._id !== product?._id)
+        .slice(0, 4)
 
     if (loading) {
         return (
@@ -77,6 +100,28 @@ const SingleProduct = () => {
                     <ProductDesc product={product} />
                 </div>
             </div>
+
+            {/* You May Also Like Section */}
+            {relatedProducts.length > 0 && (
+                <div className="mt-24">
+                    <div className="text-center mb-12">
+                        <h2 className="text-2xl font-serif font-light tracking-[0.2em] uppercase text-gray-900">
+                            You May Also Like
+                        </h2>
+                        <div className="h-[1px] w-24 bg-[#b08d57] mx-auto mt-4 opacity-50" />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-12 sm:gap-x-6 sm:gap-y-16">
+                        {relatedProducts.map((related) => (
+                            <ProductCard 
+                                key={related._id} 
+                                product={related} 
+                                loading={false} 
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
