@@ -102,13 +102,12 @@ const Navbar = () => {
   const cartCount = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   const isHomePage = location.pathname === '/';
-  const navbarClasses = `fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${
-    isHomePage 
-      ? isScrolled 
-        ? 'bg-white shadow-md py-3' 
-        : 'bg-transparent py-2'
-      : 'bg-white shadow-md py-3'
-  }`;
+  const navbarClasses = `fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isHomePage
+    ? isScrolled
+      ? 'bg-white shadow-md py-3'
+      : 'bg-transparent py-2'
+    : 'bg-white shadow-md py-3'
+    }`;
 
   const textClasses = isHomePage && !isScrolled ? 'text-white' : 'text-black';
 
@@ -116,9 +115,9 @@ const Navbar = () => {
     <>
       <header className={navbarClasses}>
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
-          
+
           <div className="flex-1 flex justify-start">
-            <button 
+            <button
               onClick={() => setIsMenuOpen(true)}
               className={`${textClasses} hover:opacity-70 transition-opacity p-2`}
               aria-label="Open Menu"
@@ -136,7 +135,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex-1 flex justify-end">
-            <button 
+            <button
               onClick={() => dispatch(setCartOpen(true))}
               className={`relative hover:opacity-70 transition-opacity p-2 ${textClasses}`}
               aria-label="Open Shopping Bag"
@@ -155,20 +154,18 @@ const Navbar = () => {
 
       <CartDrawer isOpen={isCartOpen} onClose={() => dispatch(setCartOpen(false))} />
 
-      <div 
-        className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${
-          isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+      <div
+        className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setIsMenuOpen(false)}
       />
 
-      <div className={`fixed top-0 left-0 h-full w-[320px] bg-white z-[70] shadow-2xl transform transition-transform duration-500 ease-in-out flex flex-col ${
-        isMenuOpen ? "translate-x-0" : "-translate-x-full"
-      }`}>
-        
+      <div className={`fixed top-0 left-0 h-full w-[320px] bg-white z-[70] shadow-2xl transform transition-transform duration-500 ease-in-out flex flex-col ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}>
+
         <div className="flex justify-between items-center p-8 border-b border-gray-100">
           <h2 className="text-xl font-serif tracking-widest uppercase text-black">Menu</h2>
-          <button 
+          <button
             onClick={() => setIsMenuOpen(false)}
             className="p-2 hover:rotate-90 transition-transform duration-300"
           >
@@ -178,8 +175,15 @@ const Navbar = () => {
 
         <div className="flex-1 flex flex-col p-8 gap-8 overflow-y-auto">
           <NavTree data={navData} onNavigate={() => setIsMenuOpen(false)} />
-
-          <div className="flex flex-col gap-6 pt-6 border-t border-gray-100">
+          <Link
+            to="/products"
+            onClick={() => setIsMenuOpen(false)}
+            className="flex items-center gap-4 text-lg font-light tracking-widest uppercase text-gray-800 hover:text-[#e8d87f] transition group"
+          >
+            <ShoppingBasket className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />
+            View Collection
+          </Link>
+          <div className="flex flex-col gap-6">
             {user && (
               <Link
                 to={`/profile/${user._id}`}
@@ -214,8 +218,8 @@ const Navbar = () => {
               Logout
             </button>
           ) : (
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               onClick={() => setIsMenuOpen(false)}
               className="w-full flex items-center justify-center gap-3 bg-black text-white py-4 px-6 tracking-[0.2em] uppercase text-sm hover:bg-[#e8d87f] hover:text-black transition duration-300 group shadow-lg"
             >
