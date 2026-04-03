@@ -21,7 +21,7 @@ import {
 
 
 const AddProduct = () => {
-  const { products } = useSelector(store => store.product);
+  const products = useSelector(store => store.product?.products) || [];
   const accessToken = localStorage.getItem('accessToken');
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
