@@ -31,7 +31,8 @@ const AddressForm = () => {
         });
     };
 
-    const { cart, addresses, selectedAddress } = useSelector((store) => store.product);
+    const productStore = useSelector((store) => store.product) || {};
+    const { cart, addresses, selectedAddress } = productStore;
     const [showForm, setShowForm] = useState(addresses?.length > 0 ? false : true);
     const [savingAddress, setSavingAddress] = useState(false);
     const [placingOrder, setPlacingOrder] = useState(false);
