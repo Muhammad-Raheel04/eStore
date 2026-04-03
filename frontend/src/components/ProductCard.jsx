@@ -71,7 +71,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
   return (
     <div className="group select-none flex flex-col items-center">
       {/* Image Container */}
-      <div className="w-full aspect-[3/4] sm:aspect-[2/3] lg:aspect-[3/4] overflow-hidden bg-gray-50 mb-4 relative">
+      <div className="w-full overflow-hidden bg-gray-50 mb-4 relative">
         {loading ? (
           <Skeleton className="w-full h-full" />
         ) : (
