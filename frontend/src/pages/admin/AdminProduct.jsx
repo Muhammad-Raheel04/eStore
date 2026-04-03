@@ -48,7 +48,7 @@ const quillModules = {
     ]
 };
 const AdminProduct = () => {
-    const { products } = useSelector((store) => store.product)
+    const products = useSelector((store) => store.product?.products) || []
     const [editProduct, setEditProduct] = useState(null);
     const [open, setOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -82,7 +82,7 @@ const AdminProduct = () => {
             fetchAll();
         }
         fetchTypes();
-    }, [dispatch]);
+    }, [dispatch, products.length]);
 
     let filteredProducts = products.filter((product) => {
         return (
