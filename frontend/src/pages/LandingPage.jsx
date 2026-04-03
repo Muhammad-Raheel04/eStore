@@ -165,9 +165,9 @@ const LandingPage = () => {
             <div onClick={() => handleTypeClick("men")} className="relative group overflow-hidden cursor-pointer">
               <img
                 loading='lazy'
-                src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774254627/men_pwzico.avif"
+                src='https://res.cloudinary.com/dxdywv9xl/image/upload/v1775210593/category_img_1_wrg2ik.avif'
                 alt="Mens"
-                className="w-full h-80 md:h-150 object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-130 md:h-150 object-cover aspect-ratio[3/4] group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
 
@@ -181,9 +181,9 @@ const LandingPage = () => {
             <div onClick={() => handleTypeClick("women")} className="relative group overflow-hidden cursor-pointer">
               <img
                 loading='lazy'
-                src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1774465500/women_ucamwu.avif"
+                src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1775210964/category_img_2_igsyb8.avif"
                 alt="womens"
-                className="w-full h-80 md:h-150  object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-130 md:h-150  object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
 
@@ -199,7 +199,7 @@ const LandingPage = () => {
                 loading='lazy'
                 src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570038/leatherBags_fjtrd7.avif"
                 alt="Leather Products"
-                className="w-full h-80 md:h-150  object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-130 md:h-150  object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
 
