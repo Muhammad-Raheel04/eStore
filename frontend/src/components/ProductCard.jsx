@@ -11,14 +11,14 @@ import { toast } from 'sonner'
 const ProductCard = ({ product, loading, isAdmin }) => {
   if (loading) {
     return (
-      <div className='shadow-lg rounded-lg overflow-hidden h-max'>
-        <div className='w-full h-full aspect-square overflow-hidden'>
-          <Skeleton className='w-full h-full rounded-lg' />
+      <div className="flex flex-col items-center">
+        <div className="w-full aspect-[3/4] sm:aspect-[2/3] lg:aspect-[3/4] overflow-hidden bg-gray-50 mb-4">
+          <Skeleton className="w-full h-full rounded-none" />
         </div>
-        <div className='px-2 space-y-2 my-2'>
-          <Skeleton className='w-[200px] h-4' />
-          <Skeleton className='w-[100px] h-4' />
-          <Skeleton className='w-[150px] h-8' />
+        <div className="w-full space-y-2 px-1 flex flex-col items-center">
+          <Skeleton className="h-3 w-3/4 bg-gray-100 rounded-none" />
+          <Skeleton className="h-2 w-1/2 bg-gray-100 rounded-none" />
+          <Skeleton className="h-9 w-full max-w-[140px] bg-gray-100 rounded-none mt-2" />
         </div>
       </div>
     );
@@ -69,53 +69,69 @@ const ProductCard = ({ product, loading, isAdmin }) => {
   }
 
   return (
-    <div className='border border-gray-400 shadow-lg overflow-hidden h-max'>
-      <div className=' w-full h-full aspect-square overflow-hidden'>
+    <div className="group select-none flex flex-col items-center">
+      {/* Image Container */}
+      <div className="w-full aspect-[3/4] sm:aspect-[2/3] lg:aspect-[3/4] overflow-hidden bg-gray-50 mb-4 relative">
         {loading ? (
-          <Skeleton className='w-full h-full rounded-lg' />
+          <Skeleton className="w-full h-full" />
         ) : (
-          <img
-            src={productImg?.[0]?.url}
-            onClick={() => navigate(`/products/${product._id}`)}
-            alt={productName}
-            className='w-full h-full transition-transform duration-300 hover:scale-105 cursor-pointer'
-          />
-        )}
-      </div>
-
-      {loading ? (
-        <div className='px-2 space-y-2 my-2'>
-          <Skeleton className='w-[200px] h-4' />
-          <Skeleton className='w-[100px] h-4' />
-          <Skeleton className='w-[150px] h-8' />
-        </div>
-      ) : (
-        <div className='px-2 space-y-1'>
-          <h1 className='text-center mt-2  h-12 line-clamp-2'>{productName}</h1>
-          <h2 className='font-normal text-red-500'>Rs. {productPrice}</h2>
-          <div className='flex gap-2 mt-3 mb-4'>
-            <Button
-              onClick={() => addToCart(product._id)}
-              className='bg-white text-black hover:text-white border-1 border-black w-full'
-              disabled={loadingCart} 
-            >
-              {loadingCart ? (
-                <span className="animate-pulse">Adding...</span> 
-              ) : (
-                <>
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  Add to Cart
-                </>
-              )}
-            </Button>
+          <>
+            <img
+              src={productImg?.[0]?.url}
+              onClick={() => navigate(`/products/${product._id}`)}
+              alt={productName}
+              draggable={false}
+              className="w-full h-full object-fill transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+            />
             {isAdmin && (
-              <Button onClick={() => handleDelete(product._id)} className='bg-red-500 hover:bg-red-600'>
+              <Button 
+                onClick={() => handleDelete(product._id)} 
+                variant="destructive"
+                size="icon"
+                className="absolute top-2 right-2 h-8 w-8 rounded-none opacity-0 group-hover:opacity-100 transition-opacity"
+              >
                 <Trash2 className="h-4 w-4" />
               </Button>
             )}
-          </div>
-        </div>
-      )}
+          </>
+        )}
+      </div>
+
+      {/* Info Container */}
+      <div className="text-center space-y-1 w-full px-1 flex flex-col items-center">
+        {loading ? (
+          <>
+            <Skeleton className="h-3 w-3/4 mx-auto" />
+            <Skeleton className="h-2 w-1/2 mx-auto" />
+          </>
+        ) : (
+          <>
+            <h3 
+              onClick={() => navigate(`/products/${product._id}`)}
+              className="text-[10px] sm:text-[11px] font-light tracking-[0.18em] uppercase text-gray-900 truncate cursor-pointer hover:text-gray-600 transition-colors w-full"
+            >
+              {productName}
+            </h3>
+            <p className="text-[9px] sm:text-[10px] font-light tracking-widest text-gray-400">
+              Rs. {productPrice?.toLocaleString()}
+            </p>
+            
+            <div className="pt-2 w-full max-w-[140px]">
+              <Button
+                onClick={() => addToCart(product._id)}
+                className="bg-black text-white hover:bg-[#e8d87f] hover:text-black border-none w-full py-4 rounded-none tracking-[0.2em] uppercase text-[9px] h-auto font-light transition-all duration-300"
+                disabled={loadingCart}
+              >
+                {loadingCart ? (
+                  <span className="animate-pulse">Adding...</span>
+                ) : (
+                  "Add to Bag"
+                )}
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
