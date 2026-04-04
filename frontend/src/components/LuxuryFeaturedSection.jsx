@@ -119,12 +119,12 @@ const LuxuryFeaturedSection = ({ products, loading }) => {
                 className="group cursor-pointer flex flex-col items-center"
               >
                 {/* Image — tighter aspect ratio on desktop */}
-                <div className="w-full aspect-[3/4] sm:aspect-[2/3] lg:aspect-[3/4] overflow-hidden bg-gray-50 mb-4">
+                <div className="w-full overflow-hidden bg-gray-50 mb-4">
                   <img
                     src={product?.productImg?.[0]?.url || product?.thumbnail}
                     alt={product?.productName}
                     draggable={false}
-                    className="w-full h-full object-fill transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
  
