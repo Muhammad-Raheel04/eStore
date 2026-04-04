@@ -81,10 +81,10 @@ const LuxuryFeaturedSection = ({ products, loading }) => {
  
         {/* Header */}
         <div className="text-center mb-10 relative">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-light tracking-[0.4em] uppercase text-gray-900">
+          <h2 className="text-xl sm:text-2xl md:text-4xl font-light tracking-[0.4em] uppercase text-gray-900">
             Featured Products
           </h2>
-          <div className="w-10 h-[1px] bg-black mx-auto mt-3" />
+          <div className="w-15 h-[1px] bg-black mx-auto mt-3" />
  
         
         </div>
