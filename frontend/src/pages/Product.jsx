@@ -95,8 +95,8 @@ const Products = () => {
         if (typeFromURL && !categoryFromURL) setCategory("All");
     }, [location.search]);
     return (
-        <div className='pt-24 pb-10 px-4 '>
-            <div className="text-center mb-12 mt-4">
+        <div className='pt-10 pb-10 px-4 '>
+            <div className="text-center mb-12 mt-4 bg-gray-200 p-4">
 
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.35em] uppercase text-gray-900">
                     Collection
