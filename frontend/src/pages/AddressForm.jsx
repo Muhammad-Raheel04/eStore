@@ -31,8 +31,7 @@ const AddressForm = () => {
         });
     };
 
-    const productStore = useSelector((store) => store.product) || {};
-    const { cart, addresses, selectedAddress } = productStore;
+    const { cart, addresses, selectedAddress } = useSelector((store) => store.product);
     const [showForm, setShowForm] = useState(addresses?.length > 0 ? false : true);
     const [savingAddress, setSavingAddress] = useState(false);
     const [placingOrder, setPlacingOrder] = useState(false);
@@ -103,8 +102,13 @@ const AddressForm = () => {
     const total = subtotal + shipping + tax;
 
     return (
-        <div className="pt-24 max-w-7xl mx-auto p-2 sm:px-10 sm:pb-10">
-            <h1 className='text-center p-2  text-lg border-t  border-b border-gray-300  '>Checkout </h1>
+        <div className="pt-10 max-w-7xl mx-auto p-2 sm:px-10 sm:pb-10">
+            <div className="text-center mb-12 mt-4 bg-gray-200 py-6 px-4">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.35em] uppercase text-gray-900">
+                    CHECKOUT
+                </h1>
+                <div className="w-12 h-[1px] bg-black mx-auto mt-6"></div>
+            </div>
             <div className="pt-2 grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {/* Left: Address Form */}
                 <div className="space-y-4 p-6 bg-white border border-gray-300 shadow-md">
