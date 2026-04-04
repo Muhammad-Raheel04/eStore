@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
@@ -6,7 +6,11 @@ const ProductImg = ({ images }) => {
     const [mainImg, setMainImg] = useState(
         images?.length ? images[0].url : ""
     );
-
+    useEffect(() => {
+        if (images?.length) {
+            setMainImg(images[0].url);
+        }
+    }, [images]);
     return (
         <div className="relative">
             {/* Main Image */}
