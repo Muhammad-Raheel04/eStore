@@ -266,7 +266,7 @@ const ProductDesc = ({ product }) => {
             </div>
 
             {/* Mobile Sticky Bar */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-gray-200 p-4 md:hidden">
+            <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-gray-200 p-4 md:hidden z-50">
                 <button
                     onClick={handleAddToCart}
                     disabled={loading}
