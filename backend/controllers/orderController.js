@@ -14,7 +14,26 @@ export const createCODOrder = async (req, res) => {
             return res.status(400).json({ message: "Cart is empty" });
         }
 
-        // Basic guest validation
+        // Remove invalid items from cart in-place and persist immediately
+        const hadInvalidItems = cart.items.some(item => item.productId == null);
+        cart.items = cart.items.filter(item => item.productId != null);
+
+        if (hadInvalidItems) {
+            // Recalculate totalPrice after removing stale items
+            cart.totalPrice = cart.items.reduce(
+                (sum, item) => sum + item.productId.productPrice * item.quantity, 0
+            );
+            await cart.save();
+        }
+
+        // After cleanup, re-check if anything remains
+        if (cart.items.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "All items in your cart are no longer available. Your cart has been cleared."
+            });
+        }
+
         if (!isRegistered) {
             const required = ["fullName", "phone", "email", "address", "city", "state", "zip", "country"];
             const missing = required.filter(k => !shippingAddress?.[k]);
@@ -69,12 +88,10 @@ export const createCODOrder = async (req, res) => {
             emailToSend = shippingAddress.email;
         }
 
-        // clear cart
         cart.items = [];
         cart.totalPrice = 0;
         await cart.save();
 
-        // Send Emails
         const populatedOrder = await Order.findById(createdOrder._id)
             .populate("products.productId", "productName productPrice");
         await sendOrderEmail(populatedOrder, emailToSend);
@@ -87,7 +104,11 @@ export const createCODOrder = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ 
+            success:false,
+            message: `Server error`,
+            error:error.message, 
+        });
     }
 };
 export const getAllOrders = async (req, res) => {
