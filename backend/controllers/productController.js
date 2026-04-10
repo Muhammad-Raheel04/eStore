@@ -132,7 +132,7 @@ export const deleteProduct = async (req, res) => {
             }
         );
         // Delete product from MongoDB
-        await Product.findByIdAndDelete({productId});
+        await Product.findByIdAndDelete({_id:productId});
         return res.status(200).json({
             success: true,
             message: "Product deleted successfully"
