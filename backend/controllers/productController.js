@@ -1,3 +1,4 @@
+import { Cart } from "../models/CartModel.js";
 import { Product } from "../models/productModel.js";
 import { ProductType } from "../models/productTypeModel.js";
 import cloudinary from "../utils/cloudinary.js";
@@ -122,9 +123,16 @@ export const deleteProduct = async (req, res) => {
                 const result = await cloudinary.uploader.destroy(img.public_id);
             }
         }
-
+        await Cart.updateMany(
+            {},
+            {
+                $pull: {
+                    items: { productId }
+                }
+            }
+        );
         // Delete product from MongoDB
-        await Product.findByIdAndDelete({ _id: productId });
+        await Product.findByIdAndDelete({productId});
         return res.status(200).json({
             success: true,
             message: "Product deleted successfully"
@@ -246,7 +254,7 @@ export const getFeaturedProducts = async (_, res) => {
     try {
         const products = await Product.find({ featured: true })
             .select('productName productPrice productImg.url _id')
-            .slice('productImg.url',1)
+            .slice('productImg.url', 1)
             .lean();
         return res.status(200).json({
             success: true,
