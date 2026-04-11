@@ -48,7 +48,7 @@ const quillModules = {
     ]
 };
 const AdminProduct = () => {
-    const products = useSelector((store) => store.product?.products) || []
+    const { products } = useSelector((store) => store.product)
     const [editProduct, setEditProduct] = useState(null);
     const [open, setOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -56,34 +56,30 @@ const AdminProduct = () => {
     const accessToken = localStorage.getItem('accessToken');
     const dispatch = useDispatch();
     const [typeDefs, setTypeDefs] = useState([]);
-
-    useEffect(() => {
-        const fetchAll = async () => {
-            try {
-                const res = await API.get('product/getallproducts');
-                if (res.data?.success) {
-                    dispatch(setProducts(res.data.products));
-                }
-            } catch (err) {
-                console.log(err);
+    const fetchAll = async () => {
+        try {
+            const res = await API.get('product/getallproducts');
+            if (res.data?.success) {
+                dispatch(setProducts(res.data.products));
             }
-        };
-        const fetchTypes = async () => {
-            try {
-                const res = await API.get('types');
-                if (res.data?.success) {
-                    setTypeDefs(res.data.types || []);
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        if (!products || products.length === 0) {
-            fetchAll();
+        } catch (err) {
+            console.log(err);
         }
+    };
+    const fetchTypes = async () => {
+        try {
+            const res = await API.get('types');
+            if (res.data?.success) {
+                setTypeDefs(res.data.types || []);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    useEffect(() => {
+        fetchAll();
         fetchTypes();
-    }, [dispatch, products.length]);
-
+    }, [dispatch]);
     let filteredProducts = products.filter((product) => {
         return (
             product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -162,10 +158,7 @@ const AdminProduct = () => {
             });
             if (res.data.success) {
                 toast.success("Product updated Successfully");
-                const updateProducts = products.map((p) => {
-                    return p._id === editProduct._id ? res.data.product : p
-                })
-                dispatch(setProducts(updateProducts));
+                await fetchAll();
                 setOpen(false);
             }
         } catch (error) {
@@ -174,7 +167,6 @@ const AdminProduct = () => {
     }
     const deleteProductHandler = async (productId) => {
         try {
-            const remainingProducts = products.filter((product) => product._id !== productId)
             const res = await API.delete(`/product/delete/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
@@ -182,7 +174,7 @@ const AdminProduct = () => {
             })
             if (res.data.success) {
                 toast.success(res.data.message)
-                dispatch(setProducts(remainingProducts))
+                await fetchAll();
             }
         } catch (error) {
             console.log(error)
