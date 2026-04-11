@@ -76,13 +76,14 @@ const ProductCard = ({ product, loading, isAdmin }) => {
           <Skeleton className="w-full h-full" />
         ) : (
           <>
+          <div className="w-full aspect-[4/4] overflow-hidden bg-gray-50 relative">
             <img
               src={productImg?.[0]?.url}
               onClick={() => navigate(`/products/${product._id}`)}
               alt={productName}
               draggable={false}
               className="w-auto h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
-            />
+            /></div>
             {isAdmin && (
               <Button 
                 onClick={() => handleDelete(product._id)} 
