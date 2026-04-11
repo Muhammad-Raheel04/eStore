@@ -76,7 +76,7 @@ const ProductCard = ({ product, loading, isAdmin }) => {
           <Skeleton className="w-full h-full" />
         ) : (
           <>
-          <div className="w-full aspect-[4/4] overflow-hidden bg-gray-50 relative">
+          <div className="w-full aspect-[4/4] overflow-hidden bg-white relative">
             <img
               src={productImg?.[0]?.url}
               onClick={() => navigate(`/products/${product._id}`)}
