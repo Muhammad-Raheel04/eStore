@@ -64,7 +64,8 @@ export const addProduct = async (req, res) => {
 
 export const getAllProduct = async (_, res) => {
     try {
-        const products = await Product.find();
+        const products = await Product.find()
+            .sort({createdAt:-1});
         if (!products || products.length === 0) {
             return res.status(200).json({
                 success: true,
