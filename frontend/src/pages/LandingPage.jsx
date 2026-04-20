@@ -194,7 +194,7 @@ const LandingPage = () => {
             </div>
 
             {/* Category Card 3 */}
-            <div onClick={() => handleTypeClick("unisex")} className="relative group overflow-hidden cursor-pointer">
+            <div onClick={() => handleTypeClick("leather products")} className="relative group overflow-hidden cursor-pointer">
               <img
                 loading='lazy'
                 src="https://res.cloudinary.com/dxdywv9xl/image/upload/v1773570038/leatherBags_fjtrd7.avif"
