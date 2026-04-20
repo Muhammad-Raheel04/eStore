@@ -253,6 +253,7 @@ export const toggleFeatured = async (req, res) => {
 export const getFeaturedProducts = async (_, res) => {
     try {
         const products = await Product.find({ featured: true })
+            .sort({createdAt:-1})
             .select('productName productPrice productImg.url _id')
             .slice('productImg.url', 1)
             .lean();
