@@ -233,3 +233,32 @@ export const getSalesData = async (req, res) => {
         })
     }
 }
+export const getMyOrder=async(req,res)=>{
+    try{
+        const userId=req.user.id;
+        const orders=await Order.find({user:userId})
+            .sort({createdAt:-1})
+            .select("_id orderId products paymentStatus orderStatus createdAt amount productIm")
+            .lean();
+
+        if(orders.length===0){
+            return res.status(200).json({
+                success:true,
+                message:"No Orders found",
+                orders,
+            })
+        }
+
+        return res.status(200).json({
+            success:true,
+            message:"Orders fetched successfully",
+            orders,
+        })
+    }catch(error){
+        return res.status(500).json({
+            success:false,
+            message:"Internal Server Error",
+            error:error.message,
+        })
+    };
+}
