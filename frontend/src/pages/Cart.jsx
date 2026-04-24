@@ -19,8 +19,7 @@ const Cart = () => {
   const cart = useSelector((store) => store.product.cart);
   const subTotal = cart?.totalPrice || 0;
   const shipping = subTotal > 299 ? 0 : 10;
-  const tax = subTotal * 0.05;
-  const total = subTotal + shipping + tax;
+  const total = subTotal + shipping ;
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
@@ -137,10 +136,7 @@ const Cart = () => {
                           <span>Shipping</span>
                           <span>Rs. {shipping}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span>Tax(5%)</span>
-                          <span>Rs. {tax}</span>
-                        </div>
+                       
                         <Separator />
                         <div className='flex justify-between font-bold text-lg'>
                           <span>Total</span>
