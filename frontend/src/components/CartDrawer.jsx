@@ -12,10 +12,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
 
-  const subTotal = cart?.totalPrice || 0;
-  const shipping = subTotal > 299 ? 0 : 10;
-  const tax = subTotal * 0.05;
-  const total = subTotal + shipping + tax;
+  const total = cart?.totalPrice || 0;
 
   const loadCart = async () => {
     try {
@@ -165,13 +162,10 @@ const CartDrawer = ({ isOpen, onClose }) => {
         {cart?.items?.length > 0 && (
           <div className="p-6 border-t border-gray-100 space-y-4 sticky bottom-0 bg-white shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
             <div className="space-y-2">
-              <div className="flex justify-between text-xs font-light tracking-widest text-gray-500 uppercase">
-                <span>Subtotal</span>
-                <span>Rs. {subTotal}</span>
-              </div>
+             
               <div className="flex justify-between text-xs font-light tracking-widest text-gray-500 uppercase">
                 <span>Shipping</span>
-                <span>Rs. {shipping}</span>
+                <span>Rs. 0</span>
               </div>
               <div className="flex justify-between text-sm font-medium tracking-[0.1em] text-black uppercase pt-2 border-t border-gray-50">
                 <span>Total</span>
