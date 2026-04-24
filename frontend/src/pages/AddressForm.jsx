@@ -98,8 +98,7 @@ const AddressForm = () => {
 
     const subtotal = cart.totalPrice;
     const shipping = subtotal > 50 ? 0 : 10;
-    const tax = parseFloat((subtotal * 0.05).toFixed(2));
-    const total = subtotal + shipping + tax;
+    const total = subtotal + shipping ;
 
     return (
         <div className="pt-10 max-w-7xl mx-auto p-2 sm:px-10 sm:pb-10">
@@ -277,10 +276,6 @@ const AddressForm = () => {
                             <div className="flex justify-between">
                                 <span>Shipping</span>
                                 <span>Rs. {shipping}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Tax</span>
-                                <span>Rs. {tax}</span>
                             </div>
                             <Separator />
                             <div className="flex justify-between font-bold text-lg">
