@@ -42,7 +42,6 @@ const orderSchema = new mongoose.Schema({
         unique: true
     },
     amount: { type: Number, required: true },
-    tax: { type: Number, required: true },
     shipping: { type: Number, required: true },
     currency: { type: String, default: "PKR" },
 
