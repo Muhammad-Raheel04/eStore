@@ -47,8 +47,8 @@ const Footer = () => {
             </h3>
 
             <div className="flex justify-center md:justify-start gap-5">
-              <FaFacebookF className="text-lg hover:text-white transition duration-300 cursor-pointer" />
-              <FaInstagram className="text-lg hover:text-white transition duration-300 cursor-pointer" />
+              <a href='https://www.facebook.com/share/1APt8mnSDy/'><FaFacebookF className="text-lg hover:text-white transition duration-300 cursor-pointer" /></a>
+              <a href="https://www.instagram.com/rajputco?igsh=d2xtazAxYjliZmx0"><FaInstagram className="text-lg hover:text-white transition duration-300 cursor-pointer" ></FaInstagram></a>
               <FaPinterestP className="text-lg hover:text-white transition duration-300 cursor-pointer" />
               <FaTwitter className="text-lg hover:text-white transition duration-300 cursor-pointer" />
             </div>
