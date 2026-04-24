@@ -184,7 +184,7 @@ const AdminOrders = () => {
                       <div key={index} className="mb-2">
                         <p className="font-medium">{item.productId?.productName}</p>
                         <p className="text-gray-500 text-sm">
-                          Qty: {item.quantity} | Rs {item.productId?.productPrice} | Tax: Rs {(item.productId?.productPrice * item.quantity * 0.05).toFixed(2)}
+                          Qty: {item.quantity} | Rs {item.productId?.productPrice}
                         </p>
                       </div>
                     ))}
