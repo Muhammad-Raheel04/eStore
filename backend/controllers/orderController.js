@@ -47,8 +47,7 @@ export const createCODOrder = async (req, res) => {
 
         const subtotal = cart.totalPrice;
         const shipping = subtotal > 299 ? 0 : 10;
-        const tax = subtotal * 0.05;
-        const total = subtotal + shipping + tax;
+        const total = subtotal + shipping ;
 
         const orderId = `ORD-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
 
@@ -60,7 +59,6 @@ export const createCODOrder = async (req, res) => {
             })),
             shippingAddress,
             amount: total,
-            tax,
             shipping
         };
 
