@@ -97,7 +97,7 @@ const AddressForm = () => {
     };
 
     const subtotal = cart.totalPrice;
-    const shipping = subtotal > 50 ? 0 : 10;
+    const shipping = 0;
     const total = subtotal + shipping ;
 
     return (
