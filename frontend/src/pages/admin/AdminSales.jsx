@@ -58,9 +58,9 @@ const AdminSales = () => {
         </Card>
          <Card className="bg-gray-500 text-white shadow">
           <CardHeader>
-            <CardTitle>Total Sales</CardTitle>
+            <CardTitle>Total Revenue</CardTitle>
           </CardHeader>
-          <CardContent className='text-2xl font-bold'>{stats.totalSales}</CardContent>
+          <CardContent className='text-2xl font-bold'>Rs. {stats.totalSales}</CardContent>
         </Card>
         <Card className='lg:col-span-4'>
           <CardHeader>
