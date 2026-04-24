@@ -17,9 +17,7 @@ import { toast } from 'sonner';
 
 const Cart = () => {
   const cart = useSelector((store) => store.product.cart);
-  const subTotal = cart?.totalPrice || 0;
-  const shipping = subTotal > 299 ? 0 : 10;
-  const total = subTotal + shipping ;
+  const total =  cart?.totalPrice || 0;
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
