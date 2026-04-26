@@ -128,8 +128,8 @@ const Navbar = () => {
 
           <div className="flex justify-center">
             <Link to="/" className="flex items-center">
-              <span className={`text-sm md:text-2xl font-serif font-light tracking-[0.2em] uppercase hover:tracking-normal transition-all duration-700 ${textClasses}`}>
-                Hamza Rajput
+              <span className={`text-sm md:text-2xl font-serif font-light tracking-[0.2em] hover:tracking-normal transition-all duration-700 ${textClasses}`}>
+                Rajput & Co Bags
               </span>
             </Link>
           </div>
