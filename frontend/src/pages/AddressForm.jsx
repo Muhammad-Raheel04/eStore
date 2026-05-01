@@ -270,7 +270,7 @@ const AddressForm = () => {
                             <CardTitle>Order Summary</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                               <div className="max-h-60 overflow-y-auto space-y-3 pr-2">
+                            <div className="max-h-60 overflow-y-auto space-y-3 pr-2">
                                 {cart.items.map((item, index) => (
                                     <div key={index} className="flex gap-3 items-center border-b pb-2">
 
@@ -289,8 +289,13 @@ const AddressForm = () => {
                                             </p>
                                         </div>
 
-                                        <div className="text-sm font-medium">
-                                            Rs. {(item.productId?.productPrice * item.quantity).toLocaleString("en-IN")}
+                                        <div className="text-sm font-medium text-right">
+                                            <p>
+                                                Rs. {(item.productId?.productPrice * item.quantity).toLocaleString("en-IN")}
+                                            </p>
+                                            <p className="text-xs text-gray-500">
+                                                {item.productId?.productPrice.toLocaleString("en-IN")} × {item.quantity}
+                                            </p>
                                         </div>
                                     </div>
                                 ))}
