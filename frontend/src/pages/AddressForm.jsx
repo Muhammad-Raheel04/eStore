@@ -84,7 +84,7 @@ const AddressForm = () => {
             const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
             const res = await API.post("order/cod", { shippingAddress: addr }, config);
             if (res.data.success) {
-                dispatch(clearCart)
+                dispatch(clearCart())
                 toast.success("Order Placed Successfully!");
                 navigate("/order-success");
             }
