@@ -150,7 +150,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto ">
           <div className="text-center mb-24 px-4">
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.35em] text-gray-900 uppercase leading-tight">
+            <h2 className="text-xl sm:text-4xl md:text-5xl font-light tracking-[0.35em] text-gray-900 uppercase leading-tight">
               Our Collection
             </h2>
 
@@ -262,7 +262,7 @@ const LandingPage = () => {
 
           {/* Heading */}
           <div className="text-center mb-20">
-            <h2 className="text-3xl md:text-5xl font-light tracking-[0.3em] uppercase text-gray-900">
+            <h2 className="text-xl md:text-5xl font-light tracking-[0.3em] uppercase text-gray-900">
               Why Choose Us
             </h2>
             <div className="w-12 h-[1px] bg-black mx-auto mt-6"></div>
