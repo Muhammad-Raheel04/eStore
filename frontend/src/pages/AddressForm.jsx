@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { addAddress, deleteAddress, setSelectedAddress } from '@/redux/productSlice';
+import { addAddress, clearCart, deleteAddress, setSelectedAddress } from '@/redux/productSlice';
 import { Separator } from '@/components/ui/separator';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -84,6 +84,7 @@ const AddressForm = () => {
             const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
             const res = await API.post("order/cod", { shippingAddress: addr }, config);
             if (res.data.success) {
+                dispatch(clearCart)
                 toast.success("Order Placed Successfully!");
                 navigate("/order-success");
             }
