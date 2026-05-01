@@ -47,6 +47,16 @@ const quillModules = {
         [{ 'table': true }]
     ]
 };
+const sanitizeQuillHTML = (html) => {
+    if (!html) return '';
+    return html
+        .replace(/<p><br\s*\/?><\/p>/gi, '')
+        .replace(/<br\s*\/?>/gi, ' ')
+        .replace(/&nbsp;/gi, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+};
+
 const AdminProduct = () => {
     const { products } = useSelector((store) => store.product)
     const [editProduct, setEditProduct] = useState(null);
@@ -310,7 +320,7 @@ const AdminProduct = () => {
                                                             modules={quillModules}
                                                             value={editProduct?.productDesc || ''}
                                                             onChange={(value) =>
-                                                                setEditProduct(prev => ({ ...prev, productDesc: value }))
+                                                                setEditProduct(prev => ({ ...prev, productDesc: sanitizeQuillHTML(value) }))
                                                             }
                                                             placeholder="Enter brief description of product..."
                                                         />
