@@ -55,6 +55,7 @@ export const createCODOrder = async (req, res) => {
                 productId: item.productId._id,
                 quantity: item.quantity
             })),
+            shipping:0,
             shippingAddress,
             amount: total,
         };
