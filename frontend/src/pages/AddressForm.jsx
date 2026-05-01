@@ -99,7 +99,7 @@ const AddressForm = () => {
 
     const subtotal = cart.totalPrice;
     const shipping = 0;
-    const total = subtotal + shipping ;
+    const total = subtotal + shipping;
 
     return (
         <div className="pt-10 max-w-7xl mx-auto p-2 sm:px-10 sm:pb-10">
@@ -270,6 +270,31 @@ const AddressForm = () => {
                             <CardTitle>Order Summary</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
+                               <div className="max-h-60 overflow-y-auto space-y-3 pr-2">
+                                {cart.items.map((item, index) => (
+                                    <div key={index} className="flex gap-3 items-center border-b pb-2">
+
+                                        <img
+                                            src={item.productId?.productImg?.[0]?.url}
+                                            alt="product"
+                                            className="w-12 h-12 object-cover rounded"
+                                        />
+
+                                        <div className="flex-1">
+                                            <p className="font-medium text-sm">
+                                                {item.productId?.productName}
+                                            </p>
+                                            <p className="text-xs text-gray-500">
+                                                Qty: {item.quantity}
+                                            </p>
+                                        </div>
+
+                                        <div className="text-sm font-medium">
+                                            Rs. {(item.productId?.productPrice * item.quantity).toLocaleString("en-IN")}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                             <div className="flex justify-between">
                                 <span>Subtotal ({cart.items.length} items)</span>
                                 <span>Rs. {subtotal.toLocaleString("en-IN")}</span>
