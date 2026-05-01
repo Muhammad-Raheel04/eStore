@@ -91,16 +91,33 @@ const AccordionSection = ({ title, content, isOpenInitially = false }) => {
                 className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-[1200px] opacity-100 pb-6" : "max-h-0 opacity-0"
                     }`}
             >
-                <div
-                    className="prose prose-sm max-w-none w-full text-gray-600
-                               prose-p:leading-relaxed prose-p:my-2
-                               prose-ul:list-disc prose-ul:pl-5 prose-li:my-1
-                               prose-strong:text-gray-900 prose-strong:font-semibold"
-                    dangerouslySetInnerHTML={{ __html: content }}
-                />
+                <div className="overflow-x-auto w-full text-left pr-2">
+                    <div
+                        className="prose prose-sm max-w-none w-full text-gray-600
+                   prose-p:leading-relaxed prose-p:my-2
+                   prose-ul:list-disc prose-ul:pl-5 prose-li:my-1
+                   prose-strong:text-gray-900 prose-strong:font-semibold
+                   prose-table:w-full prose-table:border-collapse
+                   prose-td:border prose-td:border-gray-200 prose-td:p-3 prose-td:align-top
+                   prose-th:border prose-th:border-gray-200 prose-th:p-3 prose-th:text-left prose-th:bg-gray-50
+                   prose-tr:border-b prose-tr:border-gray-100
+                   [&_p]:break-words [&_*]:max-w-full"
+                        dangerouslySetInnerHTML={{ __html: content }}
+                    />
+                </div>
             </div>
         </div>
     );
+};
+
+const sanitizeHTML = (html) => {
+    if (!html) return '';
+    return html
+        .replace(/<p><br\s*\/?><\/p>/gi, '')
+        .replace(/<br\s*\/?>/gi, ' ')
+        .replace(/&nbsp;/gi, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
 };
 
 const ProductDesc = ({ product }) => {
@@ -112,7 +129,7 @@ const ProductDesc = ({ product }) => {
 
     useEffect(() => {
         if (product?.productDesc) {
-            setSections(parseDescription(product.productDesc));
+            setSections(parseDescription(sanitizeHTML(product.productDesc)));
         }
     }, [product?.productDesc]);
 
