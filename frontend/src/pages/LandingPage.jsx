@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { setCart, setCartOpen } from '@/redux/productSlice';
 import BespokeSection from '@/components/Bespoke';
 import LuxuryFeaturedSection from '@/components/LuxuryFeaturedSection';
+import ImageSwitcher from '@/components/ImageSwitcher';
 
 
 const LandingPage = () => {
@@ -228,7 +229,29 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      <ImageSwitcher />
+      <section className="py-24 bg-white text-center px-6">
+        <div className="max-w-3xl mx-auto">
 
+          <p className="text-xs tracking-[0.4em] text-gray-400 uppercase mb-6">
+            Crafted Excellence
+          </p>
+
+          <h2 className="text-2xl md:text-5xl font-light tracking-[0.1em] text-gray-900 leading-tight">
+            Where Craft Meets
+            <br />
+            Timeless Design
+          </h2>
+
+          <div className="w-12 h-[1px] bg-black mx-auto my-8"></div>
+
+          <p className="text-gray-500 text-sm md:text-base font-light leading-relaxed">
+            Every piece is designed with precision and passion, blending modern
+            elegance with heritage craftsmanship to create something truly lasting.
+          </p>
+
+        </div>
+      </section>
       <BespokeSection />
 
 
