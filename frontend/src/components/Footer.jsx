@@ -29,12 +29,11 @@ const Footer = () => {
 
               <li>Rajput & Co. Bahria Town Phase 8, RWP</li>
 
-              <li className="pt-4 text-xs tracking-wide text-[#d6eb18]">
+              <li className="pt-4 text-xs tracking-wide text-white">
                 <a
                   href="https://wa.me/923295694485"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition underline underline-offset-4"
                 >
                  Contact Devloper
                 </a>
