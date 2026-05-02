@@ -41,7 +41,7 @@ const ImageSwitcher = () => {
           Luxury Fashion Collection
         </h1>
 
-        <p className="text-gray-600 font-light text-base md:text-xl text-sm mb-6 pt-4 px-4">
+        <p className="text-gray-600 font-light text-base md:text-xl text-sm mb-6 pt-4 px-4 md:px-0 ">
           Discover premium quality products crafted with elegance and modern design.
           Elevate your lifestyle with our exclusive collection.
         </p>
