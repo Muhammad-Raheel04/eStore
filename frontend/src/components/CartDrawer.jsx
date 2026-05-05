@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ShoppingBag, X, Plus, Minus, Trash2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setCart } from '@/redux/productSlice';
 import API from '@/utils/API';
 import { toast } from 'sonner';
@@ -40,8 +40,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
   const handleRemove = async (productId) => {
     try {
-      const config = accessToken 
-        ? { headers: { Authorization: `Bearer ${accessToken}` }, data: { productId } } 
+      const config = accessToken
+        ? { headers: { Authorization: `Bearer ${accessToken}` }, data: { productId } }
         : { data: { productId } };
       const res = await API.delete(`cart/remove`, config);
 
@@ -68,20 +68,18 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div 
-        className={`fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+      <div
+        className={`fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={onClose}
       />
 
-      <div className={`fixed top-0 right-0 h-full w-full sm:w-[380px] bg-white z-[110] shadow-2xl transform transition-transform duration-500 ease-in-out flex flex-col ${
-        isOpen ? "translate-x-0" : "translate-x-full"
-      }`}>
-      
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[380px] bg-white z-[110] shadow-2xl transform transition-transform duration-500 ease-in-out flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"
+        }`}>
+
         <div className="flex justify-between items-center p-6 border-b border-gray-100 sticky top-0 bg-white z-10">
           <h2 className="text-xl font-serif font-light tracking-[0.2em] uppercase text-black">Your Cart</h2>
-          <button 
+          <button
             onClick={onClose}
             className="p-2 hover:rotate-90 transition-transform duration-300 group"
           >
@@ -92,8 +90,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
         <div className="flex-1 overflow-y-auto p-6 space-y-8">
           {cart?.items?.length > 0 ? (
             cart.items.map((item, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="flex gap-4 group transition-all duration-300 hover:translate-x-1"
               >
                 <div className="w-30 h-auto ">
@@ -110,7 +108,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                       <h3 className="text-sm font-light tracking-wide text-black uppercase line-clamp-2 leading-relaxed">
                         {item?.productId?.productName}
                       </h3>
-                      <button 
+                      <button
                         onClick={() => handleRemove(item?.productId?._id)}
                         className="text-gray-400 hover:text-black transition-colors"
                       >
@@ -124,14 +122,14 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
                   <div className="flex justify-between items-center">
                     <div className="flex items-center border border-gray-100">
-                      <button 
+                      <button
                         onClick={() => handleUpdateQuantity(item.productId._id, 'decrease')}
                         className="p-2 hover:bg-gray-50 transition-colors"
                       >
                         <Minus className="w-3 h-3 text-black" />
                       </button>
                       <span className="px-4 text-xs font-light">{item?.quantity}</span>
-                      <button 
+                      <button
                         onClick={() => handleUpdateQuantity(item.productId._id, 'increase')}
                         className="p-2 hover:bg-gray-50 transition-colors"
                       >
@@ -149,7 +147,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
             <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
               <ShoppingBag className="w-12 h-12 text-gray-200" />
               <p className="text-sm font-light tracking-widest uppercase text-gray-500">Your bag is empty</p>
-              <button 
+              <button
                 onClick={() => { onClose(); navigate('/products'); }}
                 className="text-xs font-light tracking-[0.2em] uppercase underline hover:text-[#e8d87f] transition-colors"
               >
@@ -162,7 +160,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
         {cart?.items?.length > 0 && (
           <div className="p-6 border-t border-gray-100 space-y-4 sticky bottom-0 bg-white shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
             <div className="space-y-2">
-             
+
               <div className="flex justify-between text-xs font-light tracking-widest text-gray-500 uppercase">
                 <span>Shipping</span>
                 <span>Rs. 0</span>
@@ -180,12 +178,13 @@ const CartDrawer = ({ isOpen, onClose }) => {
               >
                 Checkout
               </button>
-              <button
+              <Link
                 onClick={onClose}
-                className="w-full bg-transparent text-black py-4 px-6 tracking-[0.2em] uppercase text-[10px] font-light hover:text-gray-500 transition duration-300"
+                to={"/products"}
+                className="block w-full bg-transparent text-gray-400 py-4 px-6 tracking-[0.2em] uppercase text-[10px] font-light hover:text-black transition duration-300 text-center"
               >
                 Continue Shopping
-              </button>
+              </Link>
             </div>
           </div>
         )}
