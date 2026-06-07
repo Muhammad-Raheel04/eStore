@@ -7,7 +7,7 @@
     "start": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Muhammad Raheel",
   "license": "ISC",
   "type": "module",
   "dependencies": {
